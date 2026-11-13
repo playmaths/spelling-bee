@@ -72,6 +72,24 @@ export function parseSpokenLetters(transcript: string): string[] {
   return letters
 }
 
+/**
+ * True when the transcript is letters being spelled out ("r h i n o", "bee see",
+ * "double u"), not a word being said ("rhino"). Saying the word is not spelling it.
+ */
+export function isSpelledOut(transcript: string): boolean {
+  const tokens = transcript
+    .toLowerCase()
+    .replace(/[^a-z\s]/g, ' ')
+    .split(/\s+/)
+    .filter((t) => t && t !== 'capital' && t !== 'double')
+  return tokens.length > 0 && tokens.every((t) => t.length === 1 || LETTER_WORDS[t] !== undefined)
+}
+
+/** Keeps only the alternatives in which she actually spelled, best first. */
+export function spelledAlternatives(nBest: readonly string[]): string[] {
+  return nBest.filter(isSpelledOut)
+}
+
 export function sameAcousticGroup(a: string, b: string): boolean {
   return a !== b && ACOUSTIC_CONFUSION_GROUPS.some((g) => g.includes(a) && g.includes(b))
 }

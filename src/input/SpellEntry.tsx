@@ -3,7 +3,7 @@ import type { BeeWord } from '../types/game.ts'
 import { IconButton } from '../components/IconButton.tsx'
 import { StylusTileCanvas } from './StylusTileCanvas.tsx'
 import { TouchKeyboard } from './TouchKeyboard.tsx'
-import { acousticGroupOf, verifyDictation, type HeardTile } from './speechVerifier.ts'
+import { acousticGroupOf, spelledAlternatives, verifyDictation, type HeardTile } from './speechVerifier.ts'
 import type { LetterGuess } from './strokeRecognizer.ts'
 
 type Mode = 'KEYS' | 'WRITE' | 'SAY'
@@ -105,7 +105,13 @@ export function SpellEntry({
     rec.continuous = false
     rec.onresult = (e) => {
       const nBest = Array.from(e.results[0] ?? [], (alt) => alt.transcript)
-      const tiles = verifyDictation(word, nBest)
+      // Saying the whole word does not count: she has to spell it, as at the bee.
+      const spelled = spelledAlternatives(nBest)
+      if (spelled.length === 0 && nBest.some((t) => t.trim() !== '')) {
+        setMicNote('I heard a word, not letters. Spell it one letter at a time, like at the bee.')
+        return
+      }
+      const tiles = verifyDictation(word, spelled)
       if (tiles.length === 0) {
         setMicNote("I didn't catch any letters. Say them one at a time, nice and clear.")
         return

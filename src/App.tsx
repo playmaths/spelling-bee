@@ -6,6 +6,8 @@ import { IconButton } from './components/IconButton.tsx'
 import { WordCards } from './components/WordCards.tsx'
 import { WordMap } from './components/WordMap.tsx'
 import { isFamilyCode, newFamilyCode, normalizeCode, syncOnce } from './lib/familySync.ts'
+import { fileReport, loadReports, sendReports, setReportContext, type Report } from './lib/report.ts'
+import { usageCount, usageOpen } from './lib/usage.ts'
 import { getVoiceName, listVoices, setMuted, setVoiceName, speak } from './lib/speak.ts'
 import { pickSession, type Progress } from './lib/unlocks.ts'
 import type { BeeWord } from './types/game.ts'
@@ -77,10 +79,30 @@ function App() {
     }
   }, [progress])
 
+  const [reports, setReports] = useState<Report[]>(loadReports)
+  const [reportText, setReportText] = useState('')
+  useEffect(() => {
+    usageOpen()
+    void sendReports().then(setReports)
+    const onVisible = () => {
+      if (document.visibilityState !== 'visible') return
+      usageOpen()
+      void sendReports().then(setReports)
+    }
+    document.addEventListener('visibilitychange', onVisible)
+    return () => document.removeEventListener('visibilitychange', onVisible)
+  }, [])
+  useEffect(() => {
+    if (view !== 'GROWNUPS') setReportContext(view === 'PLAY' ? `play: ${session.map((w) => w.word).join(', ')}` : view.toLowerCase())
+  }, [view, session])
+
   const record = (wordId: string, clean: boolean) =>
+    {
+    usageCount('wins')
     setProgress((p) =>
       p.solved[wordId] === 'CLEAN' ? p : { ...p, savedAt: Date.now(), solved: { ...p.solved, [wordId]: clean ? 'CLEAN' : 'DONE' } },
     )
+  }
   // Family sync (same scheme as Number Garden and Sudoku): pull on open and on
   // returning to the app, push 1.5 seconds after any progress.
   const [family, setFamily] = useState(() => {
@@ -167,6 +189,7 @@ function App() {
             onClick={() => {
               setSession(pickSession(progress, bypassCooldownForDemo))
               setProgress((p) => ({ ...p, sessions: (p.sessions ?? 0) + 1 }))
+              usageCount('starts')
               setSessionFrom('HOME')
               setView('PLAY')
             }}
@@ -202,7 +225,21 @@ function App() {
         />
       )}
       {view === 'CARDS' && <WordCards unlockAll={bypassCooldownForDemo} collected={Object.keys(progress.solved)} />}
-      {view === 'STAGE' && <Compete solved={progress.solved} unlockAll={bypassCooldownForDemo} />}
+      {view === 'STAGE' && (
+        <Compete
+          solved={progress.solved}
+          unlockAll={bypassCooldownForDemo}
+          seen={progress.stageSeen ?? []}
+          onAsked={(ids, startedOver) => {
+            usageCount('starts')
+            setProgress((p) => ({
+              ...p,
+              savedAt: Date.now(),
+              stageSeen: startedOver ? ids : [...(p.stageSeen ?? []), ...ids],
+            }))
+          }}
+        />
+      )}
       {view === 'BENCH' && <BeeStage />}
 
       {view === 'GROWNUPS' && (
@@ -280,6 +317,48 @@ function App() {
                 </form>
                 {familyStatus && <p className="text-base text-rose-700">{familyStatus}</p>}
               </>
+            )}
+          </section>
+          <section className="flex flex-col gap-2 rounded-2xl bg-white p-4 shadow-sm">
+            <h3 className="font-bold">Report a problem</h3>
+            <form
+              className="flex flex-col gap-2"
+              onSubmit={(e) => {
+                e.preventDefault()
+                if (!reportText.trim()) return
+                setReports(fileReport(reportText))
+                setReportText('')
+                void sendReports().then(setReports)
+              }}
+            >
+              <textarea
+                id="report-text"
+                value={reportText}
+                onChange={(e) => setReportText(e.target.value)}
+                placeholder="What went wrong? A few words are enough."
+                aria-label="What went wrong"
+                rows={3}
+                maxLength={380}
+                className="rounded-lg border border-slate-300 p-2 text-base"
+              />
+              <button type="submit" className="self-start rounded-full bg-slate-800 px-5 py-2 font-bold text-white">
+                Send report
+              </button>
+            </form>
+            <p className="text-sm text-slate-500">
+              Sends your words, the screen you were on and the device type. No name and no family code.
+            </p>
+            {reports.length > 0 && (
+              <ul data-testid="reports" className="text-sm text-slate-600">
+                {reports
+                  .slice(-3)
+                  .reverse()
+                  .map((r) => (
+                    <li key={r.when}>
+                      {r.sent ? 'Sent' : 'Waiting to send'}: {r.text}
+                    </li>
+                  ))}
+              </ul>
             )}
           </section>
           <button type="button" onClick={() => setView('BENCH')} className="self-start underline">

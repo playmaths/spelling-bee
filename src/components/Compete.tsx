@@ -18,7 +18,37 @@ interface Result {
  * The competition module: a Scripps-style round. No givens, no hints, no word length.
  * She may ask the Judge anything, then spells once. Coach's Corner comes after the round.
  */
-export function Compete({ solved, unlockAll }: { solved: Record<string, unknown>; unlockAll: boolean }) {
+/**
+ * Eight words near her level that she has not been asked on the stage before.
+ * When the unasked words run out, the list starts over.
+ */
+export function pickRound(
+  solved: Record<string, unknown>,
+  unlockAll: boolean,
+  seen: readonly string[],
+  seed: number,
+): { words: BeeWord[]; startedOver: boolean } {
+  // The stage reaches a little past what she has solved so far.
+  const level = 2.4 + Object.keys(solved).length * 0.02
+  const pool = unlockedWords(solved, unlockAll).sort((a, b) => a.difficulty - b.difficulty)
+  const near = pool.filter((w, i) => w.difficulty <= level || i < ROUND_SIZE * 6)
+  const fresh = near.filter((w) => !seen.includes(w.id))
+  const startedOver = fresh.length < ROUND_SIZE
+  return { words: seededShuffle(startedOver ? near : fresh, seed).slice(0, ROUND_SIZE), startedOver }
+}
+
+export function Compete({
+  solved,
+  unlockAll,
+  seen,
+  onAsked,
+}: {
+  solved: Record<string, unknown>
+  unlockAll: boolean
+  /** Words already asked on the stage in earlier rounds. */
+  seen: readonly string[]
+  onAsked: (wordIds: string[], startedOver: boolean) => void
+}) {
   const [round, setRound] = useState(0)
   const [words, setWords] = useState<BeeWord[] | null>(null)
   const [index, setIndex] = useState(0)
@@ -26,11 +56,9 @@ export function Compete({ solved, unlockAll }: { solved: Record<string, unknown>
   const [answered, setAnswered] = useState(false)
 
   const start = () => {
-    // Stay near her level: the stage reaches a little past what she has solved so far.
-    const level = 2.3 + Object.keys(solved).length * 0.02
-    const pool = unlockedWords(solved, unlockAll).sort((a, b) => a.difficulty - b.difficulty)
-    const near = pool.filter((w, i) => w.difficulty <= level || i < ROUND_SIZE * 3)
-    setWords(seededShuffle(near, round + 1).slice(0, ROUND_SIZE))
+    const picked = pickRound(solved, unlockAll, seen, Math.floor(Math.random() * 1e9))
+    setWords(picked.words)
+    onAsked(picked.words.map((w) => w.id), picked.startedOver)
     setRound((r) => r + 1)
     setIndex(0)
     setResults([])

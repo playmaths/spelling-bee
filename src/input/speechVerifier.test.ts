@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { getWord } from '../data/index.ts'
-import { parseSpokenLetters, verifyDictation } from './speechVerifier.ts'
+import { isSpelledOut, parseSpokenLetters, spelledAlternatives, verifyDictation } from './speechVerifier.ts'
 
 const practice = getWord('word_practice')!
 const sentence = getWord('word_sentence')!
@@ -43,3 +43,19 @@ describe('verifyDictation', () => {
     expect(verifyDictation(practice, ['p r a c t i c e']).some((t) => t.isAsrSuspect)).toBe(false)
   })
 })
+
+describe('saying the word is not spelling it', () => {
+  it.each(['r h i n o', 'R. H. I. N. O.', 'are aitch eye en oh', 'double u r i t e', 'capital K n o w'])('accepts %s', (t) => {
+    expect(isSpelledOut(t)).toBe(true)
+  })
+
+  it.each(['rhino', 'Rhino.', 'the rhino', 'r h ino', ''])('rejects %j', (t) => {
+    expect(isSpelledOut(t)).toBe(false)
+  })
+
+  it('uses a spelled alternative when the best guess was the whole word', () => {
+    expect(spelledAlternatives(['rhino', 'r h i n o', 'rhinos'])).toEqual(['r h i n o'])
+    expect(spelledAlternatives(['rhino', 'rhinos'])).toEqual([])
+  })
+})
+

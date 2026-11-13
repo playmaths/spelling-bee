@@ -10,6 +10,8 @@ export interface Progress {
   sessions?: number
   /** Write clock for family sync: set whenever she makes progress, never by joining a family. */
   savedAt?: number
+  /** Words already asked on the bee stage, so a new round asks different ones. */
+  stageSeen?: string[]
 }
 
 export const SESSION_SIZE = 5

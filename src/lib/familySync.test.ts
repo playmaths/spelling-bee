@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { isFamilyCode, newFamilyCode, normalizeCode, pushFamily, resolve, syncOnce } from './familySync.ts'
+import { isFamilyCode, mergeProgress, newFamilyCode, normalizeCode, pushFamily, syncOnce } from './familySync.ts'
 import type { Progress } from './unlocks.ts'
 
 /** An in-memory stand-in for the Firestore REST endpoint. */
@@ -36,15 +36,12 @@ describe('family codes', () => {
   })
 })
 
-describe('resolve', () => {
-  it('lets the newer copy win', () => {
-    expect(resolve(some(5, 'a'), some(9, 'b'))).toBe('ADOPT_REMOTE')
-    expect(resolve(some(9, 'a'), some(5, 'b'))).toBe('PUSH_LOCAL')
-    expect(resolve(some(5, 'a'), some(5, 'a'))).toBe('IN_SYNC')
-  })
-
-  it('gives an empty device the family progress, whatever the clocks say', () => {
-    expect(resolve({ solved: {}, savedAt: 99 }, some(1, 'a'))).toBe('ADOPT_REMOTE')
+describe('mergeProgress', () => {
+  it('keeps every word solved on either device, and a clean solve beats a helped one', () => {
+    const a: Progress = { solved: { x: 'DONE', y: 'CLEAN' }, sessions: 3, savedAt: 5 }
+    const b: Progress = { solved: { x: 'CLEAN', z: 'DONE' }, sessions: 7, savedAt: 9 }
+    expect(mergeProgress(a, b)).toEqual({ solved: { x: 'CLEAN', y: 'CLEAN', z: 'DONE' }, sessions: 7, savedAt: 9 })
+    expect(mergeProgress(b, a).solved).toEqual(mergeProgress(a, b).solved)
   })
 })
 
@@ -69,6 +66,19 @@ describe('two devices and one family', () => {
     expect(Object.keys(back.adopt!.solved)).toEqual(['word_practice', 'word_sentence'])
     ipad = back.adopt!
     expect((await syncOnce(CODE, ipad, cloud.f)).status).toBe('Up to date.')
+  })
+
+  it('loses nothing when two devices were both played offline', async () => {
+    const cloud = fakeFirestore()
+    await syncOnce(CODE, some(100, 'a'), cloud.f)
+    // Both go offline and play different words; the phone comes back first.
+    const phone = some(300, 'a', 'c')
+    const ipad = some(200, 'a', 'b')
+    await syncOnce(CODE, phone, cloud.f)
+    const back = await syncOnce(CODE, ipad, cloud.f)
+    expect(Object.keys(back.adopt!.solved).sort()).toEqual(['a', 'b', 'c'])
+    expect(JSON.stringify(cloud.docs.get(CODE))).toContain('\\"b\\"')
+    expect((await syncOnce(CODE, phone, cloud.f)).adopt!.solved).toHaveProperty('b')
   })
 
   it('keeps working offline and says so', async () => {

@@ -30,3 +30,20 @@ Copy `src/data/families/silent-mb.json`, edit it, then check it:
 ```bash
 node scripts/check-family.mjs src/data/families/<your-file>.json
 ```
+
+## Firestore rule for usage counts
+
+The family code and problem reports use rules the other two apps already have. The anonymous daily counts need one more, added inside `match /databases/{database}/documents { … }` and published:
+
+```
+match /beeUsage/{day} {
+  allow read: if true;
+  allow create, update: if day.matches('^20[0-9]{2}-[0-9]{2}-[0-9]{2}$')
+    && request.resource.data.keys().hasOnly(['day', 'devices', 'opens', 'starts', 'wins', 'families'])
+    && (!('families' in request.resource.data) || request.resource.data.families.size() <= 2000);
+  allow delete: if false;
+}
+```
+
+Until it is published the counts simply wait on the device (the last week is kept).
+

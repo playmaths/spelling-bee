@@ -99,10 +99,10 @@ export function buildWrites(queue: Record<string, Day>): unknown[] {
   return writes
 }
 
-export async function usageFlush(f: typeof fetch = fetch): Promise<void> {
+export async function usageFlush(f: typeof fetch = fetch, host = typeof location === 'undefined' ? '' : location.hostname): Promise<void> {
   if (busy || typeof location === 'undefined' || !/^https?:$/.test(location.protocol)) return
   // Development and test runs on this machine must not be counted as real use.
-  if (/^(localhost|127\.0\.0\.1)$/.test(location.hostname)) return
+  if (/^(localhost|127\.0\.0\.1)$/.test(host)) return
   if (typeof navigator !== 'undefined' && navigator.onLine === false) return
   const u = load()
   const sent = JSON.parse(JSON.stringify(u.queue)) as Record<string, Day>

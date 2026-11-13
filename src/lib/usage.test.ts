@@ -25,10 +25,20 @@ describe('usage counts', () => {
 
   it('clears the queue after a successful send and keeps it after a failure', async () => {
     usageCount('opens')
-    await usageFlush((async () => new Response('{}', { status: 500 })) as typeof fetch)
+    const site = 'playmaths.github.io'
+    await usageFlush((async () => new Response('{}', { status: 500 })) as typeof fetch, site)
     expect(localStorage.getItem('spelling-bee-usage')).toContain('opens')
-    await usageFlush((async () => new Response('{}', { status: 200 })) as typeof fetch)
+    await usageFlush((async () => new Response('{}', { status: 200 })) as typeof fetch, site)
     expect(JSON.parse(localStorage.getItem('spelling-bee-usage')!).queue).toEqual({})
+  })
+})
+
+describe('local test runs', () => {
+  it('are never sent as real use', async () => {
+    usageCount('opens')
+    let called = false
+    await usageFlush((async () => ((called = true), new Response('{}', { status: 200 }))) as typeof fetch, 'localhost')
+    expect(called).toBe(false)
   })
 })
 

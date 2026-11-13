@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { CARDS, getWord } from '../data/index.ts'
+import { clipKeys } from '../lib/clips.ts'
 import { speak } from '../lib/speak.ts'
 import { LEVEL_FLOOR } from '../lib/unlocks.ts'
 import type { BeeWord, WordCard } from '../types/game.ts'
@@ -33,7 +34,7 @@ export function WordCardFace({ word, card }: { word: BeeWord; card: WordCard }) 
         {parts.join(', ')} <span className="mx-1 text-slate-300">|</span> {word.phoneticRespelling}
         <button
           type="button"
-          onClick={() => speak(word.word)}
+          onClick={() => speak(word.word, false, clipKeys.word(word.word))}
           aria-label="Hear the word"
           className="ml-2 rounded-full bg-white px-2 py-0.5 shadow-sm"
         >
@@ -60,7 +61,7 @@ export function WordCardFace({ word, card }: { word: BeeWord; card: WordCard }) 
       <div className="flex justify-center gap-3">
         <button
           type="button"
-          onClick={() => speak(card.sentence)}
+          onClick={() => speak(card.sentence, false, clipKeys.card(word.word))}
           className="rounded-full bg-white px-4 py-2 text-sm font-semibold shadow"
         >
           🔊 Read it to me

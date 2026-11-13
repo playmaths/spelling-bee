@@ -3,6 +3,7 @@ import { createJudge, judgeReducer } from '../engine/judgeStateMachine.ts'
 import { MAX_STRIKES, createPuzzle, isCleanSolve, puzzleReducer } from '../engine/puzzleEngine.ts'
 import { StylusTileCanvas } from '../input/StylusTileCanvas.tsx'
 import { recognitionCheckFor } from '../lib/recognition.ts'
+import { clipKeys } from '../lib/clips.ts'
 import { speak } from '../lib/speak.ts'
 import type { BeeWord } from '../types/game.ts'
 import { AskJudge } from './AskJudge.tsx'
@@ -25,7 +26,7 @@ export function DetectiveCheck({ word, onDone }: { word: BeeWord; onDone: () => 
 
   // She arrives here by tapping Next, so the question may be read aloud.
   useEffect(() => {
-    speak(check.question)
+    speak(check.question, false, clipKeys.secret(word.word))
   }, [check.question])
 
   return (
@@ -38,7 +39,9 @@ export function DetectiveCheck({ word, onDone }: { word: BeeWord; onDone: () => 
           disabled={right}
           onClick={() => {
             setPicked(o)
-            speak(o === check.correctAnswer ? 'Great detective work!' : 'Not quite. Try another one.')
+            o === check.correctAnswer
+              ? speak('Great detective work!', false, clipKeys.greatDetective)
+              : speak('Not quite. Try another one.', false, clipKeys.notQuite)
           }}
           className={`rounded-2xl px-5 py-4 text-left text-lg shadow ${
             picked === o ? (o === check.correctAnswer ? 'bg-emerald-200' : 'bg-rose-100') : 'bg-white'
@@ -65,7 +68,7 @@ export function PuzzlePlay({ word, onDone }: { word: BeeWord; onDone: (clean: bo
 
   // Nothing is spoken on arrival; she taps the speaker when she is ready.
   useEffect(() => {
-    if (judge.line.kind !== 'PROMPT') speak(judge.line.spoken, judge.line.slow)
+    if (judge.line.kind !== 'PROMPT') speak(judge.line.spoken, judge.line.slow, judge.line.clip)
   }, [judge.line])
 
   const over = state.status !== 'PLAYING'

@@ -49,6 +49,8 @@ export interface JudgeLine {
   display: string
   /** Speak at slow rate. */
   slow?: boolean
+  /** Key of a recording of exactly this line, if one may exist (see src/lib/clips.ts). */
+  clip?: string
 }
 
 /** Queued for the post-round Coach's Corner (CONTEST) and the pattern engine. */
@@ -123,18 +125,20 @@ export function createJudge(word: BeeWord, mode: GameMode): JudgeState {
 function intentLine(state: JudgeState, intent: JudgeIntent): JudgeLine {
   const { word } = state
   // Repeated asks cycle through the word's meanings.
-  const meaning = word.meanings[state.intentCounts[intent] % word.meanings.length]
+  const meaningIndex = state.intentCounts[intent] % word.meanings.length
+  const meaning = word.meanings[meaningIndex]
   const beats = word.syllables.length
   switch (intent) {
     case 'DEFINITION': {
       const text = `It's ${/^[aeiou]/.test(meaning.partOfSpeech) ? 'an' : 'a'} ${meaning.partOfSpeech}. ${meaning.kidDefinition}`
-      return { kind: 'INTENT_REPLY', spoken: text, display: text }
+      return { kind: 'INTENT_REPLY', spoken: text, display: text, clip: `d/${word.word}-${meaningIndex}` }
     }
     case 'SENTENCE':
       return {
         kind: 'INTENT_REPLY',
         spoken: meaning.exampleSentence,
         display: meaning.blankedSentence,
+        clip: `x/${word.word}-${meaningIndex}`,
       }
     case 'SLOW':
       return {
@@ -142,13 +146,14 @@ function intentLine(state: JudgeState, intent: JudgeIntent): JudgeLine {
         spoken: word.word,
         display: `🔊 Nice and slow… listen for ${beats} ${beats === 1 ? 'beat' : 'beats'}.`,
         slow: true,
+        clip: `s/${word.word}`,
       }
     case 'CLUE': {
       const text = `Here's a clue: it's ${/^[aeiou]/.test(meaning.partOfSpeech) ? 'an' : 'a'} ${meaning.partOfSpeech} with ${beats} ${beats === 1 ? 'beat' : 'beats'}.`
       return { kind: 'INTENT_REPLY', spoken: text, display: text }
     }
     case 'REPEAT':
-      return { kind: 'INTENT_REPLY', spoken: word.word, display: '🔊 Here it is again!' }
+      return { kind: 'INTENT_REPLY', spoken: word.word, display: '🔊 Here it is again!', clip: `w/${word.word}` }
   }
 }
 

@@ -4,6 +4,10 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+  # Redeploy when new voice recordings are ready.
+  workflow_run:
+    workflows: ["Record the Judge's voice"]
+    types: [completed]
 
 permissions:
   contents: read
@@ -24,6 +28,14 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
+      - name: Add the voice recordings, if any exist yet
+        uses: actions/cache/restore@v4
+        with:
+          path: public/audio
+          key: audio-v1-none
+          restore-keys: |
+            audio-v1-
+      - run: rm -f public/audio/done.json && ls public/audio 2>/dev/null | head -3 || true
       - run: npx vitest run
       - run: npm run build
       - uses: actions/configure-pages@v5

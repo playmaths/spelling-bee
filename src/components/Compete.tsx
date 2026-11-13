@@ -2,7 +2,9 @@ import { useState } from 'react'
 import type { JudgeState } from '../engine/judgeStateMachine.ts'
 import { seededShuffle, unlockedWords } from '../lib/unlocks.ts'
 import type { BeeWord } from '../types/game.ts'
+import { getCard } from '../data/index.ts'
 import { JudgeRound } from './BeeStage.tsx'
+import { WordCardFace } from './WordCards.tsx'
 
 export const ROUND_SIZE = 8
 
@@ -160,6 +162,7 @@ export function Compete({
         ))}
       </div>
       <JudgeRound key={`${round}-${word.id}`} word={word} mode="CONTEST" onResolved={onResolved} />
+      {answered && getCard(word.id) && <WordCardFace key={word.id} word={word} card={getCard(word.id)!} />}
       {answered && (
         <button
           type="button"

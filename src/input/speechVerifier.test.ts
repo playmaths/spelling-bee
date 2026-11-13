@@ -93,3 +93,14 @@ describe('letters arriving a few at a time', () => {
   })
 })
 
+
+describe('confirming a fuzzy letter', () => {
+  it('offers at most four letters, including the heard one and the one the word needs', async () => {
+    const { fuzzyChoices } = await import('./SpellEntry.tsx')
+    const choices = fuzzyChoices({ index: 1, letter: 'T', alternatives: [], isAsrSuspect: true }, 'needle')
+    expect(choices).toHaveLength(4)
+    expect(choices).toContain('T')
+    expect(choices).toContain('E')
+    expect(choices).toEqual([...choices].sort())
+  })
+})

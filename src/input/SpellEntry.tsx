@@ -8,6 +8,19 @@ import type { LetterGuess } from './strokeRecognizer.ts'
 
 type Mode = 'KEYS' | 'WRITE' | 'SAY'
 
+/**
+ * A short list to confirm a fuzzy letter: what was heard, what else the microphone
+ * offered, the letter the word needs there, and one sound-alike. Never the whole
+ * rhyme group (nine buttons is too many), and in alphabetical order so the position
+ * gives nothing away.
+ */
+export function fuzzyChoices(suspect: HeardTile, target: string): string[] {
+  const needed = target[suspect.index]?.toUpperCase()
+  const picks = [suspect.letter, ...suspect.alternatives, ...(needed ? [needed] : [])]
+  const fillers = acousticGroupOf(suspect.letter).filter((l) => !picks.includes(l))
+  return [...new Set([...picks, ...fillers])].slice(0, Math.max(4, new Set(picks).size)).slice(0, 4).sort()
+}
+
 interface Recognition {
   lang: string
   maxAlternatives: number
@@ -227,7 +240,7 @@ export function SpellEntry({
             The microphone was a little fuzzy on letter {suspect.index + 1}. Which letter did you say?
           </p>
           <div className="flex flex-wrap gap-2">
-            {[...new Set([suspect.letter, ...suspect.alternatives, ...acousticGroupOf(suspect.letter)])].map((l) => (
+            {fuzzyChoices(suspect, word.word).map((l) => (
               <button
                 key={l}
                 type="button"

@@ -212,9 +212,19 @@ function App() {
     <main className="mx-auto flex min-h-dvh max-w-2xl flex-col items-center gap-8 bg-amber-50 p-4 text-slate-900 sm:p-8">
       <div className="flex w-full items-center justify-between">
         {view === 'HOME' ? (
-          <span data-testid="blooms" className="text-xl font-semibold text-slate-600">
-            {blooms > 0 ? `🌸 ${blooms}` : ''}
-          </span>
+          blooms > 0 ? (
+            <button
+              type="button"
+              data-testid="blooms"
+              onClick={() => setView('MAP')}
+              aria-label={`${blooms} flowers in my garden`}
+              className="rounded-full bg-white px-4 py-2 text-lg font-semibold text-slate-600 shadow-sm"
+            >
+              🌸 {blooms} {blooms === 1 ? 'flower' : 'flowers'}
+            </button>
+          ) : (
+            <span />
+          )
         ) : (
           <button type="button" aria-label="Home" onClick={() => setView('HOME')} className={round}>
             🏠

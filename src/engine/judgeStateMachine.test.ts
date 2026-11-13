@@ -116,3 +116,27 @@ describe('free intents', () => {
     expect(s.line.display).toMatch(/^It's a noun/)
   })
 })
+
+describe('clues', () => {
+  const clue = (s: JudgeState) => judgeReducer(s, { type: 'INTENT', intent: 'CLUE' })
+
+  it('gives words that mean nearly the same, not grammar facts', () => {
+    const s = clue(createJudge(practice, 'CONTEST'))
+    expect(s.line.display).toBe("Here's a clue. It means nearly the same as “train” or “rehearse”.")
+    expect(s.line.display).not.toMatch(/noun|verb|beats/)
+  })
+
+  it('adds a nudge about the tricky part while learning, without showing the word', () => {
+    const s = clue(clue(createJudge(mysterious, 'ADVENTURE')))
+    expect(s.line.display).toMatch(/^Here's a clue about the tricky part\./)
+    expect(s.line.display).not.toMatch(/mysterious/i)
+  })
+
+  it('never gives spelling help on the bee stage', () => {
+    let s = createJudge(mysterious, 'CONTEST')
+    for (let i = 0; i < 3; i++) {
+      s = clue(s)
+      expect(s.line.display).not.toMatch(/tricky part/)
+    }
+  })
+})

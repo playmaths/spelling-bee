@@ -1,3 +1,4 @@
+import { getCard } from '../data/index.ts'
 import type { BeeWord, ErrorBucket, GameMode } from '../types/game.ts'
 import { classifyAttempt, isVowel, normalizeAttempt, type Diagnosis } from './diagnosticClassifier.ts'
 
@@ -149,8 +150,29 @@ function intentLine(state: JudgeState, intent: JudgeIntent): JudgeLine {
         clip: `s/${word.word}`,
       }
     case 'CLUE': {
-      const text = `Here's a clue: it's ${/^[aeiou]/.test(meaning.partOfSpeech) ? 'an' : 'a'} ${meaning.partOfSpeech} with ${beats} ${beats === 1 ? 'beat' : 'beats'}.`
-      return { kind: 'INTENT_REPLY', spoken: text, display: text }
+      // Concrete clues, never "it's a noun with 3 beats":
+      // first, words that mean nearly the same; then (while learning only) a nudge
+      // about the tricky part. The bee stage gives meaning clues only, never spelling help.
+      const synonyms = (getCard(word.id)?.synonyms ?? []).filter((x) => !new RegExp(`\\b${word.word}\\b`, 'i').test(x))
+      const hint = word.graphemeMap.find((c) => c.isPatternFocus && c.coachingHint)?.coachingHint
+      const clues: { spoken: string; display: string }[] = []
+      if (synonyms.length > 0) {
+        const list = synonyms.map((x) => `“${x}”`).join(' or ')
+        const text = `Here's a clue. It means nearly the same as ${list}.`
+        clues.push({ spoken: text, display: text })
+      }
+      if (state.mode === 'ADVENTURE' && hint) {
+        clues.push({
+          spoken: `Here's a clue about the tricky part. ${hint}`,
+          display: `Here's a clue about the tricky part. ${hint.replace(new RegExp(`\\b${word.word}\\b`, 'gi'), 'this word')}`,
+        })
+      }
+      if (clues.length === 0) {
+        const text = `Here's a clue. ${meaning.kidDefinition}`
+        clues.push({ spoken: text, display: text })
+      }
+      const clue = clues[state.intentCounts.CLUE % clues.length]
+      return { kind: 'INTENT_REPLY', ...clue }
     }
     case 'REPEAT':
       return { kind: 'INTENT_REPLY', spoken: word.word, display: '🔊 Here it is again!', clip: `w/${word.word}` }

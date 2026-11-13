@@ -117,7 +117,7 @@ export function SpellEntry({
     rec.onerror = (e) =>
       setMicNote(
         e.error === 'not-allowed' || e.error === 'service-not-allowed'
-          ? 'The microphone is switched off here. Try tapping the letters or writing them.'
+          ? "The microphone is blocked for this page. A grown-up can allow it in the browser's site settings, then tap again. Tapping or writing the letters still works."
           : "I couldn't hear that. Tap the microphone and try again.",
       )
     rec.onend = () => setListening(false)

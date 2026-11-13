@@ -3,7 +3,7 @@ import type { BeeWord } from '../types/game.ts'
 import { IconButton } from '../components/IconButton.tsx'
 import { StylusTileCanvas } from './StylusTileCanvas.tsx'
 import { TouchKeyboard } from './TouchKeyboard.tsx'
-import { acousticGroupOf, spelledAlternatives, verifyDictation, type HeardTile } from './speechVerifier.ts'
+import { acousticGroupOf, readChunk, verifyDictation, type HeardTile } from './speechVerifier.ts'
 import type { LetterGuess } from './strokeRecognizer.ts'
 
 type Mode = 'KEYS' | 'WRITE' | 'SAY'
@@ -14,6 +14,7 @@ interface Recognition {
   interimResults: boolean
   continuous: boolean
   onresult: ((e: { results: ArrayLike<ArrayLike<{ transcript: string }>> }) => void) | null
+  onspeechstart: (() => void) | null
   onerror: ((e: { error: string }) => void) | null
   onend: (() => void) | null
   start(): void
@@ -102,23 +103,36 @@ export function SpellEntry({
     rec.lang = 'en-US'
     rec.maxAlternatives = 5
     rec.interimResults = false
-    rec.continuous = false
+    // Keep listening while she spells; letters are added as each burst is understood.
+    rec.continuous = true
+    let mark: number | null = null // when the current burst of speech began
+    let handled = 0
+    rec.onspeechstart = () => {
+      mark ??= Date.now()
+    }
     rec.onresult = (e) => {
-      const nBest = Array.from(e.results[0] ?? [], (alt) => alt.transcript)
-      // Saying the whole word does not count: she has to spell it, as at the bee.
-      const spelled = spelledAlternatives(nBest)
-      if (spelled.length === 0 && nBest.some((t) => t.trim() !== '')) {
-        setMicNote('I heard a word, not letters. Spell it one letter at a time, like at the bee.')
-        return
+      for (let i = handled; i < e.results.length; i++) {
+        const result = e.results[i] as ArrayLike<{ transcript: string }> & { isFinal?: boolean }
+        if (result.isFinal === false) break
+        handled = i + 1
+        const nBest = Array.from(result, (alt) => alt.transcript)
+        const chunk = readChunk(nBest, mark === null ? null : Date.now() - mark)
+        // Later bursts are timed from the previous one, so a pause counts in her favour.
+        mark = Date.now()
+        if (chunk.kind === 'NOTHING') continue
+        if (chunk.kind === 'WORD') {
+          setMicNote('That sounded like the whole word. Spell it one letter at a time, like at the bee.')
+          continue
+        }
+        const offset = state.current.letters.length
+        const tiles = verifyDictation(word, chunk.transcripts, offset)
+        if (tiles.length === 0) continue
+        setMicNote(null)
+        setSuspects((prev) => [...prev, ...tiles.filter((t) => t.isAsrSuspect)])
+        const next = state.current.letters + tiles.map((t) => t.letter).join('')
+        state.current.letters = next // several bursts can land before the next render
+        state.current.onChange(next)
       }
-      const tiles = verifyDictation(word, spelled)
-      if (tiles.length === 0) {
-        setMicNote("I didn't catch any letters. Say them one at a time, nice and clear.")
-        return
-      }
-      setMicNote(null)
-      setSuspects(tiles.filter((t) => t.isAsrSuspect))
-      state.current.onChange(tiles.map((t) => t.letter).join(''))
     }
     rec.onerror = (e) =>
       setMicNote(
@@ -252,7 +266,7 @@ export function SpellEntry({
                   listening ? 'animate-pulse bg-rose-500' : 'bg-sky-600 hover:bg-sky-700'
                 }`}
               >
-                {listening ? '🎙️ Listening…' : '🎙️ Tap and spell'}
+                {listening ? '🎙️ Listening… tap when you are done' : '🎙️ Tap and spell'}
               </button>
               {micNote && (
                 <p data-testid="mic-note" className="rounded-xl bg-amber-100 px-3 py-2 text-sm">

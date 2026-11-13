@@ -7,7 +7,7 @@ import { WordCards } from './components/WordCards.tsx'
 import { WordMap } from './components/WordMap.tsx'
 import { isFamilyCode, newFamilyCode, normalizeCode, syncOnce } from './lib/familySync.ts'
 import { fileReport, loadReports, sendReports, setReportContext, type Report } from './lib/report.ts'
-import { usageCount, usageOpen } from './lib/usage.ts'
+import { fetchUsage, usageCount, usageOpen, type UsageRow } from './lib/usage.ts'
 import { getVoiceName, listVoices, setMuted, setVoiceName, speak } from './lib/speak.ts'
 import { pickSession, type Progress } from './lib/unlocks.ts'
 import type { BeeWord } from './types/game.ts'
@@ -60,6 +60,58 @@ function VoicePicker() {
         ))}
       </select>
     </label>
+  )
+}
+
+function UsageTable() {
+  const [rows, setRows] = useState<UsageRow[] | null>(null)
+  const [note, setNote] = useState('Loading…')
+  useEffect(() => {
+    if (!/^https?:$/.test(location.protocol)) return setNote('Counts show when the app is opened from its web address.')
+    fetchUsage()
+      .then((r) => {
+        setRows(r)
+        setNote(r.length ? '' : 'No counts yet.')
+      })
+      .catch(() => setNote('Could not load the counts just now.'))
+  }, [])
+  const cell = 'px-2 py-1 text-right tabular-nums'
+  return (
+    <section className="flex flex-col gap-2 rounded-2xl bg-white p-4 shadow-sm">
+      <h3 className="font-bold">Who is playing</h3>
+      <p className="text-sm text-slate-500">
+        The last 30 days, all devices and families together. Numbers only; nothing that identifies anyone.
+      </p>
+      {note && <p className="text-base text-slate-600">{note}</p>}
+      {rows && rows.length > 0 && (
+        <div className="overflow-x-auto">
+          <table data-testid="usage-table" className="w-full text-base">
+            <thead>
+              <tr className="text-sm text-slate-500">
+                <th className="px-2 py-1 text-left font-semibold">Day</th>
+                <th className={`${cell} font-semibold`}>Devices</th>
+                <th className={`${cell} font-semibold`}>Opens</th>
+                <th className={`${cell} font-semibold`}>Sessions</th>
+                <th className={`${cell} font-semibold`}>Words solved</th>
+                <th className={`${cell} font-semibold`}>Families</th>
+              </tr>
+            </thead>
+            <tbody>
+              {rows.map((r) => (
+                <tr key={r.day} className="border-t border-slate-100">
+                  <td className="px-2 py-1 whitespace-nowrap">{r.day}</td>
+                  <td className={cell}>{r.devices}</td>
+                  <td className={cell}>{r.opens}</td>
+                  <td className={cell}>{r.starts}</td>
+                  <td className={cell}>{r.wins}</td>
+                  <td className={cell}>{r.families}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </section>
   )
 }
 
@@ -319,6 +371,7 @@ function App() {
               </>
             )}
           </section>
+          <UsageTable />
           <section className="flex flex-col gap-2 rounded-2xl bg-white p-4 shadow-sm">
             <h3 className="font-bold">Report a problem</h3>
             <form

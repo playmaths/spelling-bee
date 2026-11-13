@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 import { fileReport, loadReports, reportBodies, sendReports, setReportContext } from './report.ts'
-import { buildWrites, hashCode, usageCount, usageFlush } from './usage.ts'
+import { buildWrites, fetchUsage, hashCode, usageCount, usageFlush } from './usage.ts'
 
 beforeEach(() => localStorage.clear())
 
@@ -29,6 +29,25 @@ describe('usage counts', () => {
     expect(localStorage.getItem('spelling-bee-usage')).toContain('opens')
     await usageFlush((async () => new Response('{}', { status: 200 })) as typeof fetch)
     expect(JSON.parse(localStorage.getItem('spelling-bee-usage')!).queue).toEqual({})
+  })
+})
+
+describe('usage table', () => {
+  it('reads the daily documents into rows, newest first, skipping days with none', async () => {
+    const body = [
+      { found: { name: 'projects/p/databases/(default)/documents/beeUsage/2026-11-13', fields: { day: { stringValue: '2026-11-13' }, devices: { integerValue: '2' }, opens: { integerValue: '5' }, wins: { integerValue: '9' }, families: { arrayValue: { values: [{ stringValue: 'a' }] } } } } },
+      { found: { name: 'projects/p/databases/(default)/documents/beeUsage/2026-11-12', fields: { day: { stringValue: '2026-11-12' }, opens: { integerValue: '1' } } } },
+      { missing: 'projects/p/databases/(default)/documents/beeUsage/2026-11-11' },
+    ]
+    const rows = await fetchUsage((async () => new Response(JSON.stringify(body), { status: 200 })) as typeof fetch)
+    expect(rows).toEqual([
+      { day: '2026-11-13', devices: 2, opens: 5, starts: 0, wins: 9, families: 1 },
+      { day: '2026-11-12', devices: 0, opens: 1, starts: 0, wins: 0, families: 0 },
+    ])
+  })
+
+  it('throws when the collection cannot be read', async () => {
+    await expect(fetchUsage((async () => new Response('{}', { status: 403 })) as typeof fetch)).rejects.toThrow('HTTP 403')
   })
 })
 

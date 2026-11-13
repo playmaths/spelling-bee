@@ -112,7 +112,7 @@ export interface HeardTile {
  * shows up among the alternatives, or the top letter merely rhymes with the target,
  * unless that letter is a known phonetic trap for this word (then it is a real error).
  */
-export function verifyDictation(word: BeeWord, nBest: readonly string[]): HeardTile[] {
+export function verifyDictation(word: BeeWord, nBest: readonly string[], offset = 0): HeardTile[] {
   const parses = nBest.slice(0, 5).map(parseSpokenLetters)
   const top = parses[0] ?? []
   const target = word.word.toUpperCase()
@@ -127,13 +127,46 @@ export function verifyDictation(word: BeeWord, nBest: readonly string[]): HeardT
           .filter((l) => l && l !== letter),
       ),
     ]
-    const expected = target[index]
-    const knownTrap = word.traps.some((t) => t.misspelling[index]?.toUpperCase() === letter)
+    // `offset` = tiles already filled, when letters arrive a few at a time.
+    const expected = target[index + offset]
+    const knownTrap = word.traps.some((t) => t.misspelling[index + offset]?.toUpperCase() === letter)
     const isAsrSuspect =
       expected !== undefined &&
       letter !== expected &&
       !knownTrap &&
       (alternatives.includes(expected) || sameAcousticGroup(letter, expected))
-    return { index, letter, alternatives, isAsrSuspect }
+    return { index: index + offset, letter, alternatives, isAsrSuspect }
   })
 }
+
+/** Roughly the fastest a child can say one letter name, in milliseconds. */
+export const MS_PER_LETTER = 300
+
+export type HeardChunk =
+  | { kind: 'LETTERS'; transcripts: string[] }
+  | { kind: 'WORD' } // she said a word instead of spelling
+  | { kind: 'NOTHING' }
+
+/**
+ * Decides whether one burst of speech was letters or a whole word.
+ *
+ * Browsers often tidy spelled letters into a word ("R, H, I, N, O" comes back as
+ * "rhino"), so the transcript alone cannot tell. What can: spelling takes time.
+ * A burst is accepted as letters when the recogniser offers a letter-by-letter
+ * reading, when it is only a letter or two, or when it lasted long enough for
+ * that many letters to have been said one by one. A quick multi-letter burst is a word.
+ * With no timing available the burst is accepted, because refusing real spelling is worse.
+ */
+export function readChunk(nBest: readonly string[], elapsedMs: number | null): HeardChunk {
+  const heard = nBest.filter((t) => t.trim() !== '')
+  if (heard.length === 0) return { kind: 'NOTHING' }
+  const spelled = spelledAlternatives(heard)
+  if (spelled.length > 0) return { kind: 'LETTERS', transcripts: spelled }
+  const letters = parseSpokenLetters(heard[0])
+  if (letters.length === 0) return { kind: 'NOTHING' }
+  if (letters.length <= 2 || elapsedMs === null || elapsedMs >= MS_PER_LETTER * letters.length) {
+    return { kind: 'LETTERS', transcripts: [...heard] }
+  }
+  return { kind: 'WORD' }
+}
+

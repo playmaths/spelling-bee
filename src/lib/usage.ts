@@ -101,6 +101,8 @@ export function buildWrites(queue: Record<string, Day>): unknown[] {
 
 export async function usageFlush(f: typeof fetch = fetch): Promise<void> {
   if (busy || typeof location === 'undefined' || !/^https?:$/.test(location.protocol)) return
+  // Development and test runs on this machine must not be counted as real use.
+  if (/^(localhost|127\.0\.0\.1)$/.test(location.hostname)) return
   if (typeof navigator !== 'undefined' && navigator.onLine === false) return
   const u = load()
   const sent = JSON.parse(JSON.stringify(u.queue)) as Record<string, Day>
@@ -135,4 +137,50 @@ export async function usageFlush(f: typeof fetch = fetch): Promise<void> {
     // offline: try again next time
   }
   busy = false
+}
+
+export interface UsageRow {
+  day: string
+  devices: number
+  opens: number
+  starts: number
+  wins: number
+  families: number
+}
+
+/**
+ * The last 30 days of counts, newest first, for the grown-ups screen.
+ * Asks for the 30 daily documents by name: sorting the collection newest-first
+ * on the server would need an index, and this needs none.
+ */
+export async function fetchUsage(f: typeof fetch = fetch, today = new Date()): Promise<UsageRow[]> {
+  const root = `projects/${FIREBASE.projectId}/databases/(default)/documents`
+  const days = Array.from({ length: 30 }, (_, i) => {
+    const d = new Date(today)
+    d.setDate(d.getDate() - i)
+    return localDay(d)
+  })
+  const r = await f(`https://firestore.googleapis.com/v1/${root}:batchGet?key=${FIREBASE.apiKey}`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ documents: days.map((day) => `${root}/${COLLECTION}/${day}`) }),
+  })
+  if (!r.ok) throw new Error(`HTTP ${r.status}`)
+  type Value = { integerValue?: string; arrayValue?: { values?: unknown[] } }
+  const found = (await r.json()) as { found?: { name: string; fields?: Record<string, Value> } }[]
+  return found
+    .filter((x) => x.found)
+    .map(({ found: document }) => {
+      const fields = document!.fields ?? {}
+      const n = (k: string) => Number(fields[k]?.integerValue ?? 0)
+      return {
+        day: document!.name.split('/').pop()!,
+        devices: n('devices'),
+        opens: n('opens'),
+        starts: n('starts'),
+        wins: n('wins'),
+        families: fields.families?.arrayValue?.values?.length ?? 0,
+      }
+    })
+    .sort((a, b) => b.day.localeCompare(a.day))
 }

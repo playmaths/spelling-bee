@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { getWord } from '../data/index.ts'
-import { isSpelledOut, parseSpokenLetters, spelledAlternatives, verifyDictation } from './speechVerifier.ts'
+import { isSpelledOut, parseSpokenLetters, readChunk, spelledAlternatives, verifyDictation } from './speechVerifier.ts'
 
 const practice = getWord('word_practice')!
 const sentence = getWord('word_sentence')!
@@ -56,6 +56,40 @@ describe('saying the word is not spelling it', () => {
   it('uses a spelled alternative when the best guess was the whole word', () => {
     expect(spelledAlternatives(['rhino', 'r h i n o', 'rhinos'])).toEqual(['r h i n o'])
     expect(spelledAlternatives(['rhino', 'rhinos'])).toEqual([])
+  })
+})
+
+describe('readChunk: letters or a word?', () => {
+  it('refuses a quickly spoken word', () => {
+    expect(readChunk(['rhino', 'rhinos'], 700)).toEqual({ kind: 'WORD' })
+  })
+
+  it('accepts the same transcript when it took long enough to have been spelled', () => {
+    // The browser tidied "R, H, I, N, O" into "rhino"; five letters need about 1.5 seconds.
+    expect(readChunk(['rhino'], 2600)).toEqual({ kind: 'LETTERS', transcripts: ['rhino'] })
+  })
+
+  it('accepts letter-by-letter readings at any speed, and prefers them', () => {
+    expect(readChunk(['rhino', 'r h i n o'], 400)).toEqual({ kind: 'LETTERS', transcripts: ['r h i n o'] })
+    expect(readChunk(['are aitch'], 300)).toEqual({ kind: 'LETTERS', transcripts: ['are aitch'] })
+  })
+
+  it('accepts a letter or two said together, and anything when timing is unknown', () => {
+    expect(readChunk(['no'], 200).kind).toBe('LETTERS')
+    expect(readChunk(['rhino'], null).kind).toBe('LETTERS')
+  })
+
+  it('reports silence', () => {
+    expect(readChunk(['', ' '], 900)).toEqual({ kind: 'NOTHING' })
+  })
+})
+
+describe('letters arriving a few at a time', () => {
+  it('checks each new letter against the right tile', () => {
+    const tiles = verifyDictation(practice, ['t i c e'], 4)
+    expect(tiles.map((t) => t.index)).toEqual([4, 5, 6, 7])
+    expect(tiles.some((t) => t.isAsrSuspect)).toBe(false)
+    expect(verifyDictation(practice, ['d'], 4)[0]).toMatchObject({ index: 4, letter: 'D', isAsrSuspect: true })
   })
 })
 

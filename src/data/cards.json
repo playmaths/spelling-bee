@@ -1,0 +1,502 @@
+[
+  {
+    "wordId": "word_practice",
+    "emoji": "🐧🏒🧊",
+    "hook": "ice",
+    "synonyms": [
+      "train",
+      "rehearse"
+    ],
+    "sentence": "The penguin hockey team holds *practice* on the *ice* every single morning!"
+  },
+  {
+    "wordId": "word_notice",
+    "emoji": "🧊🙃",
+    "hook": "ice",
+    "synonyms": [
+      "spot",
+      "see"
+    ],
+    "sentence": "Did you *not* *notice* the *ice* cube melting on your head?"
+  },
+  {
+    "wordId": "word_advice",
+    "emoji": "🩳🧊😬",
+    "hook": "ice",
+    "synonyms": [
+      "tip",
+      "suggestion"
+    ],
+    "sentence": "My best *advice*: never sit on *ice* in your pyjamas!"
+  },
+  {
+    "wordId": "word_office",
+    "emoji": "🐻‍❄️💼🧊",
+    "hook": "ice",
+    "synonyms": [
+      "workplace"
+    ],
+    "sentence": "The polar bear's *office* is so cold that her desk is carved from *ice*!"
+  },
+  {
+    "wordId": "word_service",
+    "emoji": "🐧🍽️🧊",
+    "hook": "ice",
+    "synonyms": [
+      "help",
+      "assistance"
+    ],
+    "sentence": "The penguin waiter's *service* always comes with extra *ice*!"
+  },
+  {
+    "wordId": "word_justice",
+    "emoji": "⚖️🍦",
+    "hook": "just",
+    "synonyms": [
+      "fairness"
+    ],
+    "sentence": "It's *just* not fair! *Justice* means everyone gets the same scoop of *ice* cream."
+  },
+  {
+    "wordId": "word_knowledge",
+    "emoji": "🦉📚",
+    "hook": "know",
+    "synonyms": [
+      "learning",
+      "wisdom"
+    ],
+    "sentence": "The owl *knows* so much that her *knowledge* reaches the very *edge* of the forest!"
+  },
+  {
+    "wordId": "word_knight",
+    "emoji": "🛡️🌙💡",
+    "hook": "night",
+    "synonyms": [
+      "warrior"
+    ],
+    "sentence": "The brave *knight* was scared of the *night*, so he carried a K-shaped night-light!"
+  },
+  {
+    "wordId": "word_knuckle",
+    "emoji": "✊🍓",
+    "hook": "uck",
+    "synonyms": [
+      "finger joint"
+    ],
+    "sentence": "Y*uck*! I got strawberry jam st*uck* on my *knuckle*!"
+  },
+  {
+    "wordId": "word_kneel",
+    "emoji": "🧎🐌",
+    "hook": "knee",
+    "synonyms": [
+      "bend down"
+    ],
+    "sentence": "*Kneel* on one *knee* to say good morning to the snail."
+  },
+  {
+    "wordId": "word_mysterious",
+    "emoji": "🕵️🧦",
+    "hook": "my",
+    "synonyms": [
+      "puzzling",
+      "strange"
+    ],
+    "sentence": "Who keeps taking *my* socks? It is a very *mysterious* case!"
+  },
+  {
+    "wordId": "word_system",
+    "emoji": "🌷💧",
+    "hook": "stem",
+    "synonyms": [
+      "setup",
+      "network"
+    ],
+    "sentence": "The tulip's watering *system* runs straight up its *stem*!"
+  },
+  {
+    "wordId": "word_typical",
+    "emoji": "🐱⌨️📸",
+    "hook": "pic",
+    "synonyms": [
+      "usual",
+      "normal"
+    ],
+    "sentence": "A *typical* day for the cat: nap, snack, take a *pic*, nap again."
+  },
+  {
+    "wordId": "word_sympathy",
+    "emoji": "🐌🤗",
+    "hook": "path",
+    "synonyms": [
+      "kindness",
+      "caring"
+    ],
+    "sentence": "The snail showed *sympathy* and shared the garden *path* with the tired ant."
+  },
+  {
+    "wordId": "word_pyramid",
+    "emoji": "🐪🔺",
+    "hook": "mid",
+    "synonyms": [
+      "pointed tower"
+    ],
+    "sentence": "The camel got stuck right in the *mid*dle of the *pyramid*!"
+  },
+  {
+    "wordId": "word_sentence",
+    "emoji": "🐱✏️🔟",
+    "hook": "ten",
+    "synonyms": [
+      "statement"
+    ],
+    "sentence": "It took *ten* kittens to finish writing one *sentence*!"
+  },
+  {
+    "wordId": "word_citizen",
+    "emoji": "🧘🏙️",
+    "hook": "zen",
+    "synonyms": [
+      "resident",
+      "member"
+    ],
+    "sentence": "The calm, *zen* *citizen* meditates in the middle of the noisy town square."
+  },
+  {
+    "wordId": "word_distance",
+    "emoji": "🐜☀️🕶️",
+    "hook": "tan",
+    "synonyms": [
+      "length",
+      "gap"
+    ],
+    "sentence": "The ant got a sun*tan* walking such a long *distance*!"
+  },
+  {
+    "wordId": "word_silence",
+    "emoji": "🦁🤫📖",
+    "hook": "len",
+    "synonyms": [
+      "quiet",
+      "hush"
+    ],
+    "sentence": "*Len* the lion roared for *silence* so the library mouse could read."
+  },
+  {
+    "wordId": "word_celebrate",
+    "emoji": "🎂🎉",
+    "hook": "ate",
+    "synonyms": [
+      "party",
+      "rejoice"
+    ],
+    "sentence": "We *ate* so much cake to *celebrate* that the candles had nowhere to stand!"
+  },
+  {
+    "wordId": "word_elephant",
+    "emoji": "🐘🤫🐜",
+    "hook": "ant",
+    "synonyms": [
+      "jumbo animal"
+    ],
+    "sentence": "The *elephant* tiptoed all the way home so she would not wake the *ant*!"
+  },
+  {
+    "wordId": "word_dolphin",
+    "emoji": "🐬💦😲",
+    "hook": "in",
+    "synonyms": [
+      "sea animal"
+    ],
+    "sentence": "The *dolphin* dived *in* so fast that the whole sea got the hiccups!"
+  },
+  {
+    "wordId": "word_alphabet",
+    "emoji": "🦜🔤😮",
+    "hook": "bet",
+    "synonyms": [
+      "ABCs",
+      "letters"
+    ],
+    "sentence": "I *bet* my parrot can burp the whole *alphabet*!"
+  },
+  {
+    "wordId": "word_trophy",
+    "emoji": "🏆🙈",
+    "hook": "rop",
+    "synonyms": [
+      "prize",
+      "award"
+    ],
+    "sentence": "Do not d*rop* the *trophy*! It is full of spaghetti!"
+  },
+  {
+    "wordId": "word_photograph",
+    "emoji": "🦒📸🖼️",
+    "hook": "photo",
+    "synonyms": [
+      "picture",
+      "snapshot"
+    ],
+    "sentence": "The giraffe's *photo* was so tall that the *photograph* needed two frames!"
+  },
+  {
+    "wordId": "word_pharmacy",
+    "emoji": "🐙🩹💊",
+    "hook": "arm",
+    "synonyms": [
+      "drugstore"
+    ],
+    "sentence": "The octopus at the *pharmacy* needed a bandage for every *arm*!"
+  },
+  {
+    "wordId": "word_wrinkle",
+    "emoji": "🐙👗🖋️",
+    "hook": "ink",
+    "synonyms": [
+      "crease",
+      "fold"
+    ],
+    "sentence": "The octopus spilled *ink* on her dress while ironing out the very last *wrinkle*!"
+  },
+  {
+    "wordId": "word_wreath",
+    "emoji": "🐐🚪🌿",
+    "hook": "eat",
+    "synonyms": [
+      "leafy ring"
+    ],
+    "sentence": "Please do not *eat* the *wreath*, said the door to the hungry goat!"
+  },
+  {
+    "wordId": "word_wrestle",
+    "emoji": "🐻🤼😴",
+    "hook": "rest",
+    "synonyms": [
+      "tussle",
+      "grapple"
+    ],
+    "sentence": "After they *wrestle*, the two sleepy bear cubs need a very long *rest*."
+  },
+  {
+    "wordId": "word_gentle",
+    "emoji": "🎩🐌👋",
+    "hook": "gent",
+    "synonyms": [
+      "kind",
+      "soft"
+    ],
+    "sentence": "The *gentle* *gent* tipped his hat to every single snail on the path."
+  },
+  {
+    "wordId": "word_energy",
+    "emoji": "🐶⚡🫛",
+    "hook": "ner",
+    "synonyms": [
+      "power",
+      "pep"
+    ],
+    "sentence": "One pea at din*ner* gave the puppy enough *energy* to zoom around the yard ten times!"
+  },
+  {
+    "wordId": "word_gigantic",
+    "emoji": "🦕🪶😂",
+    "hook": "tic",
+    "synonyms": [
+      "huge",
+      "enormous"
+    ],
+    "sentence": "It takes a *gigantic* feather to *tic*kle a dinosaur!"
+  },
+  {
+    "wordId": "word_general",
+    "emoji": "🐊🦆🎖️",
+    "hook": "al",
+    "synonyms": [
+      "army leader",
+      "commander"
+    ],
+    "sentence": "*Al* the alligator is the *general* of the rubber duck army!"
+  },
+  {
+    "wordId": "word_blossom",
+    "emoji": "🌸🐝😵",
+    "hook": "so",
+    "synonyms": [
+      "flower",
+      "bloom"
+    ],
+    "sentence": "The cherry *blossom* smelled *so* sweet that the bee forgot how to buzz!"
+  },
+  {
+    "wordId": "word_station",
+    "emoji": "🚂😴💨",
+    "hook": "at",
+    "synonyms": [
+      "stop",
+      "depot"
+    ],
+    "sentence": "The train was so sleepy *at* the *station* that it snored out puffs of steam!"
+  },
+  {
+    "wordId": "word_nation",
+    "emoji": "🦁👑🐭",
+    "hook": "ion",
+    "synonyms": [
+      "country",
+      "land"
+    ],
+    "sentence": "The l*ion* was crowned king of a *nation* of very nervous mice!"
+  },
+  {
+    "wordId": "word_vacation",
+    "emoji": "🐈🏖️✉️",
+    "hook": "cat",
+    "synonyms": [
+      "holiday",
+      "trip"
+    ],
+    "sentence": "The *cat* took a *vacation* on the sunny windowsill and mailed herself a postcard."
+  },
+  {
+    "wordId": "word_direction",
+    "emoji": "🦀🧭↔️",
+    "hook": "direct",
+    "synonyms": [
+      "way",
+      "path"
+    ],
+    "sentence": "The crab can only *direct* you in one *direction*: sideways!"
+  },
+  {
+    "wordId": "word_invention",
+    "emoji": "🥄🌬️🍲",
+    "hook": "invent",
+    "synonyms": [
+      "creation",
+      "new idea"
+    ],
+    "sentence": "I will *invent* a brand-new *invention*: a spoon that blows on your soup!"
+  },
+  {
+    "wordId": "word_knapsack",
+    "emoji": "🎒😴",
+    "hook": "nap",
+    "synonyms": [
+      "backpack"
+    ],
+    "sentence": "I took a *nap* on my *knapsack* at the top of the hill!"
+  },
+  {
+    "wordId": "word_knead",
+    "emoji": "🍞👐",
+    "hook": "ad",
+    "synonyms": [
+      "press",
+      "squash"
+    ],
+    "sentence": "D*ad* will *knead* the dough until it squeaks!"
+  },
+  {
+    "wordId": "word_wrench",
+    "emoji": "🔧🐦",
+    "hook": "wren",
+    "synonyms": [
+      "spanner"
+    ],
+    "sentence": "A tiny *wren* fixed her nest with a tiny *wrench*!"
+  },
+  {
+    "wordId": "word_wrapper",
+    "emoji": "🍬🎤",
+    "hook": "rap",
+    "synonyms": [
+      "cover"
+    ],
+    "sentence": "The candy *wrapper* crinkled along to the *rap* song!"
+  },
+  {
+    "wordId": "word_wriggle",
+    "emoji": "🪱💃",
+    "hook": "rig",
+    "synonyms": [
+      "squirm",
+      "wiggle"
+    ],
+    "sentence": "The worm did a *wriggle* jig up in the pirate ship's *rig*ging!"
+  },
+  {
+    "wordId": "word_pattern",
+    "emoji": "🐱🎨",
+    "hook": "pat",
+    "synonyms": [
+      "design"
+    ],
+    "sentence": "*Pat* the cat painted a polka-dot *pattern* on the dog!"
+  },
+  {
+    "wordId": "word_cabbage",
+    "emoji": "🥬🚕",
+    "hook": "cab",
+    "synonyms": [
+      "leafy vegetable"
+    ],
+    "sentence": "The *cabbage* took a *cab* to the salad party!"
+  },
+  {
+    "wordId": "word_mammal",
+    "emoji": "🐋🍼",
+    "hook": "am",
+    "synonyms": [
+      "warm-blooded animal"
+    ],
+    "sentence": "'I *am* a *mammal*,' said the whale, 'and so are you!'"
+  },
+  {
+    "wordId": "word_summit",
+    "emoji": "🏔️🐐",
+    "hook": "sum",
+    "synonyms": [
+      "peak",
+      "top"
+    ],
+    "sentence": "The goat did a hard *sum* at the *summit* and got it right!"
+  },
+  {
+    "wordId": "word_hiccup",
+    "emoji": "☕😮",
+    "hook": "cup",
+    "synonyms": [
+      "hic"
+    ],
+    "sentence": "Every *hiccup* made the tea jump out of my *cup*!"
+  },
+  {
+    "wordId": "word_ginger",
+    "emoji": "🐈🍪",
+    "hook": "in",
+    "synonyms": [
+      "spicy root"
+    ],
+    "sentence": "The *ginger* cat hid *in* the cookie jar!"
+  },
+  {
+    "wordId": "word_imagine",
+    "emoji": "🧲🌙",
+    "hook": "mag",
+    "synonyms": [
+      "picture",
+      "pretend"
+    ],
+    "sentence": "*Imagine* a *mag*net strong enough to pull the moon closer!"
+  },
+  {
+    "wordId": "word_attention",
+    "emoji": "🐧🥪",
+    "hook": "ten",
+    "synonyms": [
+      "focus"
+    ],
+    "sentence": "Pay *attention*: *ten* penguins are stealing your sandwich!"
+  }
+]

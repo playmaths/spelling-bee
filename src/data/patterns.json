@@ -1,0 +1,234 @@
+[
+  {
+    "patternId": "ice-vs-ise",
+    "title": "The -ICE Ending Family",
+    "badgeName": "The ICE Breaker 🧊",
+    "kidRule": "In American Spelling Bees, nouns and action words that end with the '/ɪs/' sound after T, C, or V almost always end in I-C-E (just like an ICE cube!), never I-S-E.",
+    "recognitionCheck": {
+      "question": "Why does PRACTICE end with C-E instead of S-E in our Spelling Bee?",
+      "correctAnswer": "Because the /ɪs/ ending uses the word ICE (I-C-E) in American English!",
+      "distractors": [
+        "Because S is never allowed near the end of a two-syllable word",
+        "Because C always makes a /k/ sound at the end of practice"
+      ]
+    },
+    "anchorWordIds": [
+      "word_practice",
+      "word_notice"
+    ],
+    "guidedWordIds": [
+      "word_advice"
+    ],
+    "transferProbeIds": [
+      "word_office",
+      "word_service",
+      "word_justice"
+    ]
+  },
+  {
+    "patternId": "silent-kn",
+    "title": "The Silent K-N Team",
+    "badgeName": "The Silent Knight 🛡️",
+    "kidRule": "When K stands right in front of N at the very beginning of a word, the K stays completely silent and lets N do all the talking!",
+    "recognitionCheck": {
+      "question": "Why can't we hear the letter K at the start of KNOWLEDGE?",
+      "correctAnswer": "K is always silent when it comes right before N at the start of a word!",
+      "distractors": [
+        "The letters O-W make the K sound disappear",
+        "Only long three-syllable words have a silent K"
+      ]
+    },
+    "anchorWordIds": [
+      "word_knowledge"
+    ],
+    "guidedWordIds": [
+      "word_knapsack",
+      "word_knead"
+    ],
+    "transferProbeIds": [
+      "word_knight",
+      "word_knuckle",
+      "word_kneel"
+    ]
+  },
+  {
+    "patternId": "y-as-short-i",
+    "title": "Sneaky Y in the First Syllable",
+    "badgeName": "Mystery Detective 🔍",
+    "kidRule": "In words that come from ancient Greek—like MYSTERIOUS, SYSTEM, and SYMPTOM—the short '/ɪ/' sound in the first syllable is spelled with a sneaky Y instead of an I!",
+    "recognitionCheck": {
+      "question": "In the word MYSTERIOUS, which letter makes the short '/ɪ/' sound right after M?",
+      "correctAnswer": "A sneaky letter Y!",
+      "distractors": [
+        "A silent letter E",
+        "The letter I paired with U"
+      ]
+    },
+    "anchorWordIds": [
+      "word_mysterious"
+    ],
+    "guidedWordIds": [
+      "word_system"
+    ],
+    "transferProbeIds": [
+      "word_typical",
+      "word_sympathy",
+      "word_pyramid"
+    ]
+  },
+  {
+    "patternId": "soft-c-before-eiy",
+    "title": "Soft C Magic (E, I, Y)",
+    "badgeName": "Soft C Magician ✨",
+    "kidRule": "Whenever the letter C is followed by E, I, or Y, it turns soft and makes the '/s/' sound instead of '/k/'!",
+    "recognitionCheck": {
+      "question": "Why does the second C in SENTENCE sound like '/s/' instead of '/k/'?",
+      "correctAnswer": "Because it is followed by the letter E!",
+      "distractors": [
+        "Because it comes right after the letter N",
+        "Because every word starting with S ends with C"
+      ]
+    },
+    "anchorWordIds": [
+      "word_sentence"
+    ],
+    "guidedWordIds": [
+      "word_citizen"
+    ],
+    "transferProbeIds": [
+      "word_distance",
+      "word_silence",
+      "word_celebrate"
+    ]
+  },
+  {
+    "patternId": "greek-ph",
+    "title": "The Greek P-H Team",
+    "badgeName": "Greek Word Explorer 🏛️",
+    "kidRule": "When P and H stand side by side, they team up to make the '/f/' sound! Most P-H words—like ELEPHANT, DOLPHIN, and ALPHABET—came to English from ancient Greek. (If P and H only bump into each other where two little words join, like in UPHILL, each one keeps its own sound.)",
+    "recognitionCheck": {
+      "question": "Which two letters team up to make the '/f/' sound in the middle of ELEPHANT?",
+      "correctAnswer": "P and H—a letter team that came from ancient Greek!",
+      "distractors": [
+        "Two letter F's, just like in PUFFIN",
+        "G and H, just like in LAUGH"
+      ]
+    },
+    "anchorWordIds": [
+      "word_elephant",
+      "word_dolphin"
+    ],
+    "guidedWordIds": [
+      "word_alphabet"
+    ],
+    "transferProbeIds": [
+      "word_trophy",
+      "word_photograph",
+      "word_pharmacy"
+    ]
+  },
+  {
+    "patternId": "silent-wr",
+    "title": "The Silent W-R Team",
+    "badgeName": "The Word Wrangler 🤠",
+    "kidRule": "When W stands right in front of R at the very beginning of a word, the W stays completely silent and lets R do all the talking!",
+    "recognitionCheck": {
+      "question": "Why can't we hear the letter W at the start of WRENCH?",
+      "correctAnswer": "W is always silent when it comes right before R at the start of a word!",
+      "distractors": [
+        "The silent E at the end makes the W silent too",
+        "Only short one-beat words have a silent W"
+      ]
+    },
+    "anchorWordIds": [
+      "word_wrench",
+      "word_wrapper"
+    ],
+    "guidedWordIds": [
+      "word_wriggle"
+    ],
+    "transferProbeIds": [
+      "word_wrinkle",
+      "word_wreath",
+      "word_wrestle"
+    ]
+  },
+  {
+    "patternId": "soft-g-before-eiy",
+    "title": "Gentle G (E, I, Y)",
+    "badgeName": "Gentle G Genius 🦒",
+    "kidRule": "When the letter G is followed by E, I, or Y, it usually turns soft and makes the '/j/' sound, like in GINGER and GENTLE. Watch out for a few rule-breakers like GET, GIVE, and GIRL, where G stays hard!",
+    "recognitionCheck": {
+      "question": "Why does the G in GENTLE sound like '/j/' instead of the hard '/g/' in GO?",
+      "correctAnswer": "Because it is followed by the letter E!",
+      "distractors": [
+        "Because G is always soft at the start of a word",
+        "Because the word ends with a silent E"
+      ]
+    },
+    "anchorWordIds": [
+      "word_gentle",
+      "word_ginger"
+    ],
+    "guidedWordIds": [
+      "word_imagine"
+    ],
+    "transferProbeIds": [
+      "word_energy",
+      "word_gigantic",
+      "word_general"
+    ]
+  },
+  {
+    "patternId": "double-consonant-short-vowel",
+    "title": "Twin Consonant Guards",
+    "badgeName": "The Twin Spotter 🐰",
+    "kidRule": "In many two-beat words, when the first vowel is short and you hear just one consonant sound in the middle, that consonant is written twice—like the twin B's in CABBAGE. The twins guard the vowel and keep it short! Watch out for a few rule-breakers like ROBIN, LEMON, and CABIN, which use only one.",
+    "recognitionCheck": {
+      "question": "Why does CABBAGE have two B's in the middle?",
+      "correctAnswer": "Because the A is short, and twin consonants guard a short vowel!",
+      "distractors": [
+        "Because every six-letter word needs a double letter",
+        "Because we say the '/b/' sound two times"
+      ]
+    },
+    "anchorWordIds": [
+      "word_pattern",
+      "word_cabbage"
+    ],
+    "guidedWordIds": [
+      "word_mammal"
+    ],
+    "transferProbeIds": [
+      "word_blossom",
+      "word_summit",
+      "word_hiccup"
+    ]
+  },
+  {
+    "patternId": "tion-ending",
+    "title": "The T-I-O-N Ending",
+    "badgeName": "The T-I-O-N Conductor 🚂",
+    "kidRule": "When a word ends with the '/shun/' sound, it is most often spelled T-I-O-N—there is no S-H in sight! A few words, like MANSION and TENSION, use S-I-O-N instead, but T-I-O-N is the most common by far.",
+    "recognitionCheck": {
+      "question": "How do we spell the '/shun/' sound at the end of STATION?",
+      "correctAnswer": "T-I-O-N, with no S-H at all!",
+      "distractors": [
+        "S-H-U-N, just the way it sounds",
+        "S-H-I-O-N, just like in FASHION"
+      ]
+    },
+    "anchorWordIds": [
+      "word_station",
+      "word_nation"
+    ],
+    "guidedWordIds": [
+      "word_attention"
+    ],
+    "transferProbeIds": [
+      "word_vacation",
+      "word_direction",
+      "word_invention"
+    ]
+  }
+]

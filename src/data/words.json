@@ -1,0 +1,4254 @@
+[
+  {
+    "id": "word_practice",
+    "word": "practice",
+    "syllables": [
+      "prac",
+      "tice"
+    ],
+    "phoneticRespelling": "PRAK-tis",
+    "difficulty": 2.2,
+    "patternId": "ice-vs-ise",
+    "role": "ANCHOR",
+    "meanings": [
+      {
+        "partOfSpeech": "verb",
+        "kidDefinition": "To do something again and again—like playing piano or riding a bike—so you get really good at it.",
+        "exampleSentence": "Mia decided to practice her spelling words before dinner.",
+        "blankedSentence": "Mia decided to ________ her spelling words before dinner."
+      },
+      {
+        "partOfSpeech": "noun",
+        "kidDefinition": "A regular training session for a sport or instrument, or the place where a doctor works.",
+        "exampleSentence": "Soccer practice starts right after school on Tuesday.",
+        "blankedSentence": "Soccer ________ starts right after school on Tuesday."
+      }
+    ],
+    "graphemeMap": [
+      {
+        "grapheme": "p",
+        "phoneme": "/p/",
+        "startIndex": 0,
+        "endIndex": 0
+      },
+      {
+        "grapheme": "r",
+        "phoneme": "/r/",
+        "startIndex": 1,
+        "endIndex": 1
+      },
+      {
+        "grapheme": "a",
+        "phoneme": "/æ/",
+        "startIndex": 2,
+        "endIndex": 2
+      },
+      {
+        "grapheme": "c",
+        "phoneme": "/k/",
+        "startIndex": 3,
+        "endIndex": 3,
+        "coachingHint": "The first '/k/' sound at the end of 'prac' is spelled with a C!"
+      },
+      {
+        "grapheme": "t",
+        "phoneme": "/t/",
+        "startIndex": 4,
+        "endIndex": 4
+      },
+      {
+        "grapheme": "ice",
+        "phoneme": "/ɪs/",
+        "startIndex": 5,
+        "endIndex": 7,
+        "isPatternFocus": true,
+        "coachingHint": "Think of an ICE cube! How do we spell the '-ice' at the end of practice?"
+      }
+    ],
+    "traps": [
+      {
+        "misspelling": "practise",
+        "bucket": "UK_US_VARIANT_TRAP",
+        "errorTileIndex": 6,
+        "candidatePair": [
+          "C",
+          "S"
+        ],
+        "judgeResponse": "Great ear! In British English, 'practise' with an S is the action word—so your streak is 100% safe! In American Spelling Bees, though, PRACTICE always ends with I-C-E, just like ICE 🧊. Tap box 7 to swap S to C!",
+        "memoryTrick": "Even in winter, you PRACT-ICE on the ICE (I-C-E) 🧊!"
+      }
+    ],
+    "wordStory": "Long ago in ancient Greece, 'praktike' meant 'busy action'—because you only learn by actually doing things, not just watching!"
+  },
+  {
+    "id": "word_office",
+    "word": "office",
+    "syllables": [
+      "of",
+      "fice"
+    ],
+    "phoneticRespelling": "AW-fis",
+    "difficulty": 2.2,
+    "patternId": "ice-vs-ise",
+    "role": "TRANSFER_PROBE",
+    "meanings": [
+      {
+        "partOfSpeech": "noun",
+        "kidDefinition": "A room or building where people work at desks, or where you visit a doctor or dentist.",
+        "exampleSentence": "The school principal waved to us from her office.",
+        "blankedSentence": "The school principal waved to us from her ______."
+      }
+    ],
+    "graphemeMap": [
+      {
+        "grapheme": "o",
+        "phoneme": "/ɔː/",
+        "startIndex": 0,
+        "endIndex": 0
+      },
+      {
+        "grapheme": "ff",
+        "phoneme": "/f/",
+        "startIndex": 1,
+        "endIndex": 2,
+        "coachingHint": "There are twin F's standing side by side in the middle!"
+      },
+      {
+        "grapheme": "ice",
+        "phoneme": "/ɪs/",
+        "startIndex": 3,
+        "endIndex": 5,
+        "isPatternFocus": true,
+        "coachingHint": "Remember the ICE rule from 'practice'!"
+      }
+    ],
+    "traps": [
+      {
+        "misspelling": "offise",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 4,
+        "candidatePair": [
+          "C",
+          "S"
+        ],
+        "judgeResponse": "Listen to that '/ɪs/' ending! Just like PRACTICE, the word OFFICE ends with I-C-E.",
+        "memoryTrick": "Keep a cup of ICE (I-C-E) on the desk in your OFF-ICE!"
+      }
+    ],
+    "wordStory": "In medieval castles, an 'office' wasn't a room with computers—it included the kitchen, pantry, and stables where castle helpers did their daily duties!"
+  },
+  {
+    "id": "word_mysterious",
+    "word": "mysterious",
+    "syllables": [
+      "mys",
+      "te",
+      "ri",
+      "ous"
+    ],
+    "phoneticRespelling": "mis-TEER-ee-us",
+    "difficulty": 2.8,
+    "patternId": "y-as-short-i",
+    "role": "ANCHOR",
+    "meanings": [
+      {
+        "partOfSpeech": "adjective",
+        "kidDefinition": "Full of secrets, puzzling, or hard to explain—like a strange sound in the attic or a hidden treasure map.",
+        "exampleSentence": "The mysterious footsteps came from the attic.",
+        "blankedSentence": "The __________ footsteps came from the attic."
+      }
+    ],
+    "graphemeMap": [
+      {
+        "grapheme": "m",
+        "phoneme": "/m/",
+        "startIndex": 0,
+        "endIndex": 0
+      },
+      {
+        "grapheme": "y",
+        "phoneme": "/ɪ/",
+        "startIndex": 1,
+        "endIndex": 1,
+        "isPatternFocus": true,
+        "coachingHint": "Nice attempt! The first letter of mysterious is M, but listen to the next sound. In this word, that short '/ɪ/' sound is spelled with a sneaky vowel—can you figure out which one?"
+      },
+      {
+        "grapheme": "s",
+        "phoneme": "/s/",
+        "startIndex": 2,
+        "endIndex": 2
+      },
+      {
+        "grapheme": "t",
+        "phoneme": "/t/",
+        "startIndex": 3,
+        "endIndex": 3
+      },
+      {
+        "grapheme": "e",
+        "phoneme": "/ɪə/",
+        "startIndex": 4,
+        "endIndex": 4
+      },
+      {
+        "grapheme": "r",
+        "phoneme": "/r/",
+        "startIndex": 5,
+        "endIndex": 5
+      },
+      {
+        "grapheme": "i",
+        "phoneme": "/i/",
+        "startIndex": 6,
+        "endIndex": 6
+      },
+      {
+        "grapheme": "ous",
+        "phoneme": "/əs/",
+        "startIndex": 7,
+        "endIndex": 9,
+        "coachingHint": "The '-us' sound at the end of describing words is spelled O-U-S!"
+      }
+    ],
+    "traps": [
+      {
+        "misspelling": "misterious",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 1,
+        "candidatePair": [
+          "Y",
+          "I"
+        ],
+        "judgeResponse": "Nice attempt! Let's check your spelling. The first letter of mysterious is M, but listen to the next sound. In MYSTERIOUS, that short '/ɪ/' sound is wearing a disguise—can you swap box 2 to a sneaky Y?",
+        "memoryTrick": "Every good MYSTERY starts with M-Y-S!"
+      }
+    ],
+    "wordStory": "Comes from the Greek word 'mysterion', which meant a secret club where members promised to keep their fingers on their lips!"
+  },
+  {
+    "id": "word_knowledge",
+    "word": "knowledge",
+    "syllables": [
+      "knowl",
+      "edge"
+    ],
+    "phoneticRespelling": "NAH-lij",
+    "difficulty": 2.6,
+    "patternId": "silent-kn",
+    "role": "ANCHOR",
+    "meanings": [
+      {
+        "partOfSpeech": "noun",
+        "kidDefinition": "Everything you have learned and understand from reading, exploring, and practicing.",
+        "exampleSentence": "Reading books about dinosaurs gave her lots of new knowledge.",
+        "blankedSentence": "Reading books about dinosaurs gave her lots of new _________."
+      }
+    ],
+    "graphemeMap": [
+      {
+        "grapheme": "kn",
+        "phoneme": "/n/",
+        "startIndex": 0,
+        "endIndex": 1,
+        "isPatternFocus": true,
+        "coachingHint": "Think of the word KNOW inside KNOWLEDGE—which silent letter stands in front of N?"
+      },
+      {
+        "grapheme": "ow",
+        "phoneme": "/ɒ/",
+        "startIndex": 2,
+        "endIndex": 3
+      },
+      {
+        "grapheme": "l",
+        "phoneme": "/l/",
+        "startIndex": 4,
+        "endIndex": 4
+      },
+      {
+        "grapheme": "edge",
+        "phoneme": "/ɪdʒ/",
+        "startIndex": 5,
+        "endIndex": 8,
+        "coachingHint": "The second half is spelled just like the EDGE of a table: E-D-G-E!"
+      }
+    ],
+    "traps": [
+      {
+        "misspelling": "nowledge",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 0,
+        "candidatePair": [
+          "K",
+          "N"
+        ],
+        "judgeResponse": "You heard the '/n/' sound at the start! But remember the Silent K-N team—KNOWLEDGE starts with KNOW (K-N-O-W).",
+        "memoryTrick": "KNOW + L + EDGE = KNOWLEDGE!"
+      }
+    ],
+    "wordStory": "Hundreds of years ago, Vikings and English speakers actually pronounced the K in 'know' out loud ('kuh-now') before people got lazy and stopped saying the K!"
+  },
+  {
+    "id": "word_knight",
+    "word": "knight",
+    "syllables": [
+      "knight"
+    ],
+    "phoneticRespelling": "NYT",
+    "difficulty": 2.4,
+    "patternId": "silent-kn",
+    "role": "TRANSFER_PROBE",
+    "meanings": [
+      {
+        "partOfSpeech": "noun",
+        "kidDefinition": "A soldier in shiny armor from castle times, or the horse-shaped piece in a game of chess!",
+        "exampleSentence": "She moved her white knight across the chessboard to win the game.",
+        "blankedSentence": "She moved her white ______ across the chessboard to win the game."
+      }
+    ],
+    "graphemeMap": [
+      {
+        "grapheme": "kn",
+        "phoneme": "/n/",
+        "startIndex": 0,
+        "endIndex": 1,
+        "isPatternFocus": true,
+        "coachingHint": "Listen to the sentence—this isn't dark NIGHT with stars! Which silent letter belongs at the start?"
+      },
+      {
+        "grapheme": "igh",
+        "phoneme": "/aɪ/",
+        "startIndex": 2,
+        "endIndex": 4,
+        "coachingHint": "Three letters work together to make the long I sound: I-G-H!"
+      },
+      {
+        "grapheme": "t",
+        "phoneme": "/t/",
+        "startIndex": 5,
+        "endIndex": 5
+      }
+    ],
+    "traps": [
+      {
+        "misspelling": "night",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 0,
+        "candidatePair": [
+          "K",
+          "N"
+        ],
+        "judgeResponse": "N-I-G-H-T is when the moon comes out! For the armored KNIGHT (or the chess piece), remember your Silent K-N team from KNOWLEDGE!",
+        "memoryTrick": "A KNIGHT in armor carries a silent K shield in front of N!"
+      }
+    ],
+    "wordStory": "In Old English, 'cniht' simply meant a young boy or helper who polished a king's armor before growing up to ride a horse!"
+  },
+  {
+    "id": "word_sentence",
+    "word": "sentence",
+    "syllables": [
+      "sen",
+      "tence"
+    ],
+    "phoneticRespelling": "SEN-tens",
+    "difficulty": 2.2,
+    "patternId": "soft-c-before-eiy",
+    "role": "ANCHOR",
+    "meanings": [
+      {
+        "partOfSpeech": "noun",
+        "kidDefinition": "A group of words that tells a complete thought, starts with a capital letter, and ends with a period, question mark, or exclamation point.",
+        "exampleSentence": "Can you use the word in a sentence?",
+        "blankedSentence": "Can you use the word in a ________?"
+      }
+    ],
+    "graphemeMap": [
+      {
+        "grapheme": "s",
+        "phoneme": "/s/",
+        "startIndex": 0,
+        "endIndex": 0
+      },
+      {
+        "grapheme": "e",
+        "phoneme": "/ɛ/",
+        "startIndex": 1,
+        "endIndex": 1
+      },
+      {
+        "grapheme": "n",
+        "phoneme": "/n/",
+        "startIndex": 2,
+        "endIndex": 2
+      },
+      {
+        "grapheme": "t",
+        "phoneme": "/t/",
+        "startIndex": 3,
+        "endIndex": 3
+      },
+      {
+        "grapheme": "e",
+        "phoneme": "/ə/",
+        "startIndex": 4,
+        "endIndex": 4
+      },
+      {
+        "grapheme": "n",
+        "phoneme": "/n/",
+        "startIndex": 5,
+        "endIndex": 5
+      },
+      {
+        "grapheme": "ce",
+        "phoneme": "/s/",
+        "startIndex": 6,
+        "endIndex": 7,
+        "isPatternFocus": true,
+        "coachingHint": "The first '/s/' in sentence is an S, but the second '/s/' at the end uses Soft C Magic (C-E)!"
+      }
+    ],
+    "traps": [
+      {
+        "misspelling": "sentense",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 6,
+        "candidatePair": [
+          "C",
+          "S"
+        ],
+        "judgeResponse": "Almost! SENTENCE starts with S, but the '/s/' sound at the end is made by Soft C followed by E (E-N-C-E). Tap box 7 to switch S to C!",
+        "memoryTrick": "SENTENCE has an S at the start and a Soft C near the end!"
+      }
+    ],
+    "wordStory": "Comes from a Latin word meaning 'what someone feels or thinks'—because every sentence shares a thought from your brain!"
+  },
+  {
+    "id": "word_notice",
+    "word": "notice",
+    "syllables": [
+      "no",
+      "tice"
+    ],
+    "phoneticRespelling": "NOH-tis",
+    "difficulty": 2.2,
+    "patternId": "ice-vs-ise",
+    "role": "ANCHOR",
+    "meanings": [
+      {
+        "partOfSpeech": "verb",
+        "kidDefinition": "To see something or become aware of it.",
+        "exampleSentence": "Did you notice the rainbow after the rain?",
+        "blankedSentence": "Did you ______ the rainbow after the rain?"
+      },
+      {
+        "partOfSpeech": "noun",
+        "kidDefinition": "A sign or message that tells people something important.",
+        "exampleSentence": "The teacher pinned a notice on the classroom door.",
+        "blankedSentence": "The teacher pinned a ______ on the classroom door."
+      }
+    ],
+    "graphemeMap": [
+      {
+        "grapheme": "n",
+        "phoneme": "/n/",
+        "startIndex": 0,
+        "endIndex": 0
+      },
+      {
+        "grapheme": "o",
+        "phoneme": "/oʊ/",
+        "startIndex": 1,
+        "endIndex": 1
+      },
+      {
+        "grapheme": "t",
+        "phoneme": "/t/",
+        "startIndex": 2,
+        "endIndex": 2
+      },
+      {
+        "grapheme": "ice",
+        "phoneme": "/ɪs/",
+        "startIndex": 3,
+        "endIndex": 5,
+        "isPatternFocus": true,
+        "coachingHint": "Think of an ICE cube! How do we spell the '-ice' at the end of this word?"
+      }
+    ],
+    "traps": [
+      {
+        "misspelling": "notise",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 4,
+        "candidatePair": [
+          "C",
+          "S"
+        ],
+        "judgeResponse": "You heard that '/ɪs/' ending perfectly! In NOTICE, it is spelled I-C-E, just like ICE 🧊. Tap box 5 to swap S to C!",
+        "memoryTrick": "Did you NOT-ICE the ICE (I-C-E) 🧊 at the end?"
+      }
+    ],
+    "wordStory": "Comes from a Latin word meaning 'getting to know something'—when you notice a thing, your brain gets to know it!"
+  },
+  {
+    "id": "word_advice",
+    "word": "advice",
+    "syllables": [
+      "ad",
+      "vice"
+    ],
+    "phoneticRespelling": "ad-VYSE",
+    "difficulty": 2.4,
+    "patternId": "ice-vs-ise",
+    "role": "GUIDED",
+    "meanings": [
+      {
+        "partOfSpeech": "noun",
+        "kidDefinition": "A helpful idea that someone gives you about what to do.",
+        "exampleSentence": "Grandpa gave me good advice about planting seeds.",
+        "blankedSentence": "Grandpa gave me good ______ about planting seeds."
+      }
+    ],
+    "graphemeMap": [
+      {
+        "grapheme": "a",
+        "phoneme": "/ə/",
+        "startIndex": 0,
+        "endIndex": 0
+      },
+      {
+        "grapheme": "d",
+        "phoneme": "/d/",
+        "startIndex": 1,
+        "endIndex": 1
+      },
+      {
+        "grapheme": "v",
+        "phoneme": "/v/",
+        "startIndex": 2,
+        "endIndex": 2
+      },
+      {
+        "grapheme": "ice",
+        "phoneme": "/aɪs/",
+        "startIndex": 3,
+        "endIndex": 5,
+        "isPatternFocus": true,
+        "coachingHint": "The ending sounds exactly like the word ICE! How do we spell ICE?"
+      }
+    ],
+    "traps": [
+      {
+        "misspelling": "advise",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 4,
+        "candidatePair": [
+          "C",
+          "S"
+        ],
+        "judgeResponse": "Good ear! A-D-V-I-S-E is the action word, and it ends with a buzzing '/z/' sound. The helpful idea you GIVE someone ends with a hissing '/s/'—spelled I-C-E, just like ICE 🧊!",
+        "memoryTrick": "Good ADV-ICE is as cool as ICE (I-C-E) 🧊!"
+      }
+    ],
+    "wordStory": "In old French, people said 'a vis', which meant 'the way I see it'—so giving advice is simply sharing how you see things!"
+  },
+  {
+    "id": "word_service",
+    "word": "service",
+    "syllables": [
+      "ser",
+      "vice"
+    ],
+    "phoneticRespelling": "SUR-vis",
+    "difficulty": 2.5,
+    "patternId": "ice-vs-ise",
+    "role": "TRANSFER_PROBE",
+    "meanings": [
+      {
+        "partOfSpeech": "noun",
+        "kidDefinition": "Helpful work that someone does for other people.",
+        "exampleSentence": "The restaurant had friendly and fast service.",
+        "blankedSentence": "The restaurant had friendly and fast _______."
+      }
+    ],
+    "graphemeMap": [
+      {
+        "grapheme": "s",
+        "phoneme": "/s/",
+        "startIndex": 0,
+        "endIndex": 0
+      },
+      {
+        "grapheme": "er",
+        "phoneme": "/ɜːr/",
+        "startIndex": 1,
+        "endIndex": 2,
+        "coachingHint": "The '/er/' sound in the first beat is spelled E-R, just like in HER!"
+      },
+      {
+        "grapheme": "v",
+        "phoneme": "/v/",
+        "startIndex": 3,
+        "endIndex": 3
+      },
+      {
+        "grapheme": "ice",
+        "phoneme": "/ɪs/",
+        "startIndex": 4,
+        "endIndex": 6,
+        "isPatternFocus": true,
+        "coachingHint": "Remember the ICE rule from 'practice'!"
+      }
+    ],
+    "traps": [
+      {
+        "misspelling": "servise",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 5,
+        "candidatePair": [
+          "C",
+          "S"
+        ],
+        "judgeResponse": "Listen to that '/ɪs/' ending! Just like PRACTICE and NOTICE, the word SERVICE ends with I-C-E.",
+        "memoryTrick": "Great SERV-ICE always comes with ICE (I-C-E) 🧊 in your drink!"
+      },
+      {
+        "misspelling": "survice",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 1,
+        "candidatePair": [
+          "E",
+          "U"
+        ],
+        "judgeResponse": "So close! The '/er/' sound in the first beat of SERVICE is spelled E-R, like in HER. Tap box 2 to swap U to E!",
+        "memoryTrick": "A SERVER gives great SERVICE—both start with S-E-R!"
+      }
+    ],
+    "wordStory": "Comes from a Latin word for a helper—so every time you do a chore for your family, you are giving a service!"
+  },
+  {
+    "id": "word_justice",
+    "word": "justice",
+    "syllables": [
+      "jus",
+      "tice"
+    ],
+    "phoneticRespelling": "JUS-tis",
+    "difficulty": 2.7,
+    "patternId": "ice-vs-ise",
+    "role": "TRANSFER_PROBE",
+    "meanings": [
+      {
+        "partOfSpeech": "noun",
+        "kidDefinition": "Fairness—making sure everyone is treated the right way.",
+        "exampleSentence": "The superhero promised to fight for justice.",
+        "blankedSentence": "The superhero promised to fight for _______."
+      }
+    ],
+    "graphemeMap": [
+      {
+        "grapheme": "j",
+        "phoneme": "/dʒ/",
+        "startIndex": 0,
+        "endIndex": 0
+      },
+      {
+        "grapheme": "u",
+        "phoneme": "/ʌ/",
+        "startIndex": 1,
+        "endIndex": 1
+      },
+      {
+        "grapheme": "s",
+        "phoneme": "/s/",
+        "startIndex": 2,
+        "endIndex": 2
+      },
+      {
+        "grapheme": "t",
+        "phoneme": "/t/",
+        "startIndex": 3,
+        "endIndex": 3
+      },
+      {
+        "grapheme": "ice",
+        "phoneme": "/ɪs/",
+        "startIndex": 4,
+        "endIndex": 6,
+        "isPatternFocus": true,
+        "coachingHint": "Remember the ICE rule from 'practice'!"
+      }
+    ],
+    "traps": [
+      {
+        "misspelling": "justise",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 5,
+        "candidatePair": [
+          "C",
+          "S"
+        ],
+        "judgeResponse": "Listen to that '/ɪs/' ending! Just like PRACTICE and NOTICE, the word JUSTICE ends with I-C-E.",
+        "memoryTrick": "JUST + ICE (I-C-E) 🧊 = JUSTICE!"
+      }
+    ],
+    "wordStory": "Justice is often drawn as a lady wearing a blindfold and holding a set of scales, because being fair shouldn't depend on what anyone looks like!"
+  },
+  {
+    "id": "word_knuckle",
+    "word": "knuckle",
+    "syllables": [
+      "knuck",
+      "le"
+    ],
+    "phoneticRespelling": "NUK-ul",
+    "difficulty": 2.9,
+    "patternId": "silent-kn",
+    "role": "TRANSFER_PROBE",
+    "meanings": [
+      {
+        "partOfSpeech": "noun",
+        "kidDefinition": "The bumpy joint where your finger bends.",
+        "exampleSentence": "He scraped his knuckle on the sidewalk.",
+        "blankedSentence": "He scraped his _______ on the sidewalk."
+      }
+    ],
+    "graphemeMap": [
+      {
+        "grapheme": "kn",
+        "phoneme": "/n/",
+        "startIndex": 0,
+        "endIndex": 1,
+        "isPatternFocus": true,
+        "coachingHint": "Listen to the first sound. Does a silent letter belong in front of that N?"
+      },
+      {
+        "grapheme": "u",
+        "phoneme": "/ʌ/",
+        "startIndex": 2,
+        "endIndex": 2
+      },
+      {
+        "grapheme": "ck",
+        "phoneme": "/k/",
+        "startIndex": 3,
+        "endIndex": 4,
+        "coachingHint": "After a short vowel, the '/k/' sound is spelled with two letters: C-K!"
+      },
+      {
+        "grapheme": "le",
+        "phoneme": "/əl/",
+        "startIndex": 5,
+        "endIndex": 6,
+        "coachingHint": "The '/ul/' sound at the end is spelled L-E, like in APPLE!"
+      }
+    ],
+    "traps": [
+      {
+        "misspelling": "nuckle",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 0,
+        "candidatePair": [
+          "K",
+          "N"
+        ],
+        "judgeResponse": "You heard the '/n/' sound at the start! But remember the Silent K-N team from KNOWLEDGE—KNUCKLE starts with K-N too.",
+        "memoryTrick": "Knock, knock! A silent K knocks at the front of KNUCKLE."
+      },
+      {
+        "misspelling": "knukle",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 3,
+        "candidatePair": [
+          "C",
+          "K"
+        ],
+        "judgeResponse": "You remembered the Silent K—fantastic! Now listen to the middle: after the short U, the '/k/' sound needs two letters, C-K.",
+        "memoryTrick": "Your KNUCKLE has a C-K crack in the middle!"
+      },
+      {
+        "misspelling": "knuckel",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 5,
+        "candidatePair": [
+          "L",
+          "E"
+        ],
+        "judgeResponse": "You remembered the Silent K—fantastic! The ending '/ul/' sound is spelled L-E, like in APPLE and TABLE.",
+        "memoryTrick": "A KNUCKLE ends just like an APPLE: L-E!"
+      }
+    ],
+    "wordStory": "Your knuckles pop because tiny gas bubbles inside the joint burst—like bubble wrap inside your fingers!"
+  },
+  {
+    "id": "word_kneel",
+    "word": "kneel",
+    "syllables": [
+      "kneel"
+    ],
+    "phoneticRespelling": "NEEL",
+    "difficulty": 2.3,
+    "patternId": "silent-kn",
+    "role": "TRANSFER_PROBE",
+    "meanings": [
+      {
+        "partOfSpeech": "verb",
+        "kidDefinition": "To go down and rest on your knees.",
+        "exampleSentence": "We kneel on the grass to look at the ladybugs.",
+        "blankedSentence": "We _____ on the grass to look at the ladybugs."
+      }
+    ],
+    "graphemeMap": [
+      {
+        "grapheme": "kn",
+        "phoneme": "/n/",
+        "startIndex": 0,
+        "endIndex": 1,
+        "isPatternFocus": true,
+        "coachingHint": "Listen to the first sound. Does a silent letter belong in front of that N?"
+      },
+      {
+        "grapheme": "ee",
+        "phoneme": "/iː/",
+        "startIndex": 2,
+        "endIndex": 3,
+        "coachingHint": "The long E sound in the middle is spelled with twin E's!"
+      },
+      {
+        "grapheme": "l",
+        "phoneme": "/l/",
+        "startIndex": 4,
+        "endIndex": 4
+      }
+    ],
+    "traps": [
+      {
+        "misspelling": "neel",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 0,
+        "candidatePair": [
+          "K",
+          "N"
+        ],
+        "judgeResponse": "You heard the '/n/' sound at the start! But remember the Silent K-N team from KNOWLEDGE—KNEEL starts with K-N too.",
+        "memoryTrick": "You KNEEL on your KNEE—and both hide a silent K!"
+      },
+      {
+        "misspelling": "kneal",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 3,
+        "candidatePair": [
+          "E",
+          "A"
+        ],
+        "judgeResponse": "You remembered the Silent K—fantastic! The long E sound in KNEEL is spelled with twin E's.",
+        "memoryTrick": "KNEEL has two E's, just like you have two knees!"
+      }
+    ],
+    "wordStory": "KNEEL comes from KNEE—the part of your leg you kneel on—and both words kept their silent K for over a thousand years!"
+  },
+  {
+    "id": "word_system",
+    "word": "system",
+    "syllables": [
+      "sys",
+      "tem"
+    ],
+    "phoneticRespelling": "SIS-tum",
+    "difficulty": 2.6,
+    "patternId": "y-as-short-i",
+    "role": "GUIDED",
+    "meanings": [
+      {
+        "partOfSpeech": "noun",
+        "kidDefinition": "A group of parts that work together, like the sun and all its planets.",
+        "exampleSentence": "The solar system has eight planets.",
+        "blankedSentence": "The solar ______ has eight planets."
+      }
+    ],
+    "graphemeMap": [
+      {
+        "grapheme": "s",
+        "phoneme": "/s/",
+        "startIndex": 0,
+        "endIndex": 0
+      },
+      {
+        "grapheme": "y",
+        "phoneme": "/ɪ/",
+        "startIndex": 1,
+        "endIndex": 1,
+        "isPatternFocus": true,
+        "coachingHint": "Listen to the short '/ɪ/' sound right after S. In this word it is spelled with a sneaky vowel—can you figure out which one?"
+      },
+      {
+        "grapheme": "s",
+        "phoneme": "/s/",
+        "startIndex": 2,
+        "endIndex": 2
+      },
+      {
+        "grapheme": "t",
+        "phoneme": "/t/",
+        "startIndex": 3,
+        "endIndex": 3
+      },
+      {
+        "grapheme": "e",
+        "phoneme": "/ə/",
+        "startIndex": 4,
+        "endIndex": 4,
+        "coachingHint": "The quiet vowel in the second beat is an E!"
+      },
+      {
+        "grapheme": "m",
+        "phoneme": "/m/",
+        "startIndex": 5,
+        "endIndex": 5
+      }
+    ],
+    "traps": [
+      {
+        "misspelling": "sistem",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 1,
+        "candidatePair": [
+          "Y",
+          "I"
+        ],
+        "judgeResponse": "Nice attempt! In SYSTEM, that short '/ɪ/' sound is wearing a disguise, just like in MYSTERIOUS. Can you swap box 2 to a sneaky Y?",
+        "memoryTrick": "A SYSTEM starts with S-Y-S, just like a MYSTERY has M-Y-S!"
+      },
+      {
+        "misspelling": "systum",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 4,
+        "candidatePair": [
+          "E",
+          "U"
+        ],
+        "judgeResponse": "You caught the sneaky Y—great detective work! The quiet vowel in the second beat is an E. Tap box 5 to fix it!",
+        "memoryTrick": "S-Y-S then T-E-M: a SYSTEM is a TEAM of parts!"
+      }
+    ],
+    "wordStory": "Comes from a Greek word meaning 'standing together'—the parts of a system are like teammates standing side by side!"
+  },
+  {
+    "id": "word_typical",
+    "word": "typical",
+    "syllables": [
+      "typ",
+      "i",
+      "cal"
+    ],
+    "phoneticRespelling": "TIP-ih-kul",
+    "difficulty": 3.0,
+    "patternId": "y-as-short-i",
+    "role": "TRANSFER_PROBE",
+    "meanings": [
+      {
+        "partOfSpeech": "adjective",
+        "kidDefinition": "Normal or usual—just what you would expect.",
+        "exampleSentence": "On a typical school day, we eat lunch at noon.",
+        "blankedSentence": "On a _______ school day, we eat lunch at noon."
+      }
+    ],
+    "graphemeMap": [
+      {
+        "grapheme": "t",
+        "phoneme": "/t/",
+        "startIndex": 0,
+        "endIndex": 0
+      },
+      {
+        "grapheme": "y",
+        "phoneme": "/ɪ/",
+        "startIndex": 1,
+        "endIndex": 1,
+        "isPatternFocus": true,
+        "coachingHint": "Listen to the short '/ɪ/' sound right after T. Which vowel could be hiding there?"
+      },
+      {
+        "grapheme": "p",
+        "phoneme": "/p/",
+        "startIndex": 2,
+        "endIndex": 2
+      },
+      {
+        "grapheme": "i",
+        "phoneme": "/ɪ/",
+        "startIndex": 3,
+        "endIndex": 3
+      },
+      {
+        "grapheme": "c",
+        "phoneme": "/k/",
+        "startIndex": 4,
+        "endIndex": 4
+      },
+      {
+        "grapheme": "al",
+        "phoneme": "/əl/",
+        "startIndex": 5,
+        "endIndex": 6,
+        "coachingHint": "The '/ul/' sound at the end of describing words is often spelled A-L!"
+      }
+    ],
+    "traps": [
+      {
+        "misspelling": "tipical",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 1,
+        "candidatePair": [
+          "Y",
+          "I"
+        ],
+        "judgeResponse": "Nice attempt! Remember the sneaky Y from MYSTERIOUS? The first '/ɪ/' sound in TYPICAL is spelled with a Y too.",
+        "memoryTrick": "TYPICAL comes from TYPE—and TYPE has a Y!"
+      },
+      {
+        "misspelling": "typicle",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 5,
+        "judgeResponse": "You caught the sneaky Y—great detective work! The '/ul/' sound at the end of this describing word is spelled A-L.",
+        "memoryTrick": "TYPICAL ends like MAGICAL: A-L!"
+      }
+    ],
+    "wordStory": "Comes from a Greek word for a stamp or mark—a typical thing looks like it was stamped out just like all the others!"
+  },
+  {
+    "id": "word_sympathy",
+    "word": "sympathy",
+    "syllables": [
+      "sym",
+      "pa",
+      "thy"
+    ],
+    "phoneticRespelling": "SIM-puh-thee",
+    "difficulty": 3.4,
+    "patternId": "y-as-short-i",
+    "role": "TRANSFER_PROBE",
+    "meanings": [
+      {
+        "partOfSpeech": "noun",
+        "kidDefinition": "A kind, caring feeling you have when someone else is sad or hurt.",
+        "exampleSentence": "She showed sympathy by hugging her friend who fell.",
+        "blankedSentence": "She showed ________ by hugging her friend who fell."
+      }
+    ],
+    "graphemeMap": [
+      {
+        "grapheme": "s",
+        "phoneme": "/s/",
+        "startIndex": 0,
+        "endIndex": 0
+      },
+      {
+        "grapheme": "y",
+        "phoneme": "/ɪ/",
+        "startIndex": 1,
+        "endIndex": 1,
+        "isPatternFocus": true,
+        "coachingHint": "Listen to the short '/ɪ/' sound right after S. Which vowel could be hiding there?"
+      },
+      {
+        "grapheme": "m",
+        "phoneme": "/m/",
+        "startIndex": 2,
+        "endIndex": 2
+      },
+      {
+        "grapheme": "p",
+        "phoneme": "/p/",
+        "startIndex": 3,
+        "endIndex": 3
+      },
+      {
+        "grapheme": "a",
+        "phoneme": "/ə/",
+        "startIndex": 4,
+        "endIndex": 4,
+        "coachingHint": "The quiet vowel in the middle beat is an A!"
+      },
+      {
+        "grapheme": "th",
+        "phoneme": "/θ/",
+        "startIndex": 5,
+        "endIndex": 6
+      },
+      {
+        "grapheme": "y",
+        "phoneme": "/i/",
+        "startIndex": 7,
+        "endIndex": 7
+      }
+    ],
+    "traps": [
+      {
+        "misspelling": "simpathy",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 1,
+        "candidatePair": [
+          "Y",
+          "I"
+        ],
+        "judgeResponse": "Nice attempt! Remember the sneaky Y from MYSTERIOUS? The first '/ɪ/' sound in SYMPATHY is spelled with a Y too.",
+        "memoryTrick": "SYMPATHY has a Y at the start and a Y at the end—like two caring arms giving a hug!"
+      },
+      {
+        "misspelling": "sympithy",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 4,
+        "candidatePair": [
+          "A",
+          "I"
+        ],
+        "judgeResponse": "You caught the sneaky Y—great detective work! The quiet vowel in the middle beat is an A: S-Y-M, P-A, T-H-Y.",
+        "memoryTrick": "SYM-PA-THY: your PA gives you sympathy!"
+      }
+    ],
+    "wordStory": "Comes from two Greek pieces: SYM means 'together' and PATHY means 'feeling'—so sympathy is feeling together with someone!"
+  },
+  {
+    "id": "word_pyramid",
+    "word": "pyramid",
+    "syllables": [
+      "pyr",
+      "a",
+      "mid"
+    ],
+    "phoneticRespelling": "PEER-uh-mid",
+    "difficulty": 2.9,
+    "patternId": "y-as-short-i",
+    "role": "TRANSFER_PROBE",
+    "meanings": [
+      {
+        "partOfSpeech": "noun",
+        "kidDefinition": "A shape with a square bottom and triangle sides that meet at a point, like the giant stone ones in Egypt.",
+        "exampleSentence": "The explorers rode camels to see the great pyramid.",
+        "blankedSentence": "The explorers rode camels to see the great _______."
+      }
+    ],
+    "graphemeMap": [
+      {
+        "grapheme": "p",
+        "phoneme": "/p/",
+        "startIndex": 0,
+        "endIndex": 0
+      },
+      {
+        "grapheme": "y",
+        "phoneme": "/ɪ/",
+        "startIndex": 1,
+        "endIndex": 1,
+        "isPatternFocus": true,
+        "coachingHint": "Listen to the vowel sound right after P. Which vowel could be hiding there?"
+      },
+      {
+        "grapheme": "r",
+        "phoneme": "/r/",
+        "startIndex": 2,
+        "endIndex": 2
+      },
+      {
+        "grapheme": "a",
+        "phoneme": "/ə/",
+        "startIndex": 3,
+        "endIndex": 3,
+        "coachingHint": "The quiet vowel in the middle beat is an A!"
+      },
+      {
+        "grapheme": "m",
+        "phoneme": "/m/",
+        "startIndex": 4,
+        "endIndex": 4
+      },
+      {
+        "grapheme": "i",
+        "phoneme": "/ɪ/",
+        "startIndex": 5,
+        "endIndex": 5
+      },
+      {
+        "grapheme": "d",
+        "phoneme": "/d/",
+        "startIndex": 6,
+        "endIndex": 6
+      }
+    ],
+    "traps": [
+      {
+        "misspelling": "piramid",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 1,
+        "candidatePair": [
+          "Y",
+          "I"
+        ],
+        "judgeResponse": "Nice attempt! Remember the sneaky Y from MYSTERIOUS? The first vowel sound in PYRAMID is spelled with a Y too.",
+        "memoryTrick": "The letter Y looks like an upside-down PYRAMID on a stick!"
+      },
+      {
+        "misspelling": "pyrimid",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 3,
+        "candidatePair": [
+          "A",
+          "I"
+        ],
+        "judgeResponse": "You caught the sneaky Y—great detective work! The quiet vowel in the middle beat is an A: P-Y-R, A, M-I-D.",
+        "memoryTrick": "PYR-A-MID: there is A room in the MIDdle!"
+      },
+      {
+        "misspelling": "pyramyd",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 5,
+        "candidatePair": [
+          "I",
+          "Y"
+        ],
+        "judgeResponse": "You caught the sneaky Y at the start—great detective work! But only ONE Y is hiding in this word. The last beat is spelled M-I-D, like MIDDLE.",
+        "memoryTrick": "One sneaky Y at the start, then a plain I in the MID!"
+      }
+    ],
+    "wordStory": "The Great Pyramid in Egypt is made of more than two million stone blocks, and it was the tallest building on Earth for almost 4,000 years!"
+  },
+  {
+    "id": "word_citizen",
+    "word": "citizen",
+    "syllables": [
+      "cit",
+      "i",
+      "zen"
+    ],
+    "phoneticRespelling": "SIT-ih-zun",
+    "difficulty": 2.8,
+    "patternId": "soft-c-before-eiy",
+    "role": "GUIDED",
+    "meanings": [
+      {
+        "partOfSpeech": "noun",
+        "kidDefinition": "A person who belongs to a town, city, or country.",
+        "exampleSentence": "A good citizen helps keep the park clean.",
+        "blankedSentence": "A good _______ helps keep the park clean."
+      }
+    ],
+    "graphemeMap": [
+      {
+        "grapheme": "c",
+        "phoneme": "/s/",
+        "startIndex": 0,
+        "endIndex": 0,
+        "isPatternFocus": true,
+        "coachingHint": "We hear '/s/' at the start, and the next letter is I. Which letter turns soft in front of an I?"
+      },
+      {
+        "grapheme": "i",
+        "phoneme": "/ɪ/",
+        "startIndex": 1,
+        "endIndex": 1
+      },
+      {
+        "grapheme": "t",
+        "phoneme": "/t/",
+        "startIndex": 2,
+        "endIndex": 2
+      },
+      {
+        "grapheme": "i",
+        "phoneme": "/ɪ/",
+        "startIndex": 3,
+        "endIndex": 3
+      },
+      {
+        "grapheme": "z",
+        "phoneme": "/z/",
+        "startIndex": 4,
+        "endIndex": 4,
+        "coachingHint": "That buzzing sound in the last beat is a real Z!"
+      },
+      {
+        "grapheme": "e",
+        "phoneme": "/ə/",
+        "startIndex": 5,
+        "endIndex": 5,
+        "coachingHint": "The quiet vowel in the last beat is an E!"
+      },
+      {
+        "grapheme": "n",
+        "phoneme": "/n/",
+        "startIndex": 6,
+        "endIndex": 6
+      }
+    ],
+    "traps": [
+      {
+        "misspelling": "sitizen",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 0,
+        "candidatePair": [
+          "C",
+          "S"
+        ],
+        "judgeResponse": "You heard the '/s/' sound perfectly! In CITIZEN it is made by Soft C Magic, because the next letter is I. Tap box 1 to swap S to C!",
+        "memoryTrick": "A CITIZEN lives in a CITY—both start with a Soft C!"
+      },
+      {
+        "misspelling": "citisen",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 4,
+        "candidatePair": [
+          "Z",
+          "S"
+        ],
+        "judgeResponse": "You got the Soft C—wonderful! Now listen for the buzzing sound in the last beat. That one is a real Z.",
+        "memoryTrick": "A calm CITI-ZEN: the last beat is Z-E-N!"
+      },
+      {
+        "misspelling": "citizun",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 5,
+        "candidatePair": [
+          "E",
+          "U"
+        ],
+        "judgeResponse": "You got the Soft C—wonderful! The quiet vowel in the last beat is an E: Z-E-N.",
+        "memoryTrick": "A calm CITI-ZEN: the last beat is Z-E-N!"
+      }
+    ],
+    "wordStory": "CITIZEN and CITY are word cousins—long ago, a citizen simply meant someone who lived inside the city walls!"
+  },
+  {
+    "id": "word_distance",
+    "word": "distance",
+    "syllables": [
+      "dis",
+      "tance"
+    ],
+    "phoneticRespelling": "DIS-tuns",
+    "difficulty": 2.6,
+    "patternId": "soft-c-before-eiy",
+    "role": "TRANSFER_PROBE",
+    "meanings": [
+      {
+        "partOfSpeech": "noun",
+        "kidDefinition": "How far it is from one place to another.",
+        "exampleSentence": "We could see the mountains in the distance.",
+        "blankedSentence": "We could see the mountains in the ________."
+      }
+    ],
+    "graphemeMap": [
+      {
+        "grapheme": "d",
+        "phoneme": "/d/",
+        "startIndex": 0,
+        "endIndex": 0
+      },
+      {
+        "grapheme": "i",
+        "phoneme": "/ɪ/",
+        "startIndex": 1,
+        "endIndex": 1
+      },
+      {
+        "grapheme": "s",
+        "phoneme": "/s/",
+        "startIndex": 2,
+        "endIndex": 2
+      },
+      {
+        "grapheme": "t",
+        "phoneme": "/t/",
+        "startIndex": 3,
+        "endIndex": 3
+      },
+      {
+        "grapheme": "a",
+        "phoneme": "/ə/",
+        "startIndex": 4,
+        "endIndex": 4,
+        "coachingHint": "The quiet vowel in the second beat is an A!"
+      },
+      {
+        "grapheme": "n",
+        "phoneme": "/n/",
+        "startIndex": 5,
+        "endIndex": 5
+      },
+      {
+        "grapheme": "ce",
+        "phoneme": "/s/",
+        "startIndex": 6,
+        "endIndex": 7,
+        "isPatternFocus": true,
+        "coachingHint": "Listen to the '/s/' at the very end. Which two letters can make that sound together?"
+      }
+    ],
+    "traps": [
+      {
+        "misspelling": "distanse",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 6,
+        "candidatePair": [
+          "C",
+          "S"
+        ],
+        "judgeResponse": "Almost! Just like SENTENCE, the '/s/' sound at the end of DISTANCE is made by Soft C followed by E.",
+        "memoryTrick": "DISTANCE ends like DANCE: a Soft C and an E!"
+      },
+      {
+        "misspelling": "distence",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 4,
+        "candidatePair": [
+          "A",
+          "E"
+        ],
+        "judgeResponse": "You got the Soft C ending—wonderful! The quiet vowel in the second beat is an A: T-A-N-C-E.",
+        "memoryTrick": "Do a DANCE in the DIS-TANCE: both have A-N-C-E!"
+      }
+    ],
+    "wordStory": "Comes from Latin words meaning 'standing apart'—two things with distance between them are standing far apart!"
+  },
+  {
+    "id": "word_silence",
+    "word": "silence",
+    "syllables": [
+      "si",
+      "lence"
+    ],
+    "phoneticRespelling": "SY-luns",
+    "difficulty": 2.5,
+    "patternId": "soft-c-before-eiy",
+    "role": "TRANSFER_PROBE",
+    "meanings": [
+      {
+        "partOfSpeech": "noun",
+        "kidDefinition": "When there is no sound at all.",
+        "exampleSentence": "There was silence in the library while everyone read.",
+        "blankedSentence": "There was _______ in the library while everyone read."
+      }
+    ],
+    "graphemeMap": [
+      {
+        "grapheme": "s",
+        "phoneme": "/s/",
+        "startIndex": 0,
+        "endIndex": 0
+      },
+      {
+        "grapheme": "i",
+        "phoneme": "/aɪ/",
+        "startIndex": 1,
+        "endIndex": 1
+      },
+      {
+        "grapheme": "l",
+        "phoneme": "/l/",
+        "startIndex": 2,
+        "endIndex": 2
+      },
+      {
+        "grapheme": "e",
+        "phoneme": "/ə/",
+        "startIndex": 3,
+        "endIndex": 3,
+        "coachingHint": "The quiet vowel in the second beat is an E!"
+      },
+      {
+        "grapheme": "n",
+        "phoneme": "/n/",
+        "startIndex": 4,
+        "endIndex": 4
+      },
+      {
+        "grapheme": "ce",
+        "phoneme": "/s/",
+        "startIndex": 5,
+        "endIndex": 6,
+        "isPatternFocus": true,
+        "coachingHint": "Listen to the '/s/' at the very end. Which two letters can make that sound together?"
+      }
+    ],
+    "traps": [
+      {
+        "misspelling": "silense",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 5,
+        "candidatePair": [
+          "C",
+          "S"
+        ],
+        "judgeResponse": "Almost! SILENCE starts with S, but just like SENTENCE, the '/s/' sound at the end is made by Soft C followed by E.",
+        "memoryTrick": "Shh! SILENCE ends with a quiet, Soft C-E!"
+      },
+      {
+        "misspelling": "silance",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 3,
+        "candidatePair": [
+          "E",
+          "A"
+        ],
+        "judgeResponse": "You got the Soft C ending—wonderful! The quiet vowel in the second beat is an E: L-E-N-C-E.",
+        "memoryTrick": "SILENCE and SENTENCE both end in E-N-C-E!"
+      }
+    ],
+    "wordStory": "Astronauts say that outer space is perfectly silent, because sound needs air to travel and space has none!"
+  },
+  {
+    "id": "word_celebrate",
+    "word": "celebrate",
+    "syllables": [
+      "cel",
+      "e",
+      "brate"
+    ],
+    "phoneticRespelling": "SEL-uh-brayt",
+    "difficulty": 3.0,
+    "patternId": "soft-c-before-eiy",
+    "role": "TRANSFER_PROBE",
+    "meanings": [
+      {
+        "partOfSpeech": "verb",
+        "kidDefinition": "To do something fun and special because you are happy about something.",
+        "exampleSentence": "We celebrate birthdays with cake and candles.",
+        "blankedSentence": "We _________ birthdays with cake and candles."
+      }
+    ],
+    "graphemeMap": [
+      {
+        "grapheme": "c",
+        "phoneme": "/s/",
+        "startIndex": 0,
+        "endIndex": 0,
+        "isPatternFocus": true,
+        "coachingHint": "We hear '/s/' at the start, and the next letter is E. Which letter turns soft in front of an E?"
+      },
+      {
+        "grapheme": "e",
+        "phoneme": "/ɛ/",
+        "startIndex": 1,
+        "endIndex": 1
+      },
+      {
+        "grapheme": "l",
+        "phoneme": "/l/",
+        "startIndex": 2,
+        "endIndex": 2
+      },
+      {
+        "grapheme": "e",
+        "phoneme": "/ə/",
+        "startIndex": 3,
+        "endIndex": 3,
+        "coachingHint": "The quiet vowel in the middle beat is an E!"
+      },
+      {
+        "grapheme": "b",
+        "phoneme": "/b/",
+        "startIndex": 4,
+        "endIndex": 4
+      },
+      {
+        "grapheme": "r",
+        "phoneme": "/r/",
+        "startIndex": 5,
+        "endIndex": 5
+      },
+      {
+        "grapheme": "a",
+        "phoneme": "/eɪ/",
+        "startIndex": 6,
+        "endIndex": 6
+      },
+      {
+        "grapheme": "t",
+        "phoneme": "/t/",
+        "startIndex": 7,
+        "endIndex": 7
+      },
+      {
+        "grapheme": "e",
+        "phoneme": "(silent)",
+        "startIndex": 8,
+        "endIndex": 8,
+        "coachingHint": "A silent E at the end makes the A say its name!"
+      }
+    ],
+    "traps": [
+      {
+        "misspelling": "selebrate",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 0,
+        "candidatePair": [
+          "C",
+          "S"
+        ],
+        "judgeResponse": "You heard the '/s/' sound perfectly! Just like the Soft C in SENTENCE, CELEBRATE uses a C because the next letter is E.",
+        "memoryTrick": "Let's CELEBRATE with a Soft C!"
+      },
+      {
+        "misspelling": "celabrate",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 3,
+        "candidatePair": [
+          "E",
+          "A"
+        ],
+        "judgeResponse": "You got the Soft C—wonderful! The quiet vowel in the middle beat is an E: C-E-L, E, B-R-A-T-E.",
+        "memoryTrick": "C-E-L-E: CELEBRATE starts with two E's to party with!"
+      }
+    ],
+    "wordStory": "Comes from a Latin word meaning 'to gather a big crowd'—the best celebrations are the ones with lots of friends!"
+  },
+  {
+    "id": "word_elephant",
+    "word": "elephant",
+    "syllables": [
+      "el",
+      "e",
+      "phant"
+    ],
+    "phoneticRespelling": "EL-uh-funt",
+    "difficulty": 2.4,
+    "patternId": "greek-ph",
+    "role": "ANCHOR",
+    "meanings": [
+      {
+        "partOfSpeech": "noun",
+        "kidDefinition": "A huge gray animal with big floppy ears and a long trunk that it uses like a hand.",
+        "exampleSentence": "The elephant sprayed water over its back with its trunk.",
+        "blankedSentence": "The ________ sprayed water over its back with its trunk."
+      }
+    ],
+    "graphemeMap": [
+      {
+        "grapheme": "e",
+        "phoneme": "/ɛ/",
+        "startIndex": 0,
+        "endIndex": 0
+      },
+      {
+        "grapheme": "l",
+        "phoneme": "/l/",
+        "startIndex": 1,
+        "endIndex": 1
+      },
+      {
+        "grapheme": "e",
+        "phoneme": "/ə/",
+        "startIndex": 2,
+        "endIndex": 2,
+        "coachingHint": "The quiet vowel in the middle beat is an E!"
+      },
+      {
+        "grapheme": "ph",
+        "phoneme": "/f/",
+        "startIndex": 3,
+        "endIndex": 4,
+        "isPatternFocus": true,
+        "coachingHint": "We hear '/f/' here, but this word came from Greek. Which two letters team up to make that sound?"
+      },
+      {
+        "grapheme": "a",
+        "phoneme": "/ə/",
+        "startIndex": 5,
+        "endIndex": 5,
+        "coachingHint": "The quiet vowel in the last beat is hiding. Think of the tiny bug at the end of this word!"
+      },
+      {
+        "grapheme": "n",
+        "phoneme": "/n/",
+        "startIndex": 6,
+        "endIndex": 6
+      },
+      {
+        "grapheme": "t",
+        "phoneme": "/t/",
+        "startIndex": 7,
+        "endIndex": 7
+      }
+    ],
+    "traps": [
+      {
+        "misspelling": "elefant",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 3,
+        "candidatePair": [
+          "P",
+          "F"
+        ],
+        "judgeResponse": "You heard the '/f/' sound perfectly! In ELEPHANT, that sound is spelled by the Greek team P-H, not by a single F.",
+        "memoryTrick": "An ele-PH-ant never forgets its P-H!"
+      },
+      {
+        "misspelling": "elephent",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 5,
+        "candidatePair": [
+          "A",
+          "E"
+        ],
+        "judgeResponse": "You got the P-H team—wonderful! The quiet vowel in the last beat is an A: there is a little ANT at the end of ELEPHANT.",
+        "memoryTrick": "A tiny ANT rides at the end of the eleph-ANT!"
+      }
+    ],
+    "wordStory": "An elephant's trunk has about 40,000 muscles—and not a single bone! It is strong enough to lift a log and gentle enough to pick up one peanut."
+  },
+  {
+    "id": "word_dolphin",
+    "word": "dolphin",
+    "syllables": [
+      "dol",
+      "phin"
+    ],
+    "phoneticRespelling": "DOL-fin",
+    "difficulty": 2.3,
+    "patternId": "greek-ph",
+    "role": "ANCHOR",
+    "meanings": [
+      {
+        "partOfSpeech": "noun",
+        "kidDefinition": "A smart, friendly sea animal that leaps out of the waves and breathes air through a hole on top of its head.",
+        "exampleSentence": "A playful dolphin jumped beside our boat.",
+        "blankedSentence": "A playful _______ jumped beside our boat."
+      }
+    ],
+    "graphemeMap": [
+      {
+        "grapheme": "d",
+        "phoneme": "/d/",
+        "startIndex": 0,
+        "endIndex": 0
+      },
+      {
+        "grapheme": "o",
+        "phoneme": "/ɒ/",
+        "startIndex": 1,
+        "endIndex": 1
+      },
+      {
+        "grapheme": "l",
+        "phoneme": "/l/",
+        "startIndex": 2,
+        "endIndex": 2
+      },
+      {
+        "grapheme": "ph",
+        "phoneme": "/f/",
+        "startIndex": 3,
+        "endIndex": 4,
+        "isPatternFocus": true,
+        "coachingHint": "Listen for the '/f/' in the middle. In this sea animal's name, a Greek letter team makes that sound—which two letters?"
+      },
+      {
+        "grapheme": "i",
+        "phoneme": "/ɪ/",
+        "startIndex": 5,
+        "endIndex": 5,
+        "coachingHint": "The quiet vowel in the last beat is the same one you hear in the little word IN!"
+      },
+      {
+        "grapheme": "n",
+        "phoneme": "/n/",
+        "startIndex": 6,
+        "endIndex": 6
+      }
+    ],
+    "traps": [
+      {
+        "misspelling": "dolfin",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 3,
+        "candidatePair": [
+          "P",
+          "F"
+        ],
+        "judgeResponse": "Great listening! It sounds just like a fish's FIN, but DOLPHIN is a Greek word, so the '/f/' sound is spelled P-H.",
+        "memoryTrick": "A dolphin is not a fish, so it has no F—just a P-H!"
+      },
+      {
+        "misspelling": "dolphen",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 5,
+        "candidatePair": [
+          "I",
+          "E"
+        ],
+        "judgeResponse": "You remembered the P-H team—super! The last beat is spelled P-H-I-N, with an I.",
+        "memoryTrick": "A dolph-IN swims IN the sea!"
+      }
+    ],
+    "wordStory": "Dolphins sleep with only half of their brain at a time, so one eye can stay open to watch for danger!"
+  },
+  {
+    "id": "word_alphabet",
+    "word": "alphabet",
+    "syllables": [
+      "al",
+      "pha",
+      "bet"
+    ],
+    "phoneticRespelling": "AL-fuh-bet",
+    "difficulty": 2.6,
+    "patternId": "greek-ph",
+    "role": "GUIDED",
+    "meanings": [
+      {
+        "partOfSpeech": "noun",
+        "kidDefinition": "All the letters of a language in their special order, from A to Z.",
+        "exampleSentence": "Mia sang the alphabet song to her baby cousin.",
+        "blankedSentence": "Mia sang the ________ song to her baby cousin."
+      }
+    ],
+    "graphemeMap": [
+      {
+        "grapheme": "a",
+        "phoneme": "/æ/",
+        "startIndex": 0,
+        "endIndex": 0
+      },
+      {
+        "grapheme": "l",
+        "phoneme": "/l/",
+        "startIndex": 1,
+        "endIndex": 1
+      },
+      {
+        "grapheme": "ph",
+        "phoneme": "/f/",
+        "startIndex": 2,
+        "endIndex": 3,
+        "isPatternFocus": true,
+        "coachingHint": "We hear '/f/' in the middle. This word is made from two Greek letter names—which letter team makes '/f/' in Greek words?"
+      },
+      {
+        "grapheme": "a",
+        "phoneme": "/ə/",
+        "startIndex": 4,
+        "endIndex": 4,
+        "coachingHint": "The quiet vowel in the middle beat matches the very first letter of this word!"
+      },
+      {
+        "grapheme": "b",
+        "phoneme": "/b/",
+        "startIndex": 5,
+        "endIndex": 5
+      },
+      {
+        "grapheme": "e",
+        "phoneme": "/ɛ/",
+        "startIndex": 6,
+        "endIndex": 6
+      },
+      {
+        "grapheme": "t",
+        "phoneme": "/t/",
+        "startIndex": 7,
+        "endIndex": 7
+      }
+    ],
+    "traps": [
+      {
+        "misspelling": "alfabet",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 2,
+        "candidatePair": [
+          "P",
+          "F"
+        ],
+        "judgeResponse": "Nice try! You heard '/f/', and in ALPHABET that sound belongs to the Greek team P-H: A-L-P-H-A.",
+        "memoryTrick": "ALPHA is the first Greek letter, and it keeps its P-H!"
+      },
+      {
+        "misspelling": "alphebet",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 4,
+        "candidatePair": [
+          "A",
+          "E"
+        ],
+        "judgeResponse": "You nailed the P-H! The quiet vowel in the middle is an A, because the word begins with ALPHA: A-L-P-H-A.",
+        "memoryTrick": "ALPHA + BET: ALPHA starts with A and ends with A!"
+      }
+    ],
+    "wordStory": "The word comes from ALPHA and BETA, the first two letters of the Greek alphabet—so 'alphabet' really means 'A-B'!"
+  },
+  {
+    "id": "word_trophy",
+    "word": "trophy",
+    "syllables": [
+      "tro",
+      "phy"
+    ],
+    "phoneticRespelling": "TROH-fee",
+    "difficulty": 2.5,
+    "patternId": "greek-ph",
+    "role": "TRANSFER_PROBE",
+    "meanings": [
+      {
+        "partOfSpeech": "noun",
+        "kidDefinition": "A shiny prize, often a gold cup, that you get for winning a game or contest.",
+        "exampleSentence": "The winning team lifted the golden trophy above their heads.",
+        "blankedSentence": "The winning team lifted the golden ______ above their heads."
+      }
+    ],
+    "graphemeMap": [
+      {
+        "grapheme": "t",
+        "phoneme": "/t/",
+        "startIndex": 0,
+        "endIndex": 0
+      },
+      {
+        "grapheme": "r",
+        "phoneme": "/r/",
+        "startIndex": 1,
+        "endIndex": 1
+      },
+      {
+        "grapheme": "o",
+        "phoneme": "/oʊ/",
+        "startIndex": 2,
+        "endIndex": 2
+      },
+      {
+        "grapheme": "ph",
+        "phoneme": "/f/",
+        "startIndex": 3,
+        "endIndex": 4,
+        "isPatternFocus": true,
+        "coachingHint": "Listen for '/f/' in the middle. Remember the Greek letter team you learned—which two letters work together?"
+      },
+      {
+        "grapheme": "y",
+        "phoneme": "/i/",
+        "startIndex": 5,
+        "endIndex": 5,
+        "coachingHint": "The long E sound at the end of this word is spelled with a single letter that loves the ends of words!"
+      }
+    ],
+    "traps": [
+      {
+        "misspelling": "trophi",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 5,
+        "candidatePair": [
+          "Y",
+          "I"
+        ],
+        "judgeResponse": "You got the P-H team, wonderful! The '/ee/' sound at the very end of TROPHY is spelled with a Y, like in HAPPY.",
+        "memoryTrick": "Y did you win the TROPHY? Because it ends with Y!"
+      },
+      {
+        "misspelling": "trofy",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 3,
+        "candidatePair": [
+          "P",
+          "F"
+        ],
+        "judgeResponse": "You heard '/f/' perfectly! Just like ELEPHANT, the word TROPHY came from Greek, so it uses the P-H team.",
+        "memoryTrick": "Take a PHoto of your tro-PHy: both shine with P-H!"
+      },
+      {
+        "misspelling": "trophee",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 5,
+        "candidatePair": [
+          "Y",
+          "E"
+        ],
+        "judgeResponse": "So close! The P-H is perfect. The long E sound at the end of TROPHY is spelled with just one letter: Y.",
+        "memoryTrick": "Y did we win? Because tro-P-H-Y ends in Y!"
+      }
+    ],
+    "wordStory": "In ancient Greece, a 'tropaion' was a pile of the losing army's shields and helmets, set up on the battlefield to show who had won!"
+  },
+  {
+    "id": "word_photograph",
+    "word": "photograph",
+    "syllables": [
+      "pho",
+      "to",
+      "graph"
+    ],
+    "phoneticRespelling": "FOH-tuh-graf",
+    "difficulty": 3.2,
+    "patternId": "greek-ph",
+    "role": "TRANSFER_PROBE",
+    "meanings": [
+      {
+        "partOfSpeech": "noun",
+        "kidDefinition": "A picture made with a camera.",
+        "exampleSentence": "Grandpa keeps an old photograph of his puppy in his wallet.",
+        "blankedSentence": "Grandpa keeps an old __________ of his puppy in his wallet."
+      }
+    ],
+    "graphemeMap": [
+      {
+        "grapheme": "ph",
+        "phoneme": "/f/",
+        "startIndex": 0,
+        "endIndex": 1,
+        "isPatternFocus": true,
+        "coachingHint": "We hear '/f/' at the very start. Which Greek letter team makes that sound?"
+      },
+      {
+        "grapheme": "o",
+        "phoneme": "/oʊ/",
+        "startIndex": 2,
+        "endIndex": 2
+      },
+      {
+        "grapheme": "t",
+        "phoneme": "/t/",
+        "startIndex": 3,
+        "endIndex": 3
+      },
+      {
+        "grapheme": "o",
+        "phoneme": "/ə/",
+        "startIndex": 4,
+        "endIndex": 4,
+        "coachingHint": "The quiet vowel in the middle beat is an O, just like the O before it!"
+      },
+      {
+        "grapheme": "g",
+        "phoneme": "/g/",
+        "startIndex": 5,
+        "endIndex": 5
+      },
+      {
+        "grapheme": "r",
+        "phoneme": "/r/",
+        "startIndex": 6,
+        "endIndex": 6
+      },
+      {
+        "grapheme": "a",
+        "phoneme": "/æ/",
+        "startIndex": 7,
+        "endIndex": 7
+      },
+      {
+        "grapheme": "ph",
+        "phoneme": "/f/",
+        "startIndex": 8,
+        "endIndex": 9,
+        "isPatternFocus": true,
+        "coachingHint": "There's that '/f/' sound again at the very end! The same Greek team is back—which two letters?"
+      }
+    ],
+    "traps": [
+      {
+        "misspelling": "fotograph",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 0,
+        "candidatePair": [
+          "P",
+          "F"
+        ],
+        "judgeResponse": "You heard '/f/' at the start! Just like ELEPHANT, this Greek word spells that sound with the P-H team—and PHOTOGRAPH uses it twice!",
+        "memoryTrick": "PHOTOGRAPH has P-H bookends: one at the front and one at the back!"
+      },
+      {
+        "misspelling": "photograf",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 8,
+        "candidatePair": [
+          "P",
+          "F"
+        ],
+        "judgeResponse": "The first P-H is perfect! Now listen to the end: that '/f/' is the Greek P-H team again.",
+        "memoryTrick": "PHOTOGRAPH has P-H bookends: one at the front and one at the back!"
+      },
+      {
+        "misspelling": "photagraph",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 4,
+        "candidatePair": [
+          "O",
+          "A"
+        ],
+        "judgeResponse": "Both P-H teams are perfect! The quiet vowel in the middle is an O: P-H-O-T-O.",
+        "memoryTrick": "A PHOTO has two O's, like two round camera lenses!"
+      }
+    ],
+    "wordStory": "It is built from two Greek words: 'phos' (light) and 'graphe' (drawing). A photograph is a drawing made with light!"
+  },
+  {
+    "id": "word_pharmacy",
+    "word": "pharmacy",
+    "syllables": [
+      "phar",
+      "ma",
+      "cy"
+    ],
+    "phoneticRespelling": "FAR-muh-see",
+    "difficulty": 3.6,
+    "patternId": "greek-ph",
+    "role": "TRANSFER_PROBE",
+    "meanings": [
+      {
+        "partOfSpeech": "noun",
+        "kidDefinition": "A store where you can get medicine to help you feel better.",
+        "exampleSentence": "Dad picked up my cough medicine at the pharmacy.",
+        "blankedSentence": "Dad picked up my cough medicine at the ________."
+      }
+    ],
+    "graphemeMap": [
+      {
+        "grapheme": "ph",
+        "phoneme": "/f/",
+        "startIndex": 0,
+        "endIndex": 1,
+        "isPatternFocus": true,
+        "coachingHint": "It sounds like FARM at the start, but this word came from Greek. Which letter team makes '/f/'?"
+      },
+      {
+        "grapheme": "ar",
+        "phoneme": "/ɑːr/",
+        "startIndex": 2,
+        "endIndex": 3
+      },
+      {
+        "grapheme": "m",
+        "phoneme": "/m/",
+        "startIndex": 4,
+        "endIndex": 4
+      },
+      {
+        "grapheme": "a",
+        "phoneme": "/ə/",
+        "startIndex": 5,
+        "endIndex": 5,
+        "coachingHint": "The quiet vowel in the middle beat is an A!"
+      },
+      {
+        "grapheme": "c",
+        "phoneme": "/s/",
+        "startIndex": 6,
+        "endIndex": 6,
+        "coachingHint": "This '/s/' sound comes right before a Y. Which letter turns soft in front of Y?"
+      },
+      {
+        "grapheme": "y",
+        "phoneme": "/i/",
+        "startIndex": 7,
+        "endIndex": 7
+      }
+    ],
+    "traps": [
+      {
+        "misspelling": "farmacy",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 0,
+        "candidatePair": [
+          "P",
+          "F"
+        ],
+        "judgeResponse": "Great ear! It does sound like a FARM, but PHARMACY is a Greek word, so its '/f/' is spelled P-H.",
+        "memoryTrick": "No cows at the PHARMACY: it starts with P-H, not F-A-R-M!"
+      },
+      {
+        "misspelling": "pharmasy",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 6,
+        "candidatePair": [
+          "C",
+          "S"
+        ],
+        "judgeResponse": "The P-H is perfect! Near the end, the '/s/' sound is a Soft C, because the next letter is Y.",
+        "memoryTrick": "A Soft C sits right before the Y: M-A-C-Y!"
+      }
+    ],
+    "wordStory": "Comes from the Greek word 'pharmakon', which meant medicine. Ancient Greek healers mixed their medicines from plants and herbs!"
+  },
+  {
+    "id": "word_wrinkle",
+    "word": "wrinkle",
+    "syllables": [
+      "wrin",
+      "kle"
+    ],
+    "phoneticRespelling": "RING-kul",
+    "difficulty": 2.5,
+    "patternId": "silent-wr",
+    "role": "TRANSFER_PROBE",
+    "meanings": [
+      {
+        "partOfSpeech": "noun",
+        "kidDefinition": "A small line or fold in something, like in a shirt that needs ironing or in your fingertips after a long bath.",
+        "exampleSentence": "Mom ironed the shirt until every wrinkle was gone.",
+        "blankedSentence": "Mom ironed the shirt until every _______ was gone."
+      }
+    ],
+    "graphemeMap": [
+      {
+        "grapheme": "wr",
+        "phoneme": "/r/",
+        "startIndex": 0,
+        "endIndex": 1,
+        "isPatternFocus": true,
+        "coachingHint": "Listen: '/r/' comes first, but remember the silent team. Which quiet letter stands in front of R?"
+      },
+      {
+        "grapheme": "i",
+        "phoneme": "/ɪ/",
+        "startIndex": 2,
+        "endIndex": 2
+      },
+      {
+        "grapheme": "n",
+        "phoneme": "/ŋ/",
+        "startIndex": 3,
+        "endIndex": 3
+      },
+      {
+        "grapheme": "k",
+        "phoneme": "/k/",
+        "startIndex": 4,
+        "endIndex": 4,
+        "coachingHint": "The '/k/' sound in the middle rhymes with TWINKLE. Which letter makes '/k/' there?"
+      },
+      {
+        "grapheme": "le",
+        "phoneme": "/əl/",
+        "startIndex": 5,
+        "endIndex": 6,
+        "coachingHint": "The '/ul/' sound at the end is spelled L-E, just like in TWINKLE!"
+      }
+    ],
+    "traps": [
+      {
+        "misspelling": "rinkle",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 0,
+        "candidatePair": [
+          "W",
+          "R"
+        ],
+        "judgeResponse": "You heard '/r/' at the start! Remember the Silent W-R team from WRITE—WRINKLE begins with a quiet W.",
+        "memoryTrick": "There's INK in wr-INK-le, and a silent W in front!"
+      },
+      {
+        "misspelling": "wrincle",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 4,
+        "candidatePair": [
+          "K",
+          "C"
+        ],
+        "judgeResponse": "The silent W is perfect! The '/k/' in the middle of WRINKLE is spelled with a K, just like TWINKLE and SPRINKLE.",
+        "memoryTrick": "TWINKLE, SPRINKLE, WRINKLE: all I-N-K-L-E!"
+      },
+      {
+        "misspelling": "wrinkel",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 5,
+        "judgeResponse": "So close! The silent W is perfect. The '/ul/' sound at the end of WRINKLE is spelled L-E: K-L-E.",
+        "memoryTrick": "TWINKLE, SPRINKLE, WRINKLE: all I-N-K-L-E!"
+      }
+    ],
+    "wordStory": "Your fingers wrinkle in the bath—and scientists think those wrinkles help you grip wet things, like the treads on a tire!"
+  },
+  {
+    "id": "word_wreath",
+    "word": "wreath",
+    "syllables": [
+      "wreath"
+    ],
+    "phoneticRespelling": "REETH",
+    "difficulty": 2.6,
+    "patternId": "silent-wr",
+    "role": "TRANSFER_PROBE",
+    "meanings": [
+      {
+        "partOfSpeech": "noun",
+        "kidDefinition": "A ring made of leaves, flowers, or branches that people hang on a door for decoration.",
+        "exampleSentence": "We hung a green wreath on the front door.",
+        "blankedSentence": "We hung a green ______ on the front door."
+      }
+    ],
+    "graphemeMap": [
+      {
+        "grapheme": "wr",
+        "phoneme": "/r/",
+        "startIndex": 0,
+        "endIndex": 1,
+        "isPatternFocus": true,
+        "coachingHint": "We hear '/r/' first. Which silent letter belongs in front of the R?"
+      },
+      {
+        "grapheme": "ea",
+        "phoneme": "/iː/",
+        "startIndex": 2,
+        "endIndex": 3,
+        "coachingHint": "Two vowels team up to make the long E sound here—the same two as in the word EAT!"
+      },
+      {
+        "grapheme": "th",
+        "phoneme": "/θ/",
+        "startIndex": 4,
+        "endIndex": 5
+      }
+    ],
+    "traps": [
+      {
+        "misspelling": "reath",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 0,
+        "candidatePair": [
+          "W",
+          "R"
+        ],
+        "judgeResponse": "You heard '/r/' at the start! Just like WRITE, the word WREATH begins with a silent W.",
+        "memoryTrick": "You WRap a WReath around in a ring: both start with W-R!"
+      },
+      {
+        "misspelling": "wreeth",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 3,
+        "candidatePair": [
+          "A",
+          "E"
+        ],
+        "judgeResponse": "The silent W is perfect! The long E sound in WREATH is spelled E-A, just like in EAT.",
+        "memoryTrick": "Don't EAT the wr-EAT-h!"
+      }
+    ],
+    "wordStory": "In ancient Greece, winners at the Olympic Games did not get gold medals—they were crowned with a wreath of olive leaves!"
+  },
+  {
+    "id": "word_wrestle",
+    "word": "wrestle",
+    "syllables": [
+      "wres",
+      "tle"
+    ],
+    "phoneticRespelling": "RES-ul",
+    "difficulty": 3.0,
+    "patternId": "silent-wr",
+    "role": "TRANSFER_PROBE",
+    "meanings": [
+      {
+        "partOfSpeech": "verb",
+        "kidDefinition": "To play-fight by holding and pushing someone and trying to pin them to the ground.",
+        "exampleSentence": "The two bear cubs love to wrestle in the grass.",
+        "blankedSentence": "The two bear cubs love to _______ in the grass."
+      }
+    ],
+    "graphemeMap": [
+      {
+        "grapheme": "wr",
+        "phoneme": "/r/",
+        "startIndex": 0,
+        "endIndex": 1,
+        "isPatternFocus": true,
+        "coachingHint": "We hear '/r/' first, but remember the silent team. Which quiet letter stands in front of R?"
+      },
+      {
+        "grapheme": "e",
+        "phoneme": "/ɛ/",
+        "startIndex": 2,
+        "endIndex": 2
+      },
+      {
+        "grapheme": "s",
+        "phoneme": "/s/",
+        "startIndex": 3,
+        "endIndex": 3
+      },
+      {
+        "grapheme": "t",
+        "phoneme": "(silent)",
+        "startIndex": 4,
+        "endIndex": 4,
+        "coachingHint": "A second silent letter is hiding right after the S! It is the same one hiding in WHISTLE and CASTLE."
+      },
+      {
+        "grapheme": "le",
+        "phoneme": "/əl/",
+        "startIndex": 5,
+        "endIndex": 6,
+        "coachingHint": "The '/ul/' sound at the end is spelled L-E!"
+      }
+    ],
+    "traps": [
+      {
+        "misspelling": "restle",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 0,
+        "candidatePair": [
+          "W",
+          "R"
+        ],
+        "judgeResponse": "You heard '/r/' at the start! Remember the Silent W-R team—WRESTLE begins with a quiet W.",
+        "memoryTrick": "WRESTLE has two quiet letters: a W at the front and a T in the middle!"
+      },
+      {
+        "misspelling": "wressle",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 4,
+        "candidatePair": [
+          "T",
+          "S"
+        ],
+        "judgeResponse": "The silent W is perfect! In the middle, WRESTLE hides a silent T, just like WHISTLE and CASTLE: S-T-L-E.",
+        "memoryTrick": "WHISTLE, CASTLE, WRESTLE: each one hides a silent T before L-E!"
+      }
+    ],
+    "wordStory": "Wrestling is one of the oldest sports in the world—it was part of the ancient Olympic Games in Greece more than 2,700 years ago!"
+  },
+  {
+    "id": "word_gentle",
+    "word": "gentle",
+    "syllables": [
+      "gen",
+      "tle"
+    ],
+    "phoneticRespelling": "JEN-tul",
+    "difficulty": 2.2,
+    "patternId": "soft-g-before-eiy",
+    "role": "ANCHOR",
+    "meanings": [
+      {
+        "partOfSpeech": "adjective",
+        "kidDefinition": "Soft, kind, and careful, so you do not hurt anyone or anything.",
+        "exampleSentence": "Be gentle when you pet the baby bunny.",
+        "blankedSentence": "Be ______ when you pet the baby bunny."
+      }
+    ],
+    "graphemeMap": [
+      {
+        "grapheme": "g",
+        "phoneme": "/dʒ/",
+        "startIndex": 0,
+        "endIndex": 0,
+        "isPatternFocus": true,
+        "coachingHint": "We hear '/j/' at the start, and the next letter is E. Which letter turns soft in front of an E?"
+      },
+      {
+        "grapheme": "e",
+        "phoneme": "/ɛ/",
+        "startIndex": 1,
+        "endIndex": 1
+      },
+      {
+        "grapheme": "n",
+        "phoneme": "/n/",
+        "startIndex": 2,
+        "endIndex": 2
+      },
+      {
+        "grapheme": "t",
+        "phoneme": "/t/",
+        "startIndex": 3,
+        "endIndex": 3
+      },
+      {
+        "grapheme": "le",
+        "phoneme": "/əl/",
+        "startIndex": 4,
+        "endIndex": 5,
+        "coachingHint": "The '/ul/' sound at the end is spelled L-E, just like in LITTLE!"
+      }
+    ],
+    "traps": [
+      {
+        "misspelling": "jentle",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 0,
+        "candidatePair": [
+          "G",
+          "J"
+        ],
+        "judgeResponse": "Great ear! That '/j/' sound in GENTLE is a Soft G, because it is followed by E.",
+        "memoryTrick": "Be GENTLE with a soft, soft G!"
+      },
+      {
+        "misspelling": "gentel",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 4,
+        "judgeResponse": "The Soft G is wonderful! The '/ul/' sound at the end is spelled L-E, just like LITTLE: T-L-E.",
+        "memoryTrick": "LITTLE and GENTLE both end in T-L-E!"
+      }
+    ],
+    "wordStory": "A mother crocodile has one of the strongest bites in the world, but she is gentle enough to carry her tiny babies to the water inside her mouth!"
+  },
+  {
+    "id": "word_energy",
+    "word": "energy",
+    "syllables": [
+      "en",
+      "er",
+      "gy"
+    ],
+    "phoneticRespelling": "EN-ur-jee",
+    "difficulty": 2.6,
+    "patternId": "soft-g-before-eiy",
+    "role": "TRANSFER_PROBE",
+    "meanings": [
+      {
+        "partOfSpeech": "noun",
+        "kidDefinition": "The power that lets you run, jump, and play—and that makes lights shine and cars go.",
+        "exampleSentence": "After a good breakfast, I have lots of energy to play.",
+        "blankedSentence": "After a good breakfast, I have lots of ______ to play."
+      }
+    ],
+    "graphemeMap": [
+      {
+        "grapheme": "e",
+        "phoneme": "/ɛ/",
+        "startIndex": 0,
+        "endIndex": 0
+      },
+      {
+        "grapheme": "n",
+        "phoneme": "/n/",
+        "startIndex": 1,
+        "endIndex": 1
+      },
+      {
+        "grapheme": "er",
+        "phoneme": "/ər/",
+        "startIndex": 2,
+        "endIndex": 3,
+        "coachingHint": "The '/ur/' sound in the middle beat is spelled E-R!"
+      },
+      {
+        "grapheme": "g",
+        "phoneme": "/dʒ/",
+        "startIndex": 4,
+        "endIndex": 4,
+        "isPatternFocus": true,
+        "coachingHint": "We hear '/j/' near the end, and the last letter is Y. Which letter turns soft in front of a Y?"
+      },
+      {
+        "grapheme": "y",
+        "phoneme": "/i/",
+        "startIndex": 5,
+        "endIndex": 5
+      }
+    ],
+    "traps": [
+      {
+        "misspelling": "enerjy",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 4,
+        "candidatePair": [
+          "G",
+          "J"
+        ],
+        "judgeResponse": "You heard '/j/' perfectly! Just like GIANT, the '/j/' in ENERGY is a Soft G—this time because the next letter is Y.",
+        "memoryTrick": "E, I, or Y makes G go soft: ener-G-Y!"
+      },
+      {
+        "misspelling": "enargy",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 2,
+        "candidatePair": [
+          "E",
+          "A"
+        ],
+        "judgeResponse": "The Soft G is perfect! The middle beat of ENERGY is spelled E-R: E-N, E-R, G-Y.",
+        "memoryTrick": "ENERGY has two E's to keep it going!"
+      }
+    ],
+    "wordStory": "Comes from the Greek word 'energeia', which means 'being at work'. Even when you sleep, your body uses energy to dream and grow!"
+  },
+  {
+    "id": "word_gigantic",
+    "word": "gigantic",
+    "syllables": [
+      "gi",
+      "gan",
+      "tic"
+    ],
+    "phoneticRespelling": "jy-GAN-tik",
+    "difficulty": 3.0,
+    "patternId": "soft-g-before-eiy",
+    "role": "TRANSFER_PROBE",
+    "meanings": [
+      {
+        "partOfSpeech": "adjective",
+        "kidDefinition": "Really, really huge—much bigger than big.",
+        "exampleSentence": "A gigantic wave splashed over the sand castle.",
+        "blankedSentence": "A ________ wave splashed over the sand castle."
+      }
+    ],
+    "graphemeMap": [
+      {
+        "grapheme": "g",
+        "phoneme": "/dʒ/",
+        "startIndex": 0,
+        "endIndex": 0,
+        "isPatternFocus": true,
+        "coachingHint": "We hear '/j/' at the start, and the next letter is I. Which letter turns soft in front of an I?"
+      },
+      {
+        "grapheme": "i",
+        "phoneme": "/aɪ/",
+        "startIndex": 1,
+        "endIndex": 1
+      },
+      {
+        "grapheme": "g",
+        "phoneme": "/g/",
+        "startIndex": 2,
+        "endIndex": 2,
+        "coachingHint": "This G is followed by A, so it stays hard and says '/g/'!"
+      },
+      {
+        "grapheme": "a",
+        "phoneme": "/æ/",
+        "startIndex": 3,
+        "endIndex": 3
+      },
+      {
+        "grapheme": "n",
+        "phoneme": "/n/",
+        "startIndex": 4,
+        "endIndex": 4
+      },
+      {
+        "grapheme": "t",
+        "phoneme": "/t/",
+        "startIndex": 5,
+        "endIndex": 5
+      },
+      {
+        "grapheme": "i",
+        "phoneme": "/ɪ/",
+        "startIndex": 6,
+        "endIndex": 6
+      },
+      {
+        "grapheme": "c",
+        "phoneme": "/k/",
+        "startIndex": 7,
+        "endIndex": 7,
+        "coachingHint": "The '/k/' sound at the very end is spelled with a single letter, just like in MAGIC!"
+      }
+    ],
+    "traps": [
+      {
+        "misspelling": "jigantic",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 0,
+        "candidatePair": [
+          "G",
+          "J"
+        ],
+        "judgeResponse": "Great ear! GIGANTIC starts with '/j/', and that sound is a Soft G because the next letter is I. The second G is followed by A, so it stays hard!",
+        "memoryTrick": "GIGANTIC has two G's: one soft before I, one hard before A!"
+      },
+      {
+        "misspelling": "gigantik",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 7,
+        "candidatePair": [
+          "C",
+          "K"
+        ],
+        "judgeResponse": "Both G's are perfect! The '/k/' sound at the end of GIGANTIC is spelled with a C, just like MAGIC.",
+        "memoryTrick": "MAGIC, PICNIC, GIGANTIC: all end in I-C!"
+      }
+    ],
+    "wordStory": "The blue whale is the most gigantic animal on Earth—it can grow almost as long as three school buses parked in a row!"
+  },
+  {
+    "id": "word_general",
+    "word": "general",
+    "syllables": [
+      "gen",
+      "er",
+      "al"
+    ],
+    "phoneticRespelling": "JEN-ur-ul",
+    "difficulty": 2.8,
+    "patternId": "soft-g-before-eiy",
+    "role": "TRANSFER_PROBE",
+    "meanings": [
+      {
+        "partOfSpeech": "noun",
+        "kidDefinition": "The leader in charge of a whole army.",
+        "exampleSentence": "The general led her soldiers across the bridge.",
+        "blankedSentence": "The _______ led her soldiers across the bridge."
+      }
+    ],
+    "graphemeMap": [
+      {
+        "grapheme": "g",
+        "phoneme": "/dʒ/",
+        "startIndex": 0,
+        "endIndex": 0,
+        "isPatternFocus": true,
+        "coachingHint": "We hear '/j/' at the start, and the next letter is E. Which letter turns soft in front of an E?"
+      },
+      {
+        "grapheme": "e",
+        "phoneme": "/ɛ/",
+        "startIndex": 1,
+        "endIndex": 1
+      },
+      {
+        "grapheme": "n",
+        "phoneme": "/n/",
+        "startIndex": 2,
+        "endIndex": 2
+      },
+      {
+        "grapheme": "er",
+        "phoneme": "/ər/",
+        "startIndex": 3,
+        "endIndex": 4,
+        "coachingHint": "The quiet middle beat is spelled E-R. Say it slowly: GEN-ER-AL!"
+      },
+      {
+        "grapheme": "a",
+        "phoneme": "/ə/",
+        "startIndex": 5,
+        "endIndex": 5,
+        "coachingHint": "The quiet vowel in the last beat is an A!"
+      },
+      {
+        "grapheme": "l",
+        "phoneme": "/l/",
+        "startIndex": 6,
+        "endIndex": 6
+      }
+    ],
+    "traps": [
+      {
+        "misspelling": "jeneral",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 0,
+        "candidatePair": [
+          "G",
+          "J"
+        ],
+        "judgeResponse": "You heard '/j/' at the start! Just like GENTLE, the word GENERAL begins with a Soft G, because the next letter is E.",
+        "memoryTrick": "G-E-N: GENTLE and GENERAL start the very same way!"
+      },
+      {
+        "misspelling": "generel",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 5,
+        "candidatePair": [
+          "A",
+          "E"
+        ],
+        "judgeResponse": "The Soft G is perfect! The quiet vowel in the last beat is an A: G-E-N, E-R, A-L.",
+        "memoryTrick": "GENER-AL ends with AL!"
+      },
+      {
+        "misspelling": "genral",
+        "bucket": "SYLLABLE_OMISSION",
+        "errorTileIndex": 3,
+        "judgeResponse": "So close! The Soft G is perfect, but a quiet beat went missing. Clap it out: GEN-ER-AL has three beats.",
+        "memoryTrick": "Clap three times: GEN, ER, AL!"
+      }
+    ],
+    "wordStory": "George Washington was a general who led an army before he became the very first President of the United States!"
+  },
+  {
+    "id": "word_blossom",
+    "word": "blossom",
+    "syllables": [
+      "blos",
+      "som"
+    ],
+    "phoneticRespelling": "BLOS-um",
+    "difficulty": 2.3,
+    "patternId": "double-consonant-short-vowel",
+    "role": "TRANSFER_PROBE",
+    "meanings": [
+      {
+        "partOfSpeech": "noun",
+        "kidDefinition": "A flower, especially one that grows on a fruit tree in spring.",
+        "exampleSentence": "A pink blossom floated down from the cherry tree.",
+        "blankedSentence": "A pink _______ floated down from the cherry tree."
+      }
+    ],
+    "graphemeMap": [
+      {
+        "grapheme": "b",
+        "phoneme": "/b/",
+        "startIndex": 0,
+        "endIndex": 0
+      },
+      {
+        "grapheme": "l",
+        "phoneme": "/l/",
+        "startIndex": 1,
+        "endIndex": 1
+      },
+      {
+        "grapheme": "o",
+        "phoneme": "/ɒ/",
+        "startIndex": 2,
+        "endIndex": 2
+      },
+      {
+        "grapheme": "ss",
+        "phoneme": "/s/",
+        "startIndex": 3,
+        "endIndex": 4,
+        "isPatternFocus": true,
+        "coachingHint": "The O in the first beat is short. Remember the twin guards—how many S's go in the middle?"
+      },
+      {
+        "grapheme": "o",
+        "phoneme": "/ə/",
+        "startIndex": 5,
+        "endIndex": 5,
+        "coachingHint": "The quiet vowel in the second beat matches the vowel in the first beat!"
+      },
+      {
+        "grapheme": "m",
+        "phoneme": "/m/",
+        "startIndex": 6,
+        "endIndex": 6
+      }
+    ],
+    "traps": [
+      {
+        "misspelling": "blosom",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 4,
+        "judgeResponse": "So close! The first O in BLOSSOM is short, just like the A in RABBIT, so the middle consonant needs a twin: B-L-O-S, S-O-M.",
+        "memoryTrick": "BLOS + SOM: two S's and two O's!"
+      },
+      {
+        "misspelling": "blossum",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 5,
+        "candidatePair": [
+          "O",
+          "U"
+        ],
+        "judgeResponse": "The twin S's are perfect! The quiet vowel in the second beat is another O: S-O-M.",
+        "memoryTrick": "BLOS + SOM: two S's and two O's!"
+      }
+    ],
+    "wordStory": "In Japan, families have picnics under the cherry trees every spring to enjoy the blossoms. The party is called 'hanami', which means 'flower viewing'!"
+  },
+  {
+    "id": "word_station",
+    "word": "station",
+    "syllables": [
+      "sta",
+      "tion"
+    ],
+    "phoneticRespelling": "STAY-shun",
+    "difficulty": 2.3,
+    "patternId": "tion-ending",
+    "role": "ANCHOR",
+    "meanings": [
+      {
+        "partOfSpeech": "noun",
+        "kidDefinition": "A place where trains or buses stop to let people on and off.",
+        "exampleSentence": "The train pulled into the station right on time.",
+        "blankedSentence": "The train pulled into the _______ right on time."
+      }
+    ],
+    "graphemeMap": [
+      {
+        "grapheme": "s",
+        "phoneme": "/s/",
+        "startIndex": 0,
+        "endIndex": 0
+      },
+      {
+        "grapheme": "t",
+        "phoneme": "/t/",
+        "startIndex": 1,
+        "endIndex": 1
+      },
+      {
+        "grapheme": "a",
+        "phoneme": "/eɪ/",
+        "startIndex": 2,
+        "endIndex": 2
+      },
+      {
+        "grapheme": "tion",
+        "phoneme": "/ʃən/",
+        "startIndex": 3,
+        "endIndex": 6,
+        "isPatternFocus": true,
+        "coachingHint": "Listen to the '/shun/' at the end. There is no S-H here! Which four letters usually spell that ending?"
+      }
+    ],
+    "traps": [
+      {
+        "misspelling": "stasion",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 3,
+        "candidatePair": [
+          "T",
+          "S"
+        ],
+        "judgeResponse": "Good thinking—S-I-O-N is a real ending! But STATION uses the most common '/shun/' team: T-I-O-N.",
+        "memoryTrick": "Two T's wait at the STATION: S-T-A-T-I-O-N!"
+      },
+      {
+        "misspelling": "stashun",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 3,
+        "judgeResponse": "You spelled it just the way it sounds—great listening! But at the end of a word, '/shun/' is most often spelled T-I-O-N.",
+        "memoryTrick": "The train says 'shun', but the sign says T-I-O-N!"
+      }
+    ],
+    "wordStory": "Comes from the Latin word 'statio', which means 'a standing place'—a station is where the train stands still so you can climb aboard!"
+  },
+  {
+    "id": "word_nation",
+    "word": "nation",
+    "syllables": [
+      "na",
+      "tion"
+    ],
+    "phoneticRespelling": "NAY-shun",
+    "difficulty": 2.2,
+    "patternId": "tion-ending",
+    "role": "ANCHOR",
+    "meanings": [
+      {
+        "partOfSpeech": "noun",
+        "kidDefinition": "A country and all the people who live in it.",
+        "exampleSentence": "People from every nation come to watch the Olympic Games.",
+        "blankedSentence": "People from every ______ come to watch the Olympic Games."
+      }
+    ],
+    "graphemeMap": [
+      {
+        "grapheme": "n",
+        "phoneme": "/n/",
+        "startIndex": 0,
+        "endIndex": 0
+      },
+      {
+        "grapheme": "a",
+        "phoneme": "/eɪ/",
+        "startIndex": 1,
+        "endIndex": 1
+      },
+      {
+        "grapheme": "tion",
+        "phoneme": "/ʃən/",
+        "startIndex": 2,
+        "endIndex": 5,
+        "isPatternFocus": true,
+        "coachingHint": "Listen to the '/shun/' at the end. There is no S-H here! Which four letters usually spell that ending?"
+      }
+    ],
+    "traps": [
+      {
+        "misspelling": "nasion",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 2,
+        "candidatePair": [
+          "T",
+          "S"
+        ],
+        "judgeResponse": "Good thinking—S-I-O-N is a real ending! But NATION uses the most common '/shun/' team: T-I-O-N.",
+        "memoryTrick": "Rhyme time: STATION and NATION both end in A-T-I-O-N!"
+      },
+      {
+        "misspelling": "nashun",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 2,
+        "judgeResponse": "You spelled it just the way it sounds—great listening! But at the end of a word, '/shun/' is most often spelled T-I-O-N.",
+        "memoryTrick": "Rhyme time: STATION and NATION both end in A-T-I-O-N!"
+      }
+    ],
+    "wordStory": "There are almost 200 nations in the world, and each one has its own flag!"
+  },
+  {
+    "id": "word_vacation",
+    "word": "vacation",
+    "syllables": [
+      "va",
+      "ca",
+      "tion"
+    ],
+    "phoneticRespelling": "vay-KAY-shun",
+    "difficulty": 2.8,
+    "patternId": "tion-ending",
+    "role": "TRANSFER_PROBE",
+    "meanings": [
+      {
+        "partOfSpeech": "noun",
+        "kidDefinition": "A special time when you take a break from school or work to rest, play, or travel.",
+        "exampleSentence": "We built a huge sand castle on our beach vacation.",
+        "blankedSentence": "We built a huge sand castle on our beach ________."
+      }
+    ],
+    "graphemeMap": [
+      {
+        "grapheme": "v",
+        "phoneme": "/v/",
+        "startIndex": 0,
+        "endIndex": 0
+      },
+      {
+        "grapheme": "a",
+        "phoneme": "/eɪ/",
+        "startIndex": 1,
+        "endIndex": 1
+      },
+      {
+        "grapheme": "c",
+        "phoneme": "/k/",
+        "startIndex": 2,
+        "endIndex": 2,
+        "coachingHint": "This '/k/' sound is followed by A, so it is spelled with a hard C!"
+      },
+      {
+        "grapheme": "a",
+        "phoneme": "/eɪ/",
+        "startIndex": 3,
+        "endIndex": 3
+      },
+      {
+        "grapheme": "tion",
+        "phoneme": "/ʃən/",
+        "startIndex": 4,
+        "endIndex": 7,
+        "isPatternFocus": true,
+        "coachingHint": "Listen to the '/shun/' at the end. Remember the ending from STATION—which four letters spell it?"
+      }
+    ],
+    "traps": [
+      {
+        "misspelling": "vacasion",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 4,
+        "candidatePair": [
+          "T",
+          "S"
+        ],
+        "judgeResponse": "So close! Just like STATION, the '/shun/' at the end of VACATION is spelled T-I-O-N.",
+        "memoryTrick": "STATION, NATION, VACATION: all end in A-T-I-O-N!"
+      },
+      {
+        "misspelling": "vakation",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 2,
+        "candidatePair": [
+          "C",
+          "K"
+        ],
+        "judgeResponse": "The T-I-O-N ending is perfect! The '/k/' sound in the middle is a hard C, because the next letter is A.",
+        "memoryTrick": "Take your CAT on va-CAT-ion!"
+      }
+    ],
+    "wordStory": "Comes from a Latin word meaning 'to be free' or 'empty'—on vacation, your calendar is empty and you are free to play!"
+  },
+  {
+    "id": "word_direction",
+    "word": "direction",
+    "syllables": [
+      "di",
+      "rec",
+      "tion"
+    ],
+    "phoneticRespelling": "duh-REK-shun",
+    "difficulty": 3.0,
+    "patternId": "tion-ending",
+    "role": "TRANSFER_PROBE",
+    "meanings": [
+      {
+        "partOfSpeech": "noun",
+        "kidDefinition": "The way that someone or something is facing or moving, like north, south, left, or right.",
+        "exampleSentence": "The wind changed direction and blew my hat away.",
+        "blankedSentence": "The wind changed _________ and blew my hat away."
+      }
+    ],
+    "graphemeMap": [
+      {
+        "grapheme": "d",
+        "phoneme": "/d/",
+        "startIndex": 0,
+        "endIndex": 0
+      },
+      {
+        "grapheme": "i",
+        "phoneme": "/ɪ/",
+        "startIndex": 1,
+        "endIndex": 1,
+        "coachingHint": "The quiet vowel in the first beat is an I!"
+      },
+      {
+        "grapheme": "r",
+        "phoneme": "/r/",
+        "startIndex": 2,
+        "endIndex": 2
+      },
+      {
+        "grapheme": "e",
+        "phoneme": "/ɛ/",
+        "startIndex": 3,
+        "endIndex": 3
+      },
+      {
+        "grapheme": "c",
+        "phoneme": "/k/",
+        "startIndex": 4,
+        "endIndex": 4,
+        "coachingHint": "The '/k/' sound before the ending is spelled with a C!"
+      },
+      {
+        "grapheme": "tion",
+        "phoneme": "/ʃən/",
+        "startIndex": 5,
+        "endIndex": 8,
+        "isPatternFocus": true,
+        "coachingHint": "Listen to the '/shun/' at the end. Remember the ending from STATION—which four letters spell it?"
+      }
+    ],
+    "traps": [
+      {
+        "misspelling": "direcsion",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 5,
+        "candidatePair": [
+          "T",
+          "S"
+        ],
+        "judgeResponse": "So close! DIRECTION comes from DIRECT, so it keeps the T: the '/shun/' ending is T-I-O-N.",
+        "memoryTrick": "DIRECT + ION = DIRECTION!"
+      },
+      {
+        "misspelling": "derection",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 1,
+        "candidatePair": [
+          "I",
+          "E"
+        ],
+        "judgeResponse": "The T-I-O-N ending is perfect! The quiet vowel in the first beat is an I: D-I, R-E-C, T-I-O-N.",
+        "memoryTrick": "DIRECT + ION = DIRECTION!"
+      },
+      {
+        "misspelling": "direcshun",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 5,
+        "judgeResponse": "You spelled it just the way it sounds—great listening! Just like STATION, the '/shun/' ending is spelled T-I-O-N.",
+        "memoryTrick": "DIRECT + ION = DIRECTION!"
+      }
+    ],
+    "wordStory": "A compass needle always points north because the whole Earth acts like one enormous magnet!"
+  },
+  {
+    "id": "word_invention",
+    "word": "invention",
+    "syllables": [
+      "in",
+      "ven",
+      "tion"
+    ],
+    "phoneticRespelling": "in-VEN-shun",
+    "difficulty": 3.1,
+    "patternId": "tion-ending",
+    "role": "TRANSFER_PROBE",
+    "meanings": [
+      {
+        "partOfSpeech": "noun",
+        "kidDefinition": "Something new that somebody thought up and made for the very first time.",
+        "exampleSentence": "The telephone was an amazing invention.",
+        "blankedSentence": "The telephone was an amazing _________."
+      }
+    ],
+    "graphemeMap": [
+      {
+        "grapheme": "i",
+        "phoneme": "/ɪ/",
+        "startIndex": 0,
+        "endIndex": 0,
+        "coachingHint": "The first beat is a little word you already know: the opposite of OUT!"
+      },
+      {
+        "grapheme": "n",
+        "phoneme": "/n/",
+        "startIndex": 1,
+        "endIndex": 1
+      },
+      {
+        "grapheme": "v",
+        "phoneme": "/v/",
+        "startIndex": 2,
+        "endIndex": 2
+      },
+      {
+        "grapheme": "e",
+        "phoneme": "/ɛ/",
+        "startIndex": 3,
+        "endIndex": 3
+      },
+      {
+        "grapheme": "n",
+        "phoneme": "/n/",
+        "startIndex": 4,
+        "endIndex": 4
+      },
+      {
+        "grapheme": "tion",
+        "phoneme": "/ʃən/",
+        "startIndex": 5,
+        "endIndex": 8,
+        "isPatternFocus": true,
+        "coachingHint": "Listen to the '/shun/' at the end. Remember the ending from STATION—which four letters spell it?"
+      }
+    ],
+    "traps": [
+      {
+        "misspelling": "invension",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 5,
+        "candidatePair": [
+          "T",
+          "S"
+        ],
+        "judgeResponse": "Good thinking—S-I-O-N is a real ending! But INVENTION comes from INVENT, so it keeps the T: T-I-O-N.",
+        "memoryTrick": "INVENT + ION = INVENTION!"
+      },
+      {
+        "misspelling": "envention",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 0,
+        "candidatePair": [
+          "I",
+          "E"
+        ],
+        "judgeResponse": "The T-I-O-N ending is perfect! The first beat of INVENTION is the little word IN.",
+        "memoryTrick": "A great idea starts IN your head: IN-VEN-TION!"
+      }
+    ],
+    "wordStory": "The ice pop was invented by an 11-year-old! In 1905, Frank Epperson left a cup of soda mix with a stirring stick outside on a freezing night—and woke up to a frozen treat."
+  },
+  {
+    "id": "word_knapsack",
+    "word": "knapsack",
+    "syllables": [
+      "knap",
+      "sack"
+    ],
+    "phoneticRespelling": "NAP-sak",
+    "difficulty": 2.8,
+    "patternId": "silent-kn",
+    "role": "GUIDED",
+    "meanings": [
+      {
+        "partOfSpeech": "noun",
+        "kidDefinition": "A bag that you carry on your back.",
+        "exampleSentence": "She packed a sandwich and a map in her knapsack.",
+        "blankedSentence": "She packed a sandwich and a map in her ________."
+      }
+    ],
+    "graphemeMap": [
+      {
+        "grapheme": "kn",
+        "phoneme": "/n/",
+        "startIndex": 0,
+        "endIndex": 1,
+        "isPatternFocus": true,
+        "coachingHint": "Listen to the first sound. Does a silent letter belong in front of that N?"
+      },
+      {
+        "grapheme": "a",
+        "phoneme": "",
+        "startIndex": 2,
+        "endIndex": 2
+      },
+      {
+        "grapheme": "p",
+        "phoneme": "",
+        "startIndex": 3,
+        "endIndex": 3
+      },
+      {
+        "grapheme": "s",
+        "phoneme": "",
+        "startIndex": 4,
+        "endIndex": 4
+      },
+      {
+        "grapheme": "a",
+        "phoneme": "",
+        "startIndex": 5,
+        "endIndex": 5
+      },
+      {
+        "grapheme": "c",
+        "phoneme": "",
+        "startIndex": 6,
+        "endIndex": 6
+      },
+      {
+        "grapheme": "k",
+        "phoneme": "",
+        "startIndex": 7,
+        "endIndex": 7
+      }
+    ],
+    "traps": [
+      {
+        "misspelling": "napsack",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 0,
+        "judgeResponse": "Good try! A quiet K hides in front of the N at the start.",
+        "memoryTrick": "Look for “nap” hiding inside KNAPSACK!"
+      },
+      {
+        "misspelling": "knapsak",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 6,
+        "judgeResponse": "Good try! A quiet K hides in front of the N at the start.",
+        "memoryTrick": "Look for “nap” hiding inside KNAPSACK!"
+      }
+    ],
+    "wordStory": "A knapsack was probably first a snack sack: its name comes from an old German word for a bag that held a traveler's food!"
+  },
+  {
+    "id": "word_knead",
+    "word": "knead",
+    "syllables": [
+      "knead"
+    ],
+    "phoneticRespelling": "NEED",
+    "difficulty": 2.6,
+    "patternId": "silent-kn",
+    "role": "GUIDED",
+    "meanings": [
+      {
+        "partOfSpeech": "verb",
+        "kidDefinition": "To press and squash dough with your hands again and again.",
+        "exampleSentence": "We knead the dough before we bake the bread.",
+        "blankedSentence": "We _____ the dough before we bake the bread."
+      }
+    ],
+    "graphemeMap": [
+      {
+        "grapheme": "kn",
+        "phoneme": "/n/",
+        "startIndex": 0,
+        "endIndex": 1,
+        "isPatternFocus": true,
+        "coachingHint": "Listen to the first sound. Does a silent letter belong in front of that N?"
+      },
+      {
+        "grapheme": "e",
+        "phoneme": "",
+        "startIndex": 2,
+        "endIndex": 2
+      },
+      {
+        "grapheme": "a",
+        "phoneme": "",
+        "startIndex": 3,
+        "endIndex": 3
+      },
+      {
+        "grapheme": "d",
+        "phoneme": "",
+        "startIndex": 4,
+        "endIndex": 4
+      }
+    ],
+    "traps": [
+      {
+        "misspelling": "nead",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 0,
+        "judgeResponse": "Good try! A quiet K hides in front of the N at the start.",
+        "memoryTrick": "Look for “ad” hiding inside KNEAD!"
+      },
+      {
+        "misspelling": "kneed",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 3,
+        "candidatePair": [
+          "A",
+          "E"
+        ],
+        "judgeResponse": "Good try! A quiet K hides in front of the N at the start.",
+        "memoryTrick": "Look for “ad” hiding inside KNEAD!"
+      }
+    ],
+    "wordStory": "Cats push soft blankets with their paws in the same way, a habit left over from when they were tiny!"
+  },
+  {
+    "id": "word_wrench",
+    "word": "wrench",
+    "syllables": [
+      "wrench"
+    ],
+    "phoneticRespelling": "RENCH",
+    "difficulty": 2.3,
+    "patternId": "silent-wr",
+    "role": "ANCHOR",
+    "meanings": [
+      {
+        "partOfSpeech": "noun",
+        "kidDefinition": "A metal tool that grips and turns nuts and bolts.",
+        "exampleSentence": "Grandpa used a wrench to tighten the bike wheel.",
+        "blankedSentence": "Grandpa used a ______ to tighten the bike wheel."
+      }
+    ],
+    "graphemeMap": [
+      {
+        "grapheme": "wr",
+        "phoneme": "/r/",
+        "startIndex": 0,
+        "endIndex": 1,
+        "isPatternFocus": true,
+        "coachingHint": "Listen to the first sound. Does a silent letter belong in front of that R?"
+      },
+      {
+        "grapheme": "e",
+        "phoneme": "",
+        "startIndex": 2,
+        "endIndex": 2
+      },
+      {
+        "grapheme": "n",
+        "phoneme": "",
+        "startIndex": 3,
+        "endIndex": 3
+      },
+      {
+        "grapheme": "c",
+        "phoneme": "",
+        "startIndex": 4,
+        "endIndex": 4
+      },
+      {
+        "grapheme": "h",
+        "phoneme": "",
+        "startIndex": 5,
+        "endIndex": 5
+      }
+    ],
+    "traps": [
+      {
+        "misspelling": "rench",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 0,
+        "judgeResponse": "Good try! A quiet W hides in front of the R at the start.",
+        "memoryTrick": "Look for “wren” hiding inside WRENCH!"
+      },
+      {
+        "misspelling": "wrentch",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 4,
+        "judgeResponse": "Good try! A quiet W hides in front of the R at the start.",
+        "memoryTrick": "Look for “wren” hiding inside WRENCH!"
+      }
+    ],
+    "wordStory": "In Britain the very same tool is called a spanner!"
+  },
+  {
+    "id": "word_wrapper",
+    "word": "wrapper",
+    "syllables": [
+      "wrap",
+      "per"
+    ],
+    "phoneticRespelling": "RAP-er",
+    "difficulty": 2.5,
+    "patternId": "silent-wr",
+    "role": "ANCHOR",
+    "meanings": [
+      {
+        "partOfSpeech": "noun",
+        "kidDefinition": "The paper or plastic cover around a candy or a snack.",
+        "exampleSentence": "He put the empty wrapper in the trash can.",
+        "blankedSentence": "He put the empty _______ in the trash can."
+      }
+    ],
+    "graphemeMap": [
+      {
+        "grapheme": "wr",
+        "phoneme": "/r/",
+        "startIndex": 0,
+        "endIndex": 1,
+        "isPatternFocus": true,
+        "coachingHint": "Listen to the first sound. Does a silent letter belong in front of that R?"
+      },
+      {
+        "grapheme": "a",
+        "phoneme": "",
+        "startIndex": 2,
+        "endIndex": 2
+      },
+      {
+        "grapheme": "p",
+        "phoneme": "",
+        "startIndex": 3,
+        "endIndex": 3
+      },
+      {
+        "grapheme": "p",
+        "phoneme": "",
+        "startIndex": 4,
+        "endIndex": 4
+      },
+      {
+        "grapheme": "e",
+        "phoneme": "",
+        "startIndex": 5,
+        "endIndex": 5
+      },
+      {
+        "grapheme": "r",
+        "phoneme": "",
+        "startIndex": 6,
+        "endIndex": 6
+      }
+    ],
+    "traps": [
+      {
+        "misspelling": "rapper",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 0,
+        "judgeResponse": "Good try! A quiet W hides in front of the R at the start.",
+        "memoryTrick": "Look for “rap” hiding inside WRAPPER!"
+      },
+      {
+        "misspelling": "wraper",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 4,
+        "judgeResponse": "Good try! A quiet W hides in front of the R at the start.",
+        "memoryTrick": "Look for “rap” hiding inside WRAPPER!"
+      }
+    ],
+    "wordStory": "Long before plastic, people wrapped food in big leaves, and in some places they still do!"
+  },
+  {
+    "id": "word_wriggle",
+    "word": "wriggle",
+    "syllables": [
+      "wrig",
+      "gle"
+    ],
+    "phoneticRespelling": "RIG-ul",
+    "difficulty": 2.7,
+    "patternId": "silent-wr",
+    "role": "GUIDED",
+    "meanings": [
+      {
+        "partOfSpeech": "verb",
+        "kidDefinition": "To twist and turn your body with quick little moves.",
+        "exampleSentence": "The puppy tried to wriggle out of the bath.",
+        "blankedSentence": "The puppy tried to _______ out of the bath."
+      }
+    ],
+    "graphemeMap": [
+      {
+        "grapheme": "wr",
+        "phoneme": "/r/",
+        "startIndex": 0,
+        "endIndex": 1,
+        "isPatternFocus": true,
+        "coachingHint": "Listen to the first sound. Does a silent letter belong in front of that R?"
+      },
+      {
+        "grapheme": "i",
+        "phoneme": "",
+        "startIndex": 2,
+        "endIndex": 2
+      },
+      {
+        "grapheme": "g",
+        "phoneme": "",
+        "startIndex": 3,
+        "endIndex": 3
+      },
+      {
+        "grapheme": "g",
+        "phoneme": "",
+        "startIndex": 4,
+        "endIndex": 4
+      },
+      {
+        "grapheme": "l",
+        "phoneme": "",
+        "startIndex": 5,
+        "endIndex": 5
+      },
+      {
+        "grapheme": "e",
+        "phoneme": "",
+        "startIndex": 6,
+        "endIndex": 6
+      }
+    ],
+    "traps": [
+      {
+        "misspelling": "riggle",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 0,
+        "judgeResponse": "Good try! A quiet W hides in front of the R at the start.",
+        "memoryTrick": "Look for “rig” hiding inside WRIGGLE!"
+      },
+      {
+        "misspelling": "wrigle",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 4,
+        "judgeResponse": "Good try! A quiet W hides in front of the R at the start.",
+        "memoryTrick": "Look for “rig” hiding inside WRIGGLE!"
+      }
+    ],
+    "wordStory": "An earthworm has no bones at all, so it moves by squeezing and stretching its muscles!"
+  },
+  {
+    "id": "word_pattern",
+    "word": "pattern",
+    "syllables": [
+      "pat",
+      "tern"
+    ],
+    "phoneticRespelling": "PAT-ern",
+    "difficulty": 2.3,
+    "patternId": "double-consonant-short-vowel",
+    "role": "ANCHOR",
+    "meanings": [
+      {
+        "partOfSpeech": "noun",
+        "kidDefinition": "Shapes, colors, or sounds that repeat in the same order.",
+        "exampleSentence": "The quilt had a pattern of red and blue stars.",
+        "blankedSentence": "The quilt had a _______ of red and blue stars."
+      }
+    ],
+    "graphemeMap": [
+      {
+        "grapheme": "p",
+        "phoneme": "",
+        "startIndex": 0,
+        "endIndex": 0
+      },
+      {
+        "grapheme": "a",
+        "phoneme": "",
+        "startIndex": 1,
+        "endIndex": 1
+      },
+      {
+        "grapheme": "tt",
+        "phoneme": "",
+        "startIndex": 2,
+        "endIndex": 3,
+        "isPatternFocus": true,
+        "coachingHint": "Listen to the short vowel in the first beat. How many of the middle letter does it need to stay short?"
+      },
+      {
+        "grapheme": "e",
+        "phoneme": "",
+        "startIndex": 4,
+        "endIndex": 4
+      },
+      {
+        "grapheme": "r",
+        "phoneme": "",
+        "startIndex": 5,
+        "endIndex": 5
+      },
+      {
+        "grapheme": "n",
+        "phoneme": "",
+        "startIndex": 6,
+        "endIndex": 6
+      }
+    ],
+    "traps": [
+      {
+        "misspelling": "pattarn",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 4,
+        "candidatePair": [
+          "E",
+          "A"
+        ],
+        "judgeResponse": "Good try! Twin letters in the middle keep the first vowel short.",
+        "memoryTrick": "Look for “pat” hiding inside PATTERN!"
+      },
+      {
+        "misspelling": "patern",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 3,
+        "judgeResponse": "Good try! Twin letters in the middle keep the first vowel short.",
+        "memoryTrick": "Look for “pat” hiding inside PATTERN!"
+      }
+    ],
+    "wordStory": "No two zebras have the same stripes, just like no two people have the same fingerprints!"
+  },
+  {
+    "id": "word_cabbage",
+    "word": "cabbage",
+    "syllables": [
+      "cab",
+      "bage"
+    ],
+    "phoneticRespelling": "KAB-ij",
+    "difficulty": 2.5,
+    "patternId": "double-consonant-short-vowel",
+    "role": "ANCHOR",
+    "meanings": [
+      {
+        "partOfSpeech": "noun",
+        "kidDefinition": "A round vegetable made of many tightly packed leaves.",
+        "exampleSentence": "Mom chopped the cabbage for the soup.",
+        "blankedSentence": "Mom chopped the _______ for the soup."
+      }
+    ],
+    "graphemeMap": [
+      {
+        "grapheme": "c",
+        "phoneme": "",
+        "startIndex": 0,
+        "endIndex": 0
+      },
+      {
+        "grapheme": "a",
+        "phoneme": "",
+        "startIndex": 1,
+        "endIndex": 1
+      },
+      {
+        "grapheme": "bb",
+        "phoneme": "",
+        "startIndex": 2,
+        "endIndex": 3,
+        "isPatternFocus": true,
+        "coachingHint": "Listen to the short vowel in the first beat. How many of the middle letter does it need to stay short?"
+      },
+      {
+        "grapheme": "a",
+        "phoneme": "",
+        "startIndex": 4,
+        "endIndex": 4
+      },
+      {
+        "grapheme": "g",
+        "phoneme": "",
+        "startIndex": 5,
+        "endIndex": 5
+      },
+      {
+        "grapheme": "e",
+        "phoneme": "",
+        "startIndex": 6,
+        "endIndex": 6
+      }
+    ],
+    "traps": [
+      {
+        "misspelling": "cabbige",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 4,
+        "candidatePair": [
+          "A",
+          "I"
+        ],
+        "judgeResponse": "Good try! Twin letters in the middle keep the first vowel short.",
+        "memoryTrick": "Look for “cab” hiding inside CABBAGE!"
+      },
+      {
+        "misspelling": "cabage",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 3,
+        "judgeResponse": "Good try! Twin letters in the middle keep the first vowel short.",
+        "memoryTrick": "Look for “cab” hiding inside CABBAGE!"
+      }
+    ],
+    "wordStory": "The heaviest one ever grown weighed more than 130 pounds, about as much as a grown-up!"
+  },
+  {
+    "id": "word_mammal",
+    "word": "mammal",
+    "syllables": [
+      "mam",
+      "mal"
+    ],
+    "phoneticRespelling": "MAM-ul",
+    "difficulty": 2.5,
+    "patternId": "double-consonant-short-vowel",
+    "role": "GUIDED",
+    "meanings": [
+      {
+        "partOfSpeech": "noun",
+        "kidDefinition": "An animal that has hair or fur and feeds milk to its babies.",
+        "exampleSentence": "A whale is a mammal, not a fish.",
+        "blankedSentence": "A whale is a ______, not a fish."
+      }
+    ],
+    "graphemeMap": [
+      {
+        "grapheme": "m",
+        "phoneme": "",
+        "startIndex": 0,
+        "endIndex": 0
+      },
+      {
+        "grapheme": "a",
+        "phoneme": "",
+        "startIndex": 1,
+        "endIndex": 1
+      },
+      {
+        "grapheme": "mm",
+        "phoneme": "",
+        "startIndex": 2,
+        "endIndex": 3,
+        "isPatternFocus": true,
+        "coachingHint": "Listen to the short vowel in the first beat. How many of the middle letter does it need to stay short?"
+      },
+      {
+        "grapheme": "a",
+        "phoneme": "",
+        "startIndex": 4,
+        "endIndex": 4
+      },
+      {
+        "grapheme": "l",
+        "phoneme": "",
+        "startIndex": 5,
+        "endIndex": 5
+      }
+    ],
+    "traps": [
+      {
+        "misspelling": "mammel",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 4,
+        "candidatePair": [
+          "A",
+          "E"
+        ],
+        "judgeResponse": "Good try! Twin letters in the middle keep the first vowel short.",
+        "memoryTrick": "Look for “am” hiding inside MAMMAL!"
+      },
+      {
+        "misspelling": "mamal",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 3,
+        "judgeResponse": "Good try! Twin letters in the middle keep the first vowel short.",
+        "memoryTrick": "Look for “am” hiding inside MAMMAL!"
+      }
+    ],
+    "wordStory": "The blue whale is the largest animal that has ever lived, even bigger than the dinosaurs!"
+  },
+  {
+    "id": "word_summit",
+    "word": "summit",
+    "syllables": [
+      "sum",
+      "mit"
+    ],
+    "phoneticRespelling": "SUM-it",
+    "difficulty": 2.7,
+    "patternId": "double-consonant-short-vowel",
+    "role": "TRANSFER_PROBE",
+    "meanings": [
+      {
+        "partOfSpeech": "noun",
+        "kidDefinition": "The very top of a mountain.",
+        "exampleSentence": "The climbers cheered when they reached the summit.",
+        "blankedSentence": "The climbers cheered when they reached the ______."
+      }
+    ],
+    "graphemeMap": [
+      {
+        "grapheme": "s",
+        "phoneme": "",
+        "startIndex": 0,
+        "endIndex": 0
+      },
+      {
+        "grapheme": "u",
+        "phoneme": "",
+        "startIndex": 1,
+        "endIndex": 1
+      },
+      {
+        "grapheme": "mm",
+        "phoneme": "",
+        "startIndex": 2,
+        "endIndex": 3,
+        "isPatternFocus": true,
+        "coachingHint": "Listen to the short vowel in the first beat. How many of the middle letter does it need to stay short?"
+      },
+      {
+        "grapheme": "i",
+        "phoneme": "",
+        "startIndex": 4,
+        "endIndex": 4
+      },
+      {
+        "grapheme": "t",
+        "phoneme": "",
+        "startIndex": 5,
+        "endIndex": 5
+      }
+    ],
+    "traps": [
+      {
+        "misspelling": "summet",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 4,
+        "candidatePair": [
+          "I",
+          "E"
+        ],
+        "judgeResponse": "Good try! Twin letters in the middle keep the first vowel short.",
+        "memoryTrick": "Look for “sum” hiding inside SUMMIT!"
+      },
+      {
+        "misspelling": "sumit",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 3,
+        "judgeResponse": "Good try! Twin letters in the middle keep the first vowel short.",
+        "memoryTrick": "Look for “sum” hiding inside SUMMIT!"
+      }
+    ],
+    "wordStory": "The top of Mount Everest is the highest point on Earth above the sea!"
+  },
+  {
+    "id": "word_hiccup",
+    "word": "hiccup",
+    "syllables": [
+      "hic",
+      "cup"
+    ],
+    "phoneticRespelling": "HIK-up",
+    "difficulty": 2.8,
+    "patternId": "double-consonant-short-vowel",
+    "role": "TRANSFER_PROBE",
+    "meanings": [
+      {
+        "partOfSpeech": "noun",
+        "kidDefinition": "A sudden little jump in your chest that makes a funny 'hic' sound.",
+        "exampleSentence": "A loud hiccup made the whole class giggle.",
+        "blankedSentence": "A loud ______ made the whole class giggle."
+      }
+    ],
+    "graphemeMap": [
+      {
+        "grapheme": "h",
+        "phoneme": "",
+        "startIndex": 0,
+        "endIndex": 0
+      },
+      {
+        "grapheme": "i",
+        "phoneme": "",
+        "startIndex": 1,
+        "endIndex": 1
+      },
+      {
+        "grapheme": "cc",
+        "phoneme": "",
+        "startIndex": 2,
+        "endIndex": 3,
+        "isPatternFocus": true,
+        "coachingHint": "Listen to the short vowel in the first beat. How many of the middle letter does it need to stay short?"
+      },
+      {
+        "grapheme": "u",
+        "phoneme": "",
+        "startIndex": 4,
+        "endIndex": 4
+      },
+      {
+        "grapheme": "p",
+        "phoneme": "",
+        "startIndex": 5,
+        "endIndex": 5
+      }
+    ],
+    "traps": [
+      {
+        "misspelling": "hiccap",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 4,
+        "candidatePair": [
+          "U",
+          "A"
+        ],
+        "judgeResponse": "Good try! Twin letters in the middle keep the first vowel short.",
+        "memoryTrick": "Look for “cup” hiding inside HICCUP!"
+      },
+      {
+        "misspelling": "hicup",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 3,
+        "judgeResponse": "Good try! Twin letters in the middle keep the first vowel short.",
+        "memoryTrick": "Look for “cup” hiding inside HICCUP!"
+      }
+    ],
+    "wordStory": "One man had them for 68 years without stopping!"
+  },
+  {
+    "id": "word_ginger",
+    "word": "ginger",
+    "syllables": [
+      "gin",
+      "ger"
+    ],
+    "phoneticRespelling": "JIN-jer",
+    "difficulty": 2.4,
+    "patternId": "soft-g-before-eiy",
+    "role": "ANCHOR",
+    "meanings": [
+      {
+        "partOfSpeech": "noun",
+        "kidDefinition": "A spicy root used to flavor cookies and drinks.",
+        "exampleSentence": "We baked ginger cookies shaped like stars.",
+        "blankedSentence": "We baked ______ cookies shaped like stars."
+      }
+    ],
+    "graphemeMap": [
+      {
+        "grapheme": "g",
+        "phoneme": "/j/",
+        "startIndex": 0,
+        "endIndex": 0,
+        "isPatternFocus": true,
+        "coachingHint": "We hear a 'j' sound, and the next letter is E, I or Y. Which letter turns soft there?"
+      },
+      {
+        "grapheme": "i",
+        "phoneme": "",
+        "startIndex": 1,
+        "endIndex": 1
+      },
+      {
+        "grapheme": "n",
+        "phoneme": "",
+        "startIndex": 2,
+        "endIndex": 2
+      },
+      {
+        "grapheme": "g",
+        "phoneme": "",
+        "startIndex": 3,
+        "endIndex": 3
+      },
+      {
+        "grapheme": "e",
+        "phoneme": "",
+        "startIndex": 4,
+        "endIndex": 4
+      },
+      {
+        "grapheme": "r",
+        "phoneme": "",
+        "startIndex": 5,
+        "endIndex": 5
+      }
+    ],
+    "traps": [
+      {
+        "misspelling": "jinger",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 0,
+        "candidatePair": [
+          "G",
+          "J"
+        ],
+        "judgeResponse": "Good try! G says 'j' because E, I or Y comes right after it.",
+        "memoryTrick": "Look for “in” hiding inside GINGER!"
+      },
+      {
+        "misspelling": "ginjer",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 3,
+        "candidatePair": [
+          "G",
+          "J"
+        ],
+        "judgeResponse": "Good try! G says 'j' because E, I or Y comes right after it.",
+        "memoryTrick": "Look for “in” hiding inside GINGER!"
+      }
+    ],
+    "wordStory": "It is a knobbly root that grows under the ground, and people have cooked with it for thousands of years!"
+  },
+  {
+    "id": "word_imagine",
+    "word": "imagine",
+    "syllables": [
+      "i",
+      "mag",
+      "ine"
+    ],
+    "phoneticRespelling": "ih-MAJ-in",
+    "difficulty": 2.6,
+    "patternId": "soft-g-before-eiy",
+    "role": "GUIDED",
+    "meanings": [
+      {
+        "partOfSpeech": "verb",
+        "kidDefinition": "To make a picture of something in your mind.",
+        "exampleSentence": "Close your eyes and imagine a purple dragon.",
+        "blankedSentence": "Close your eyes and _______ a purple dragon."
+      }
+    ],
+    "graphemeMap": [
+      {
+        "grapheme": "i",
+        "phoneme": "",
+        "startIndex": 0,
+        "endIndex": 0
+      },
+      {
+        "grapheme": "m",
+        "phoneme": "",
+        "startIndex": 1,
+        "endIndex": 1
+      },
+      {
+        "grapheme": "a",
+        "phoneme": "",
+        "startIndex": 2,
+        "endIndex": 2
+      },
+      {
+        "grapheme": "g",
+        "phoneme": "/j/",
+        "startIndex": 3,
+        "endIndex": 3,
+        "isPatternFocus": true,
+        "coachingHint": "We hear a 'j' sound, and the next letter is E, I or Y. Which letter turns soft there?"
+      },
+      {
+        "grapheme": "i",
+        "phoneme": "",
+        "startIndex": 4,
+        "endIndex": 4
+      },
+      {
+        "grapheme": "n",
+        "phoneme": "",
+        "startIndex": 5,
+        "endIndex": 5
+      },
+      {
+        "grapheme": "e",
+        "phoneme": "",
+        "startIndex": 6,
+        "endIndex": 6
+      }
+    ],
+    "traps": [
+      {
+        "misspelling": "imajine",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 3,
+        "candidatePair": [
+          "G",
+          "J"
+        ],
+        "judgeResponse": "Good try! G says 'j' because E, I or Y comes right after it.",
+        "memoryTrick": "Look for “mag” hiding inside IMAGINE!"
+      },
+      {
+        "misspelling": "imagin",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 6,
+        "judgeResponse": "Good try! G says 'j' because E, I or Y comes right after it.",
+        "memoryTrick": "Look for “mag” hiding inside IMAGINE!"
+      }
+    ],
+    "wordStory": "The scientist Albert Einstein said that using your mind to picture new things matters even more than knowing facts!"
+  },
+  {
+    "id": "word_attention",
+    "word": "attention",
+    "syllables": [
+      "at",
+      "ten",
+      "tion"
+    ],
+    "phoneticRespelling": "uh-TEN-shun",
+    "difficulty": 2.7,
+    "patternId": "tion-ending",
+    "role": "GUIDED",
+    "meanings": [
+      {
+        "partOfSpeech": "noun",
+        "kidDefinition": "Looking and listening carefully to one thing.",
+        "exampleSentence": "The juggler asked for everyone's attention.",
+        "blankedSentence": "The juggler asked for everyone's _________."
+      }
+    ],
+    "graphemeMap": [
+      {
+        "grapheme": "a",
+        "phoneme": "",
+        "startIndex": 0,
+        "endIndex": 0
+      },
+      {
+        "grapheme": "t",
+        "phoneme": "",
+        "startIndex": 1,
+        "endIndex": 1
+      },
+      {
+        "grapheme": "t",
+        "phoneme": "",
+        "startIndex": 2,
+        "endIndex": 2
+      },
+      {
+        "grapheme": "e",
+        "phoneme": "",
+        "startIndex": 3,
+        "endIndex": 3
+      },
+      {
+        "grapheme": "n",
+        "phoneme": "",
+        "startIndex": 4,
+        "endIndex": 4
+      },
+      {
+        "grapheme": "tion",
+        "phoneme": "/shun/",
+        "startIndex": 5,
+        "endIndex": 8,
+        "isPatternFocus": true,
+        "coachingHint": "Listen to the 'shun' at the end. Which four letters spell that ending?"
+      }
+    ],
+    "traps": [
+      {
+        "misspelling": "attension",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 5,
+        "candidatePair": [
+          "T",
+          "S"
+        ],
+        "judgeResponse": "Good try! The 'shun' ending is spelled T-I-O-N.",
+        "memoryTrick": "Look for “ten” hiding inside ATTENTION!"
+      },
+      {
+        "misspelling": "atention",
+        "bucket": "PHONETIC_PATTERN_ERROR",
+        "errorTileIndex": 2,
+        "judgeResponse": "Good try! The 'shun' ending is spelled T-I-O-N.",
+        "memoryTrick": "Look for “ten” hiding inside ATTENTION!"
+      }
+    ],
+    "wordStory": "Goldfish do not forget everything in three seconds; they can remember things for months!"
+  }
+]

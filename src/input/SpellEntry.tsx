@@ -86,27 +86,39 @@ export function SpellEntry({
     return () => window.removeEventListener('keydown', onKey)
   }, [])
 
-  useEffect(() => () => recognition.current?.stop(), [])
-
-  const listen = () => {
-    const Ctor = recognitionCtor()
-    if (!Ctor) {
-      setMicNote('This browser cannot listen. Try tapping the letters or writing them.')
-      return
-    }
-    if (listening) {
+  useEffect(
+    () => () => {
+      wantListening.current = false
       recognition.current?.stop()
-      return
-    }
+    },
+    [],
+  )
+
+  // Many phones and tablets stop listening after every burst of speech. While she
+  // has the microphone "on", a session that ends is started again straight away,
+  // so she can keep spelling letter by letter until she taps the button.
+  const wantListening = useRef(false)
+  const quietRestarts = useRef(0)
+  const MAX_QUIET_RESTARTS = 6
+
+  const stopListening = () => {
+    wantListening.current = false
+    recognition.current?.stop()
+    setListening(false)
+  }
+
+  const startSession = () => {
+    const Ctor = recognitionCtor()
+    if (!Ctor) return
     const rec = new Ctor()
     recognition.current = rec
     rec.lang = 'en-US'
     rec.maxAlternatives = 5
     rec.interimResults = false
-    // Keep listening while she spells; letters are added as each burst is understood.
-    rec.continuous = true
+    rec.continuous = true // honoured on desktop; ignored on many phones, hence the restarts
     let mark: number | null = null // when the current burst of speech began
     let handled = 0
+    let heardSomething = false
     rec.onspeechstart = () => {
       mark ??= Date.now()
     }
@@ -120,6 +132,7 @@ export function SpellEntry({
         // Later bursts are timed from the previous one, so a pause counts in her favour.
         mark = Date.now()
         if (chunk.kind === 'NOTHING') continue
+        heardSomething = true
         if (chunk.kind === 'WORD') {
           setMicNote('That sounded like the whole word. Spell it one letter at a time, like at the bee.')
           continue
@@ -134,21 +147,52 @@ export function SpellEntry({
         state.current.onChange(next)
       }
     }
-    rec.onerror = (e) =>
-      setMicNote(
-        e.error === 'not-allowed' || e.error === 'service-not-allowed'
-          ? "The microphone is blocked for this page. A grown-up can allow it in the browser's site settings, then tap again. Tapping or writing the letters still works."
-          : "I couldn't hear that. Tap the microphone and try again.",
-      )
-    rec.onend = () => setListening(false)
+    rec.onerror = (e) => {
+      if (e.error === 'not-allowed' || e.error === 'service-not-allowed') {
+        wantListening.current = false
+        setMicNote(
+          "The microphone is blocked for this page. A grown-up can allow it in the browser's site settings, then tap again. Tapping or writing the letters still works.",
+        )
+      }
+      // 'no-speech' and 'aborted' are normal between letters; onend decides what happens next.
+    }
+    rec.onend = () => {
+      if (recognition.current !== rec) return
+      quietRestarts.current = heardSomething ? 0 : quietRestarts.current + 1
+      if (wantListening.current && !state.current.disabled && quietRestarts.current < MAX_QUIET_RESTARTS) {
+        window.setTimeout(() => {
+          if (wantListening.current) startSession()
+        }, 150)
+        return
+      }
+      wantListening.current = false
+      setListening(false)
+    }
     try {
       rec.start()
-      setListening(true)
-      setMicNote(null)
     } catch {
+      wantListening.current = false
+      setListening(false)
       setMicNote('The microphone is not available here.')
     }
   }
+
+  const listen = () => {
+    if (!recognitionCtor()) {
+      setMicNote('This browser cannot listen. Try tapping the letters or writing them.')
+      return
+    }
+    if (listening) return stopListening()
+    wantListening.current = true
+    quietRestarts.current = 0
+    setListening(true)
+    setMicNote(null)
+    startSession()
+  }
+
+  useEffect(() => {
+    if ((disabled || mode !== 'SAY') && wantListening.current) stopListening()
+  }, [disabled, mode]) // eslint-disable-line
 
   const slots = fixedSlots ? Math.max(fixedSlots, letters.length) : letters.length + (disabled ? 0 : 1)
   const suspect = suspects[0]

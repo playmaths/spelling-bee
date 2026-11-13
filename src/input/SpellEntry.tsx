@@ -3,7 +3,8 @@ import type { BeeWord } from '../types/game.ts'
 import { IconButton } from '../components/IconButton.tsx'
 import { StylusTileCanvas } from './StylusTileCanvas.tsx'
 import { TouchKeyboard } from './TouchKeyboard.tsx'
-import { acousticGroupOf, readChunk, verifyDictation, type HeardTile } from './speechVerifier.ts'
+import { acousticGroupOf, parseSpokenLetters, readChunk, verifyDictation, type HeardTile } from './speechVerifier.ts'
+import { deleteTile, enterLetter, shiftMarks, type Selection } from './tileEdit.ts'
 import type { LetterGuess } from './strokeRecognizer.ts'
 
 type Mode = 'KEYS' | 'WRITE' | 'SAY'
@@ -68,19 +69,42 @@ export function SpellEntry({
   const [listening, setListening] = useState(false)
   const [micNote, setMicNote] = useState<string | null>(null)
   const recognition = useRef<Recognition | null>(null)
-  const state = useRef({ letters, onChange, onSubmit, disabled, pending: suspects.length })
-  state.current = { letters, onChange, onSubmit, disabled, pending: suspects.length }
+  /** The tile she tapped to fix, if any. */
+  const [sel, setSel] = useState<Selection>(null)
+  /** Letters heard so far in the burst still being spoken (shown at once, in grey). */
+  const [provisional, setProvisional] = useState('')
+  const state = useRef({ letters, onChange, onSubmit, disabled, pending: suspects.length, sel })
+  state.current = { letters, onChange, onSubmit, disabled, pending: suspects.length, sel }
 
+  /** A letter from the keys, the writing pad or a physical keyboard. */
   const append = (l: string) => {
+    const cur = state.current
     setReading([])
-    onChange(letters + l)
+    if (cur.sel && cur.sel.index < cur.letters.length) {
+      const edit = { kind: cur.sel.insert ? ('INSERT' as const) : ('REPLACE' as const), index: cur.sel.index }
+      setSuspects((m) => shiftMarks(m, edit))
+    }
+    const next = enterLetter(cur.letters, l, cur.sel)
+    cur.letters = next
+    cur.onChange(next)
+    setSel(null)
   }
+  /** Removes the selected tile, or the last one. */
   const backspace = () => {
+    const cur = state.current
+    const index = cur.sel && cur.sel.index < cur.letters.length ? cur.sel.index : cur.letters.length - 1
+    if (index < 0) return
     setReading([])
-    setSuspects((s) => s.filter((t) => t.index < letters.length - 1))
-    onChange(letters.slice(0, -1))
+    setSuspects((m) => shiftMarks(m, { kind: 'DELETE', index }))
+    const next = deleteTile(cur.letters, index)
+    cur.letters = next
+    cur.onChange(next)
+    setSel(null)
   }
   const setTile = (index: number, l: string) => onChange(letters.slice(0, index) + l + letters.slice(index + 1))
+
+  const keys = useRef({ append, backspace })
+  keys.current = { append, backspace }
 
   // A physical keyboard always works, whichever input is showing.
   useEffect(() => {
@@ -89,8 +113,8 @@ export function SpellEntry({
       const el = e.target as HTMLElement | null
       if (s.disabled || e.metaKey || e.ctrlKey || e.altKey) return
       if (el && (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA' || el.tagName === 'SELECT')) return
-      if (/^[a-zA-Z]$/.test(e.key)) s.onChange(s.letters + e.key.toUpperCase())
-      else if (e.key === 'Backspace') s.onChange(s.letters.slice(0, -1))
+      if (/^[a-zA-Z]$/.test(e.key)) keys.current.append(e.key.toUpperCase())
+      else if (e.key === 'Backspace') keys.current.backspace()
       else if (e.key === 'Enter' && s.letters && s.pending === 0) s.onSubmit()
       else return
       e.preventDefault()
@@ -115,6 +139,7 @@ export function SpellEntry({
   const MAX_QUIET_RESTARTS = 6
 
   const stopListening = () => {
+    setProvisional('')
     wantListening.current = false
     recognition.current?.stop()
     setListening(false)
@@ -127,7 +152,8 @@ export function SpellEntry({
     recognition.current = rec
     rec.lang = 'en-US'
     rec.maxAlternatives = 5
-    rec.interimResults = false
+    // Show letters as they are heard (in grey) instead of waiting for the pause that ends a burst.
+    rec.interimResults = true
     rec.continuous = true // honoured on desktop; ignored on many phones, hence the restarts
     let mark: number | null = null // when the current burst of speech began
     let handled = 0
@@ -136,9 +162,14 @@ export function SpellEntry({
       mark ??= Date.now()
     }
     rec.onresult = (e) => {
+      let stillSpeaking = ''
       for (let i = handled; i < e.results.length; i++) {
         const result = e.results[i] as ArrayLike<{ transcript: string }> & { isFinal?: boolean }
-        if (result.isFinal === false) break
+        if (result.isFinal === false) {
+          stillSpeaking += ` ${result[0]?.transcript ?? ''}`
+          continue
+        }
+        if (i !== handled) continue // an earlier burst is still being worked out
         handled = i + 1
         const nBest = Array.from(result, (alt) => alt.transcript)
         const chunk = readChunk(nBest, mark === null ? null : Date.now() - mark)
@@ -159,6 +190,7 @@ export function SpellEntry({
         state.current.letters = next // several bursts can land before the next render
         state.current.onChange(next)
       }
+      setProvisional(parseSpokenLetters(stillSpeaking).join(''))
     }
     rec.onerror = (e) => {
       if (e.error === 'not-allowed' || e.error === 'service-not-allowed') {
@@ -171,6 +203,7 @@ export function SpellEntry({
     }
     rec.onend = () => {
       if (recognition.current !== rec) return
+      setProvisional('')
       quietRestarts.current = heardSomething ? 0 : quietRestarts.current + 1
       if (wantListening.current && !state.current.disabled && quietRestarts.current < MAX_QUIET_RESTARTS) {
         window.setTimeout(() => {
@@ -207,32 +240,82 @@ export function SpellEntry({
     if ((disabled || mode !== 'SAY') && wantListening.current) stopListening()
   }, [disabled, mode]) // eslint-disable-line
 
-  const slots = fixedSlots ? Math.max(fixedSlots, letters.length) : letters.length + (disabled ? 0 : 1)
+  const shown = letters.length + provisional.length
+  const slots = fixedSlots ? Math.max(fixedSlots, shown) : shown + (disabled ? 0 : 1)
   const suspect = suspects[0]
+  const selected = sel && sel.index < letters.length ? sel : null
 
   return (
     <section className="flex w-full flex-col items-center gap-6">
       <div data-testid="tiles" className="flex min-h-14 flex-wrap justify-center gap-2">
         {Array.from({ length: slots }, (_, i) => {
           const fuzzy = suspects.some((t) => t.index === i)
+          const filled = i < letters.length
+          const heard = !filled && i < shown
+          const chosen = selected?.index === i
           return (
-            <div
+            <button
               key={i}
+              type="button"
+              disabled={disabled || !filled}
+              onClick={() => setSel(chosen ? null : { index: i, insert: false })}
+              aria-label={filled ? `Letter ${i + 1}, ${letters[i]}. Tap to change it.` : `Empty box ${i + 1}`}
+              aria-pressed={chosen}
               className={`flex h-14 w-12 items-center justify-center rounded-xl border-2 text-2xl font-bold ${
-                fuzzy
-                  ? 'border-sky-500 bg-sky-100 ring-4 ring-sky-200'
-                  : highlight === i
-                    ? 'border-amber-500 bg-amber-100 ring-4 ring-amber-200'
-                    : fixedSlots && i >= fixedSlots
-                      ? 'border-dashed border-slate-300 bg-slate-100'
-                      : 'border-slate-300 bg-white'
+                chosen
+                  ? 'border-violet-600 bg-violet-100 ring-4 ring-violet-300'
+                  : fuzzy
+                    ? 'border-sky-500 bg-sky-100 ring-4 ring-sky-200'
+                    : highlight === i
+                      ? 'border-amber-500 bg-amber-100 ring-4 ring-amber-200'
+                      : heard
+                        ? 'border-dashed border-slate-300 bg-white text-slate-400'
+                        : fixedSlots && i >= fixedSlots
+                          ? 'border-dashed border-slate-300 bg-slate-100'
+                          : 'border-slate-300 bg-white'
               }`}
             >
-              {letters[i] ?? ''}
-            </div>
+              {filled ? letters[i] : heard ? provisional[i - letters.length] : ''}
+            </button>
           )
         })}
       </div>
+
+      {selected && !disabled && (
+        <div data-testid="tile-edit" className="flex flex-col items-center gap-3 rounded-2xl bg-violet-50 p-4">
+          <p className="text-center font-semibold text-slate-700">
+            {selected.insert
+              ? `Choose the letter to add before box ${selected.index + 1}.`
+              : `Box ${selected.index + 1} is ${letters[selected.index]}. Choose a new letter, or:`}
+          </p>
+          <div className="flex flex-wrap justify-center gap-3">
+            <button
+              type="button"
+              onClick={backspace}
+              className="rounded-full bg-white px-4 py-2 font-semibold text-rose-700 shadow"
+            >
+              ✕ Take it out
+            </button>
+            {!selected.insert && (
+              <button
+                type="button"
+                onClick={() => setSel({ index: selected.index, insert: true })}
+                className="rounded-full bg-white px-4 py-2 font-semibold text-slate-700 shadow"
+              >
+                ＋ Add a letter before it
+              </button>
+            )}
+            <button
+              type="button"
+              onClick={() => setSel(null)}
+              className="rounded-full bg-white px-4 py-2 font-semibold text-slate-500 shadow"
+            >
+              Leave it
+            </button>
+          </div>
+          {mode !== 'KEYS' && <TouchKeyboard onLetter={append} onBackspace={backspace} />}
+        </div>
+      )}
 
       {suspect && !disabled && (
         <div data-testid="asr-confirm" className="rounded-2xl border-2 border-sky-300 bg-sky-50 p-4">
@@ -288,8 +371,9 @@ export function SpellEntry({
             <div className="flex flex-col items-center gap-2">
               <StylusTileCanvas
                 onLetter={(l, guesses) => {
-                  onChange(state.current.letters + l)
-                  setReading(guesses.slice(0, 4))
+                  const fixing = state.current.sel !== null
+                  append(l)
+                  setReading(fixing ? [] : guesses.slice(0, 4))
                 }}
               />
               {reading.length > 1 && (

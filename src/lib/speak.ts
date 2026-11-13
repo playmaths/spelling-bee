@@ -3,7 +3,7 @@
  * silently does nothing where speech is unavailable.
  */
 
-import { hasClip, playClip, stopClip } from './clips.ts'
+import { hasClips, playClips, stopClip } from './clips.ts'
 
 const VOICE_KEY = 'spelling-bee-voice'
 let muted = false
@@ -74,15 +74,16 @@ function speakWithDevice(text: string, slow: boolean) {
 }
 
 /**
- * Says something. If a recording exists for `clip` it is played; otherwise (or if
- * it cannot be played) the device's own voice reads `text`.
+ * Says something. If recordings exist for every clip they are played in order;
+ * otherwise (or if they cannot be played) the device's own voice reads `text`.
  */
-export function speak(text: string, slow = false, clip?: string) {
+export function speak(text: string, slow = false, clip?: string | readonly string[]) {
   if (muted) return
   synth()?.cancel()
   stopClip()
-  if (hasClip(clip)) {
-    void playClip(clip).then((ok) => {
+  const clips = typeof clip === 'string' ? [clip] : clip
+  if (hasClips(clips)) {
+    void playClips(clips).then((ok) => {
       if (!ok && !muted) speakWithDevice(text, slow)
     })
     return

@@ -2,17 +2,29 @@
  * Recorded voice. The site build may include recordings under audio/ (made by
  * scripts/generate_audio.py, keys listed in audio/index.json). When a recording
  * exists it is played; otherwise the caller falls back to the device's voice.
- * Keys must match scripts/audio-manifest.mjs.
+ * Keys come from src/engine/voice.ts; the list to record from src/lib/voiceManifest.ts.
  */
+import {
+  cardClip,
+  definitionClip,
+  phrase,
+  sayText,
+  secretClip,
+  sentenceClip,
+  slowWordClip,
+  wordClip,
+} from '../engine/voice.ts'
+
 export const clipKeys = {
-  word: (word: string) => `w/${word}`,
-  slowWord: (word: string) => `s/${word}`,
-  sentence: (word: string, meaning: number) => `x/${word}-${meaning}`,
-  definition: (word: string, meaning: number) => `d/${word}-${meaning}`,
-  secret: (word: string) => `q/${word}`,
-  card: (word: string) => `c/${word}`,
-  greatDetective: 'p/great-detective',
-  notQuite: 'p/not-quite',
+  word: wordClip,
+  slowWord: slowWordClip,
+  sentence: sentenceClip,
+  definition: definitionClip,
+  secret: secretClip,
+  card: cardClip,
+  text: sayText,
+  greatDetective: phrase('greatDetective'),
+  notQuite: phrase('notQuite'),
 }
 
 const base = () => `${import.meta.env.BASE_URL}audio/`
@@ -51,6 +63,8 @@ export function initClips() {
 }
 
 export const hasClip = (key: string | undefined): key is string => !!key && !!available?.has(key)
+export const hasClips = (keys: readonly string[] | undefined): keys is readonly string[] =>
+  !!keys && keys.length > 0 && keys.every((k) => available?.has(k))
 
 export function stopClip() {
   playing++
@@ -58,23 +72,34 @@ export function stopClip() {
 }
 
 /**
- * Plays a recording. Resolves true if it started, false if the caller should
- * fall back to the device voice. Fetched as a whole file so the service worker
- * can cache it for offline use.
+ * Plays recordings one after another. Resolves true if playback started, false if
+ * the caller should fall back to the device voice. Files are fetched whole (in
+ * parallel) so the service worker can cache them for offline use.
  */
-export async function playClip(key: string): Promise<boolean> {
+export async function playClips(keys: readonly string[]): Promise<boolean> {
   const p = getPlayer()
-  if (!p || !hasClip(key)) return false
+  if (!p || !hasClips(keys)) return false
   const ticket = ++playing
   try {
-    const r = await fetch(`${base()}${key}.mp3`)
-    if (!r.ok) return false
-    const url = URL.createObjectURL(await r.blob())
+    const blobs = await Promise.all(
+      keys.map(async (key) => {
+        const r = await fetch(`${base()}${key}.mp3`)
+        if (!r.ok) throw new Error(key)
+        return r.blob()
+      }),
+    )
     if (ticket !== playing) return true // something newer was asked for meanwhile
+    const urls = blobs.map((b) => URL.createObjectURL(b))
+    const done = () => urls.forEach((u) => URL.revokeObjectURL(u))
+    let i = 0
+    const next = () => {
+      if (ticket !== playing || i >= urls.length) return done()
+      p.src = urls[i++]
+      p.play().catch(done)
+    }
+    p.onended = next
     p.pause()
-    p.src = url
-    p.onended = () => URL.revokeObjectURL(url)
-    await p.play()
+    next()
     return true
   } catch {
     return false

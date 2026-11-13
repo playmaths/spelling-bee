@@ -68,7 +68,7 @@ export function PuzzlePlay({ word, onDone }: { word: BeeWord; onDone: (clean: bo
 
   // Nothing is spoken on arrival; she taps the speaker when she is ready.
   useEffect(() => {
-    if (judge.line.kind !== 'PROMPT') speak(judge.line.spoken, judge.line.slow, judge.line.clip)
+    if (judge.line.kind !== 'PROMPT') speak(judge.line.spoken, judge.line.slow, judge.line.clips)
   }, [judge.line])
 
   const over = state.status !== 'PLAYING'

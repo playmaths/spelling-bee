@@ -9,7 +9,9 @@ on:
     branches: [main]
     paths:
       - 'src/data/**'
-      - 'scripts/audio-manifest.mjs'
+      - 'src/engine/voice.ts'
+      - 'src/engine/judgeStateMachine.ts'
+      - 'src/lib/voiceManifest.ts'
       - 'scripts/generate_audio.py'
       - '.github/workflows/audio.yml'
   workflow_dispatch:
@@ -30,10 +32,15 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
+          cache: npm
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - run: node scripts/audio-manifest.mjs > audio-manifest.json
+      - run: npm ci
+      - name: List what needs recording
+        run: npx vitest run src/lib/clips.test.ts
+        env:
+          AUDIO_MANIFEST_OUT: audio-manifest.json
       - name: Restore earlier recordings
         uses: actions/cache/restore@v4
         with:

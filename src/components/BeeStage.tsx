@@ -26,7 +26,7 @@ export function JudgeRound({
 
   // The Judge never talks on arrival: she taps the speaker when she is ready.
   useEffect(() => {
-    if (state.line.kind !== 'PROMPT') speak(state.line.spoken, state.line.slow, state.line.clip)
+    if (state.line.kind !== 'PROMPT') speak(state.line.spoken, state.line.slow, state.line.clips)
   }, [state.line])
 
   const resolved = state.phase === 'RESOLVED'

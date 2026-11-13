@@ -70,7 +70,7 @@ export function WordCardFace({ word, card }: { word: BeeWord; card: WordCard }) 
           type="button"
           aria-expanded={story}
           onClick={() => {
-            if (!story) speak(word.wordStory)
+            if (!story) speak(word.wordStory, false, clipKeys.text(word.wordStory))
             setStory((v) => !v)
           }}
           className="rounded-full bg-white px-4 py-2 text-sm font-semibold shadow"

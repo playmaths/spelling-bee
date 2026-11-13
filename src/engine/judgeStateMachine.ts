@@ -1,6 +1,17 @@
 import { getCard } from '../data/index.ts'
 import type { BeeWord, ErrorBucket, GameMode } from '../types/game.ts'
 import { classifyAttempt, isVowel, normalizeAttempt, type Diagnosis } from './diagnosticClassifier.ts'
+import {
+  beatsPhrase,
+  boxPhrase,
+  definitionClip,
+  phrase,
+  sayText,
+  sentenceClip,
+  slowWordClip,
+  spellClips,
+  wordClip,
+} from './voice.ts'
 
 /**
  * Capability 1 — Deterministic Conversational Judge.
@@ -50,8 +61,8 @@ export interface JudgeLine {
   display: string
   /** Speak at slow rate. */
   slow?: boolean
-  /** Key of a recording of exactly this line, if one may exist (see src/lib/clips.ts). */
-  clip?: string
+  /** Recordings that, played in order, say this line (see src/engine/voice.ts). */
+  clips?: string[]
 }
 
 /** Queued for the post-round Coach's Corner (CONTEST) and the pattern engine. */
@@ -132,14 +143,14 @@ function intentLine(state: JudgeState, intent: JudgeIntent): JudgeLine {
   switch (intent) {
     case 'DEFINITION': {
       const text = `It's ${/^[aeiou]/.test(meaning.partOfSpeech) ? 'an' : 'a'} ${meaning.partOfSpeech}. ${meaning.kidDefinition}`
-      return { kind: 'INTENT_REPLY', spoken: text, display: text, clip: `d/${word.word}-${meaningIndex}` }
+      return { kind: 'INTENT_REPLY', spoken: text, display: text, clips: [definitionClip(word.word, meaningIndex)] }
     }
     case 'SENTENCE':
       return {
         kind: 'INTENT_REPLY',
         spoken: meaning.exampleSentence,
         display: meaning.blankedSentence,
-        clip: `x/${word.word}-${meaningIndex}`,
+        clips: [sentenceClip(word.word, meaningIndex)],
       }
     case 'SLOW':
       return {
@@ -147,7 +158,7 @@ function intentLine(state: JudgeState, intent: JudgeIntent): JudgeLine {
         spoken: word.word,
         display: `🔊 Nice and slow… listen for ${beats} ${beats === 1 ? 'beat' : 'beats'}.`,
         slow: true,
-        clip: `s/${word.word}`,
+        clips: [slowWordClip(word.word)],
       }
     case 'CLUE': {
       // Concrete clues, never "it's a noun with 3 beats":
@@ -155,27 +166,28 @@ function intentLine(state: JudgeState, intent: JudgeIntent): JudgeLine {
       // about the tricky part. The bee stage gives meaning clues only, never spelling help.
       const synonyms = (getCard(word.id)?.synonyms ?? []).filter((x) => !new RegExp(`\\b${word.word}\\b`, 'i').test(x))
       const hint = word.graphemeMap.find((c) => c.isPatternFocus && c.coachingHint)?.coachingHint
-      const clues: { spoken: string; display: string }[] = []
+      const clues: { spoken: string; display: string; clips: string[] }[] = []
       if (synonyms.length > 0) {
         const list = synonyms.map((x) => `“${x}”`).join(' or ')
         const text = `Here's a clue. It means nearly the same as ${list}.`
-        clues.push({ spoken: text, display: text })
+        clues.push({ spoken: text, display: text, clips: [sayText(text)] })
       }
       if (state.mode === 'ADVENTURE' && hint) {
         clues.push({
           spoken: `Here's a clue about the tricky part. ${hint}`,
           display: `Here's a clue about the tricky part. ${hint.replace(new RegExp(`\\b${word.word}\\b`, 'gi'), 'this word')}`,
+          clips: [phrase('clueTricky'), sayText(hint)],
         })
       }
       if (clues.length === 0) {
         const text = `Here's a clue. ${meaning.kidDefinition}`
-        clues.push({ spoken: text, display: text })
+        clues.push({ spoken: text, display: text, clips: [sayText(text)] })
       }
       const clue = clues[state.intentCounts.CLUE % clues.length]
       return { kind: 'INTENT_REPLY', ...clue }
     }
     case 'REPEAT':
-      return { kind: 'INTENT_REPLY', spoken: word.word, display: '🔊 Here it is again!', clip: `w/${word.word}` }
+      return { kind: 'INTENT_REPLY', spoken: word.word, display: '🔊 Here it is again!', clips: [wordClip(word.word)] }
   }
 }
 
@@ -183,30 +195,33 @@ function intentLine(state: JudgeState, intent: JudgeIntent): JudgeLine {
 function nudgeLine(word: BeeWord, d: Diagnosis): JudgeLine {
   const index = d.errorTileIndex ?? 0
   const opener = "Nice attempt! Let's check your spelling."
-  const make = (rest: (name: string) => string): JudgeLine => ({
+  const w = wordClip(word.word)
+  const make = (rest: (name: string) => string, clips: string[]): JudgeLine => ({
     kind: 'COACHING',
     spoken: `${opener} ${rest(word.word)}`,
     display: `${opener} ${rest('this word')}`,
+    clips: [phrase('nice'), ...clips],
   })
 
   if (d.bucket === 'SYLLABLE_OMISSION') {
     const beats = word.syllables.length
     return make(
       (name) =>
-        `I think a beat went missing! Clap ${bold(name)} slowly — it has ${beats} beats. Which sound did we skip?`,
+        `I think a beat went missing! Clap ${bold(name)} slowly — it has ${beats} ${beats === 1 ? 'beat' : 'beats'}. Which sound did we skip?`,
+      [phrase('beatMissing'), w, sayText(beatsPhrase(beats))],
     )
   }
   if (d.bucket === 'MOTOR_SLIP' && d.attempt.length === word.word.length) {
     return make(
       () => `So close! Take another look at box ${index + 1} — I think your hand slipped there.`,
+      [sayText(boxPhrase(index + 1))],
     )
   }
   if (index === 0) {
+    const hint = d.chunk?.isPatternFocus ? d.chunk.coachingHint : undefined
     return make(
-      (name) =>
-        d.chunk?.isPatternFocus && d.chunk.coachingHint
-          ? d.chunk.coachingHint
-          : `Listen to the very beginning of ${bold(name)}. Can you figure out which letter comes first?`,
+      (name) => hint ?? `Listen to the very beginning of ${bold(name)}. Can you figure out which letter comes first?`,
+      hint ? [sayText(hint)] : [phrase('listenBeginning'), w, phrase('whichFirst')],
     )
   }
   const good = word.word.slice(0, index).toUpperCase()
@@ -219,7 +234,13 @@ function nudgeLine(word: BeeWord, d: Diagnosis): JudgeLine {
     expected === undefined
       ? 'but I think there are too many letters. Which one can go?'
       : `but listen to the next sound. Can you figure out which ${isVowel(expected) ? 'vowel' : 'letter'} comes next?`
-  return make((name) => `${lead.replace('{name}', bold(name))}, ${ask}`)
+  const askClip = phrase(expected === undefined ? 'tooMany' : isVowel(expected) ? 'butVowel' : 'butLetter')
+  return make(
+    (name) => `${lead.replace('{name}', bold(name))}, ${ask}`,
+    index === 1
+      ? [phrase('firstLetterOf'), w, phrase('is'), ...spellClips(good), askClip]
+      : [w, phrase('startsWith'), ...spellClips(good), askClip],
+  )
 }
 
 /** Second-miss (or twin-alert) line: the authored trap response plus its memory trick. */
@@ -227,7 +248,12 @@ function trapLine(d: Diagnosis): JudgeLine {
   const trap = d.matchedTrap!
   const twin = d.bucket === 'UK_US_VARIANT_TRAP'
   const text = `${twin ? 'British/American Twin Alert! ' : ''}${trap.judgeResponse} ${trap.memoryTrick}`
-  return { kind: twin ? 'TWIN_ALERT' : 'COACHING', spoken: text, display: text }
+  return {
+    kind: twin ? 'TWIN_ALERT' : 'COACHING',
+    spoken: text,
+    display: text,
+    clips: [...(twin ? [phrase('twinAlert')] : []), sayText(trap.judgeResponse), sayText(trap.memoryTrick)],
+  }
 }
 
 function coachNoteFor(word: BeeWord, d: Diagnosis): CoachNote {
@@ -273,6 +299,7 @@ export function judgeReducer(state: JudgeState, event: JudgeEvent): JudgeState {
     candidatePair: null,
   }
   const spelled = `${bold(word.word)} is spelled ${spellOut(word.word)}.`
+  const spelledClips = [wordClip(word.word), phrase('isSpelled'), ...spellClips(word.word)]
 
   if (d.isCorrect) {
     const text =
@@ -286,7 +313,12 @@ export function judgeReducer(state: JudgeState, event: JudgeEvent): JudgeState {
       phase: 'RESOLVED',
       outcome: 'CORRECT',
       firstTryUnassisted: attempts === 1,
-      line: { kind: 'CORRECT', spoken: text, display: text },
+      line: {
+        kind: 'CORRECT',
+        spoken: text,
+        display: text,
+        clips: [phrase(mode === 'CONTEST' ? 'correct' : attempts === 1 ? 'firstTry' : 'fixedIt'), ...spelledClips],
+      },
     }
   }
 
@@ -301,7 +333,12 @@ export function judgeReducer(state: JudgeState, event: JudgeEvent): JudgeState {
       phase: 'RESOLVED',
       outcome: 'INCORRECT',
       coachNote: coachNoteFor(word, d),
-      line: { kind: 'INCORRECT', spoken: text, display: text },
+      line: {
+        kind: 'INCORRECT',
+        spoken: text,
+        display: text,
+        clips: [phrase('sorry'), ...spelledClips, ...(twin ? [phrase('twinSafe')] : []), phrase('coachCorner')],
+      },
     }
   }
 
@@ -314,7 +351,12 @@ export function judgeReducer(state: JudgeState, event: JudgeEvent): JudgeState {
       phase: 'RESOLVED',
       outcome: 'INCORRECT',
       coachNote: coachNoteFor(word, d),
-      line: { kind: 'INCORRECT', spoken: text, display: text },
+      line: {
+        kind: 'INCORRECT',
+        spoken: text,
+        display: text,
+        clips: [phrase('greatEffort'), ...spelledClips, ...(trick ? [sayText(trick)] : []), phrase('meetAgain')],
+      },
     }
   }
 

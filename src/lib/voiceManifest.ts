@@ -16,6 +16,7 @@ import {
   wordClip,
 } from '../engine/voice.ts'
 
+import { STAGE_LINES } from './awards.ts'
 import { PRAISE } from './praise.ts'
 
 export interface VoiceClip {
@@ -25,6 +26,8 @@ export interface VoiceClip {
 }
 
 const NORMAL = 0.9
+/** A word said on its own, as a bee pronouncer says it: unhurried and clear. */
+const WORD = 0.75
 const SLOW = 0.55
 
 /**
@@ -43,12 +46,13 @@ export function buildVoiceManifest(): { voice: string; clips: VoiceClip[] } {
   const cardOf = new Map(CARDS.map((c) => [c.wordId, c]))
 
   for (const w of WORDS) {
-    add(wordClip(w.word), w.word)
+    add(wordClip(w.word), w.word, WORD)
     add(slowWordClip(w.word), w.word, SLOW)
   }
   for (const l of 'abcdefghijklmnopqrstuvwxyz') add(letterClip(l), l.toUpperCase())
   for (const text of Object.values(PHRASES)) say(text)
   for (const text of Object.values(PRAISE)) say(text)
+  for (const text of STAGE_LINES) say(text)
   for (let n = 1; n <= MAX_BEATS; n++) say(beatsPhrase(n))
   for (let n = 1; n <= MAX_BOXES; n++) say(boxPhrase(n))
 

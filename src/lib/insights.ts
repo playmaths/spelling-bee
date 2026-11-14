@@ -1,4 +1,5 @@
 import { PATTERNS, getPattern, getWord } from '../data/index.ts'
+import { calibrationFor } from './awards.ts'
 import type { Attempt, Progress } from './unlocks.ts'
 
 /**
@@ -27,7 +28,7 @@ export interface Insights {
   /** Right first time with no help, over everything and over the last 15. */
   cleanRate: number | null
   recentRate: number | null
-  /** Average difficulty of the last 10 words she met (2.2 = the starting level). */
+  /** The difficulty the app is aiming her words at now (2.2 = the starting level). */
   level: number | null
   strengths: FamilyStat[]
   focus: FamilyStat[]
@@ -114,7 +115,6 @@ export function buildInsights(progress: Progress): Insights {
 
   const probes = history.filter((a) => getWord(a.w)!.role === 'TRANSFER_PROBE')
   const recent = learning.slice(-15)
-  const last10 = history.slice(-10)
   const insights: Insights = {
     enough,
     attempts: history.length,
@@ -122,7 +122,7 @@ export function buildInsights(progress: Progress): Insights {
     wordsSolved: Object.keys(progress.solved).length,
     cleanRate: learning.length ? rate(learning) : null,
     recentRate: recent.length >= 5 ? rate(recent) : null,
-    level: last10.length ? last10.reduce((s, a) => s + getWord(a.w)!.difficulty, 0) / last10.length : null,
+    level: history.length ? calibrationFor(progress).target : null,
     strengths,
     focus,
     kinds,

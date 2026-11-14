@@ -47,7 +47,6 @@ export const PHRASES = {
   isSpelled: 'is spelled',
   sorry: "I'm sorry, that is not the spelling we use in this bee.",
   twinSafe: 'That was the British spelling, so your streak is safe!',
-  coachCorner: "We'll look at it together in Coach's Corner.",
   greatEffort: 'Great effort, this one is tricky!',
   meetAgain: "We'll meet it again soon.",
   twinAlert: 'British American Twin Alert!',

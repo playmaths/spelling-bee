@@ -30,6 +30,11 @@ export interface Progress {
   savedAt?: number
   /** Words already asked on the bee stage, so a new round asks different ones. */
   stageSeen?: string[]
+  /** Which bee she is in on the stage (index into BEE_LEVELS) and how many she has won. */
+  stageLevel?: number
+  beesWon?: number
+  /** Ribbons won on the stage, by kind. */
+  ribbons?: Record<string, number>
   /** Her last attempts, oldest first (at most HISTORY_CAP). */
   history?: Attempt[]
 }
@@ -59,16 +64,19 @@ export function unlockedWords(solved: Record<string, unknown>, unlockAll: boolea
 
 /**
  * Today's words. Never the same five twice:
- * - mostly NEW words, drawn at random from the dozen easiest she has not solved
+ * - mostly NEW words, drawn at random from the dozen nearest her level (`target`, from
+ *   the difficulty calibrator) that she has not solved
  *   (at most two from one family), so the mix changes but the level still climbs;
  * - one word she MISSED before (needed help or ran out of flowers), to try again;
  * - one word she already solved cleanly, as a quick review.
  * `progress.sessions` seeds the draw, so each visit differs but a test can replay it.
  */
-export function pickSession(progress: Progress, unlockAll: boolean, size = SESSION_SIZE): BeeWord[] {
+export function pickSession(progress: Progress, unlockAll: boolean, size = SESSION_SIZE, target = LEVEL_FLOOR): BeeWord[] {
   const seed = (progress.sessions ?? 0) + 1
   const open = unlockedWords(progress.solved, unlockAll).sort((a, b) => a.difficulty - b.difficulty)
-  const fresh = open.filter((w) => !progress.solved[w.id])
+  // New words closest to her level come first; ones well above it wait their turn.
+  const reach = (w: BeeWord) => Math.abs(w.difficulty - target) + (w.difficulty > target + 0.3 ? 1 : 0)
+  const fresh = open.filter((w) => !progress.solved[w.id]).sort((a, b) => reach(a) - reach(b) || a.difficulty - b.difficulty)
   const missed = open.filter((w) => progress.solved[w.id] === 'DONE')
   const clean = open.filter((w) => progress.solved[w.id] === 'CLEAN')
 

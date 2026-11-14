@@ -327,7 +327,7 @@ export function judgeReducer(state: JudgeState, event: JudgeEvent): JudgeState {
     const twin = d.bucket === 'UK_US_VARIANT_TRAP'
     const text = `🔔 I'm sorry, that is not the spelling we use in this bee. ${spelled}${
       twin ? " That was the British spelling, so your streak is safe!" : ''
-    } We'll look at it together in Coach's Corner.`
+    }`
     return {
       ...base,
       phase: 'RESOLVED',
@@ -337,7 +337,7 @@ export function judgeReducer(state: JudgeState, event: JudgeEvent): JudgeState {
         kind: 'INCORRECT',
         spoken: text,
         display: text,
-        clips: [phrase('sorry'), ...spelledClips, ...(twin ? [phrase('twinSafe')] : []), phrase('coachCorner')],
+        clips: [phrase('sorry'), ...spelledClips, ...(twin ? [phrase('twinSafe')] : [])],
       },
     }
   }

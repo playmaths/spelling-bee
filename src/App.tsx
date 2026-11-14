@@ -7,6 +7,7 @@ import { WordCards } from './components/WordCards.tsx'
 import { WordMap } from './components/WordMap.tsx'
 import { isFamilyCode, newFamilyCode, normalizeCode, syncOnce } from './lib/familySync.ts'
 import { withAttempt, type NewAttempt } from './lib/attempts.ts'
+import { afterRound, calibrationFor } from './lib/awards.ts'
 import { ParentInsights } from './components/ParentInsights.tsx'
 import { fileReport, loadReports, sendReports, setReportContext, type Report } from './lib/report.ts'
 import { fetchUsage, usageCount, usageOpen, type UsageRow } from './lib/usage.ts'
@@ -249,7 +250,7 @@ function App() {
           <button
             type="button"
             onClick={() => {
-              setSession(pickSession(progress, bypassCooldownForDemo))
+              setSession(pickSession(progress, bypassCooldownForDemo, undefined, calibrationFor(progress).target))
               setProgress((p) => ({ ...p, sessions: (p.sessions ?? 0) + 1 }))
               usageCount('starts')
               setSessionFrom('HOME')
@@ -290,9 +291,9 @@ function App() {
       {view === 'CARDS' && <WordCards unlockAll={bypassCooldownForDemo} collected={Object.keys(progress.solved)} />}
       {view === 'STAGE' && (
         <Compete
-          solved={progress.solved}
+          progress={progress}
           unlockAll={bypassCooldownForDemo}
-          seen={progress.stageSeen ?? []}
+          target={calibrationFor(progress).target}
           onAttempt={logAttempt}
           onAsked={(ids, startedOver) => {
             usageCount('starts')
@@ -301,6 +302,11 @@ function App() {
               savedAt: Date.now(),
               stageSeen: startedOver ? ids : [...(p.stageSeen ?? []), ...ids],
             }))
+          }}
+          onRoundEnd={(right, total) => {
+            const after = afterRound(latest.current, right, total)
+            setProgress((p) => ({ ...afterRound(p, right, total).progress, savedAt: Date.now() }))
+            return { ribbon: after.ribbon, wonLevel: after.wonLevel }
           }}
         />
       )}

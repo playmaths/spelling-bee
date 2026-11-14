@@ -46,12 +46,19 @@ export function mergeProgress(a: Progress, b: Progress): Progress {
   const attempts = new Map<string, Attempt>()
   for (const x of [...(a.history ?? []), ...(b.history ?? [])]) attempts.set(`${x.t}|${x.w}|${x.how}`, x)
   const history = [...attempts.values()].sort((x, y) => x.t - y.t).slice(-HISTORY_CAP)
+  const stageLevel = Math.max(a.stageLevel ?? 0, b.stageLevel ?? 0)
+  const beesWon = Math.max(a.beesWon ?? 0, b.beesWon ?? 0)
+  const ribbons: Record<string, number> = { ...a.ribbons }
+  for (const [k, v] of Object.entries(b.ribbons ?? {})) ribbons[k] = Math.max(ribbons[k] ?? 0, v)
   return {
     solved,
     sessions: Math.max(a.sessions ?? 0, b.sessions ?? 0),
     savedAt: Math.max(a.savedAt ?? 0, b.savedAt ?? 0),
     ...(stageSeen.length ? { stageSeen } : {}),
     ...(history.length ? { history } : {}),
+    ...(stageLevel ? { stageLevel } : {}),
+    ...(beesWon ? { beesWon } : {}),
+    ...(Object.keys(ribbons).length ? { ribbons } : {}),
   }
 }
 
@@ -63,6 +70,9 @@ export function sameProgress(a: Progress, b: Progress): boolean {
       p.sessions ?? 0,
       [...(p.stageSeen ?? [])].sort(),
       (p.history ?? []).map((x) => `${x.t}|${x.w}|${x.how}`).sort(),
+      p.stageLevel ?? 0,
+      p.beesWon ?? 0,
+      Object.entries(p.ribbons ?? {}).sort(),
     ])
   return shape(a) === shape(b)
 }
@@ -89,6 +99,9 @@ export async function pullFamily(code: string, f: Fetch = fetch): Promise<PullRe
       savedAt?: number
       stageSeen?: string[]
       history?: Attempt[]
+      stageLevel?: number
+      beesWon?: number
+      ribbons?: Record<string, number>
     }
     try {
       d = JSON.parse(doc.fields?.data?.stringValue ?? '')
@@ -100,7 +113,16 @@ export async function pullFamily(code: string, f: Fetch = fetch): Promise<PullRe
     if (d?.app !== APP || typeof d.solved !== 'object' || d.solved === null) return { kind: 'OTHER_APP' }
     return {
       kind: 'OK',
-      progress: { solved: d.solved, sessions: d.sessions, savedAt: d.savedAt, stageSeen: d.stageSeen, history: d.history },
+      progress: {
+        solved: d.solved,
+        sessions: d.sessions,
+        savedAt: d.savedAt,
+        stageSeen: d.stageSeen,
+        history: d.history,
+        stageLevel: d.stageLevel,
+        beesWon: d.beesWon,
+        ribbons: d.ribbons,
+      },
     }
   } catch {
     return { kind: 'OFFLINE' }
@@ -118,6 +140,9 @@ export async function pushFamily(code: string, progress: Progress, f: Fetch = fe
     savedAt: progress.savedAt ?? 0,
     stageSeen: progress.stageSeen ?? [],
     history: progress.history ?? [],
+    stageLevel: progress.stageLevel ?? 0,
+    beesWon: progress.beesWon ?? 0,
+    ribbons: progress.ribbons ?? {},
   }
   const body = {
     fields: { data: { stringValue: JSON.stringify(data) }, savedAt: { integerValue: String(progress.savedAt ?? 0) } },

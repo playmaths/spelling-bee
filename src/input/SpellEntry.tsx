@@ -3,7 +3,7 @@ import type { BeeWord } from '../types/game.ts'
 import { IconButton } from '../components/IconButton.tsx'
 import { StylusTileCanvas } from './StylusTileCanvas.tsx'
 import { TouchKeyboard } from './TouchKeyboard.tsx'
-import { acousticGroupOf, parseSpokenLetters, readChunk, verifyDictation, type HeardTile } from './speechVerifier.ts'
+import { acousticGroupOf, createSpellingSession, parseSpokenLetters, verifyDictation, type HeardTile } from './speechVerifier.ts'
 import { deleteTile, enterLetter, shiftMarks, type Selection } from './tileEdit.ts'
 import type { LetterGuess } from './strokeRecognizer.ts'
 
@@ -135,6 +135,8 @@ export function SpellEntry({
   // has the microphone "on", a session that ends is started again straight away,
   // so she can keep spelling letter by letter until she taps the button.
   const wantListening = useRef(false)
+  /** Set when she settles a fuzzy letter, so the listener does not ask about it again. */
+  const handEdit = useRef(false)
   const quietRestarts = useRef(0)
   const MAX_QUIET_RESTARTS = 6
 
@@ -155,42 +157,53 @@ export function SpellEntry({
     // Show letters as they are heard (in grey) instead of waiting for the pause that ends a burst.
     rec.interimResults = true
     rec.continuous = true // honoured on desktop; ignored on many phones, hence the restarts
-    let mark: number | null = null // when the current burst of speech began
-    let handled = 0
+    // The browser's results are read afresh on every event (see createSpellingSession),
+    // and the tiles are set to "what was there when she started + what she has said",
+    // so a result the browser repeats or revises can never double or replace a letter.
+    const session = createSpellingSession()
+    let base = state.current.letters
+    let written = base
     let heardSomething = false
-    rec.onspeechstart = () => {
-      mark ??= Date.now()
-    }
+    rec.onspeechstart = () => session.speechStarted(Date.now())
     rec.onresult = (e) => {
-      let stillSpeaking = ''
-      for (let i = handled; i < e.results.length; i++) {
-        const result = e.results[i] as ArrayLike<{ transcript: string }> & { isFinal?: boolean }
-        if (result.isFinal === false) {
-          stillSpeaking += ` ${result[0]?.transcript ?? ''}`
-          continue
-        }
-        if (i !== handled) continue // an earlier burst is still being worked out
-        handled = i + 1
-        const nBest = Array.from(result, (alt) => alt.transcript)
-        const chunk = readChunk(nBest, mark === null ? null : Date.now() - mark)
-        // Later bursts are timed from the previous one, so a pause counts in her favour.
-        mark = Date.now()
+      // She changed the tiles by hand meanwhile: keep her version and only add what comes next.
+      if (state.current.letters !== written || handEdit.current) {
+        handEdit.current = false
+        base = state.current.letters
+        written = base
+        session.forget()
+      }
+      const results = Array.from(e.results as ArrayLike<ArrayLike<{ transcript: string }> & { isFinal?: boolean }>, (r) => ({
+        final: r.isFinal !== false,
+        alternatives: Array.from(r, (alt) => alt.transcript),
+      }))
+      const { chunks, speaking } = session.read(results, Date.now())
+      let said = ''
+      const fuzzy: HeardTile[] = []
+      let wholeWord = false
+      for (const chunk of chunks) {
         if (chunk.kind === 'NOTHING') continue
         heardSomething = true
         if (chunk.kind === 'WORD') {
-          setMicNote('That sounded like the whole word. Spell it one letter at a time, like at the bee.')
+          wholeWord = true
           continue
         }
-        const offset = state.current.letters.length
-        const tiles = verifyDictation(word, chunk.transcripts, offset)
-        if (tiles.length === 0) continue
-        setMicNote(null)
-        setSuspects((prev) => [...prev, ...tiles.filter((t) => t.isAsrSuspect)])
-        const next = state.current.letters + tiles.map((t) => t.letter).join('')
-        state.current.letters = next // several bursts can land before the next render
-        state.current.onChange(next)
+        const tiles = verifyDictation(word, chunk.transcripts, base.length + said.length)
+        said += tiles.map((t) => t.letter).join('')
+        fuzzy.push(...tiles.filter((t) => t.isAsrSuspect))
       }
-      setProvisional(parseSpokenLetters(stillSpeaking).join(''))
+      const next = base + said
+      if (next !== written) {
+        const from = base.length
+        setSuspects((prev) => [...prev.filter((t) => t.index < from), ...fuzzy])
+        written = next
+        state.current.letters = next // several events can land before the next render
+        state.current.onChange(next)
+        setMicNote(null)
+      } else if (wholeWord && chunks[chunks.length - 1]?.kind === 'WORD') {
+        setMicNote('That sounded like the whole word. Spell it one letter at a time, like at the bee.')
+      }
+      setProvisional(parseSpokenLetters(speaking).join(''))
     }
     rec.onerror = (e) => {
       if (e.error === 'not-allowed' || e.error === 'service-not-allowed') {
@@ -328,6 +341,7 @@ export function SpellEntry({
                 key={l}
                 type="button"
                 onClick={() => {
+                  handEdit.current = true
                   setTile(suspect.index, l)
                   setSuspects((s) => s.slice(1))
                 }}

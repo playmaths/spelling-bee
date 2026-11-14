@@ -13,6 +13,7 @@ import os
 import sys
 import time
 
+import numpy as np
 import soundfile as sf
 from kokoro_onnx import Kokoro
 
@@ -24,6 +25,29 @@ os.makedirs(out, exist_ok=True)
 done_path = os.path.join(out, "done.json")
 done = json.load(open(done_path)) if os.path.exists(done_path) else {}
 
+# A bare word or letter name has no sentence around it, and the voice model can add a
+# stray sound before or after it. Those clips are spoken as a one-word sentence
+# ("practice."), then cut tight to the speech and faded at both ends.
+SINGLE = ("w/", "s/", "l/")
+SINGLE_RECIPE = "v2"
+
+
+def tidy(samples, rate):
+    samples = np.asarray(samples, dtype=np.float32).reshape(-1)
+    level = np.abs(samples)
+    peak = float(level.max()) if len(samples) else 0.0
+    if peak <= 0:
+        return samples
+    loud = np.nonzero(level > 0.03 * peak)[0]
+    first = max(0, int(loud[0]) - int(0.03 * rate))
+    last = min(len(samples), int(loud[-1]) + int(0.12 * rate))
+    cut = samples[first:last].copy()
+    fade_in, fade_out = min(len(cut), int(0.01 * rate)), min(len(cut), int(0.06 * rate))
+    cut[:fade_in] *= np.linspace(0.0, 1.0, fade_in, dtype=np.float32)
+    cut[-fade_out:] *= np.linspace(1.0, 0.0, fade_out, dtype=np.float32)
+    return cut
+
+
 kokoro = Kokoro("kokoro-v1.0.onnx", "voices-v1.0.bin")
 start = time.time()
 made = skipped = failed = left = 0
@@ -31,7 +55,9 @@ wanted = set()
 for clip in manifest["clips"]:
     key, text, speed = clip["key"], clip["text"], clip["speed"]
     wanted.add(key)
-    digest = hashlib.sha1(f"{voice}|{speed}|{text}".encode()).hexdigest()
+    single = key.startswith(SINGLE)
+    recipe = f"|{SINGLE_RECIPE}" if single else ""
+    digest = hashlib.sha1(f"{voice}|{speed}|{text}{recipe}".encode()).hexdigest()
     path = os.path.join(out, key + ".mp3")
     if done.get(key) == digest and os.path.exists(path):
         skipped += 1
@@ -40,7 +66,9 @@ for clip in manifest["clips"]:
         left += 1
         continue
     try:
-        samples, rate = kokoro.create(text, voice=voice, speed=speed, lang="en-us")
+        samples, rate = kokoro.create(text + "." if single else text, voice=voice, speed=speed, lang="en-us")
+        if single:
+            samples = tidy(samples, rate)
         os.makedirs(os.path.dirname(path), exist_ok=True)
         sf.write(path, samples, rate, format="MP3")
         done[key] = digest

@@ -118,6 +118,89 @@ function VoiceCheck() {
   )
 }
 
+type RawRecognition = {
+  lang: string
+  maxAlternatives: number
+  interimResults: boolean
+  continuous: boolean
+  onresult: ((e: { resultIndex?: number; results: ArrayLike<ArrayLike<{ transcript: string; confidence?: number }> & { isFinal?: boolean }> }) => void) | null
+  onspeechstart: (() => void) | null
+  onerror: ((e: { error: string }) => void) | null
+  onend: (() => void) | null
+  start(): void
+  stop(): void
+}
+
+/** Shows exactly what this device's speech recogniser reports, so a mis-heard spelling can be diagnosed from a screenshot. */
+function MicCheck() {
+  const [lines, setLines] = useState<string[]>([])
+  const [running, setRunning] = useState(false)
+  const run = () => {
+    const w = window as unknown as Record<string, unknown>
+    const Ctor = (w.SpeechRecognition ?? w.webkitSpeechRecognition) as (new () => RawRecognition) | undefined
+    if (!Ctor) return setLines(['This browser has no speech recognition.'])
+    const began = Date.now()
+    const log = (text: string) => setLines((l) => [...l, `${((Date.now() - began) / 1000).toFixed(1)}s ${text}`].slice(-40))
+    setLines([])
+    setRunning(true)
+    let sessions = 0
+    let stop = false
+    const start = () => {
+      const rec = new Ctor()
+      sessions++
+      const n = sessions
+      rec.lang = 'en-US'
+      rec.maxAlternatives = 5
+      rec.interimResults = true
+      rec.continuous = true
+      rec.onspeechstart = () => log(`#${n} speech`)
+      rec.onresult = (e) =>
+        log(
+          `#${n} i=${e.resultIndex ?? '?'} ` +
+            Array.from(e.results, (r) => `[${r.isFinal === false ? 'int' : 'FIN'} ${(r[0]?.confidence ?? 0).toFixed(2)} "${r[0]?.transcript ?? ''}"]`).join(' '),
+        )
+      rec.onerror = (e) => log(`#${n} error ${e.error}`)
+      rec.onend = () => {
+        log(`#${n} end`)
+        if (!stop && sessions < 8) window.setTimeout(start, 150)
+        else setRunning(false)
+      }
+      try {
+        rec.start()
+      } catch (error) {
+        log(`#${n} could not start: ${String(error)}`)
+        setRunning(false)
+      }
+      window.setTimeout(() => {
+        stop = true
+        try {
+          rec.stop()
+        } catch {
+          // already stopped
+        }
+      }, Math.max(0, 12000 - (Date.now() - began)))
+    }
+    start()
+  }
+  return (
+    <section className="flex flex-col gap-2 rounded-2xl bg-white p-4 shadow-sm">
+      <h3 className="font-bold">Microphone check</h3>
+      <p className="text-sm text-slate-500">
+        Tap, then slowly say four letters, for example "C, A, K, E". It listens for 12 seconds and shows what this device reported. Nothing is
+        sent anywhere.
+      </p>
+      <button type="button" onClick={run} disabled={running} className="self-start rounded-full bg-slate-800 px-5 py-2 font-bold text-white disabled:opacity-40">
+        {running ? 'Listening…' : 'Test the microphone'}
+      </button>
+      {lines.length > 0 && (
+        <pre data-testid="mic-log" className="overflow-x-auto whitespace-pre-wrap break-words rounded-xl bg-slate-50 p-2 text-xs text-slate-700">
+          {lines.join('\n')}
+        </pre>
+      )}
+    </section>
+  )
+}
+
 function UsageTable() {
   const [rows, setRows] = useState<UsageRow[] | null>(null)
   const [note, setNote] = useState('Loading…')
@@ -538,6 +621,7 @@ function App() {
             )}
           </section>
           <VoiceCheck />
+          <MicCheck />
           <UsageTable />
           <section className="flex flex-col gap-2 rounded-2xl bg-white p-4 shadow-sm">
             <h3 className="font-bold">Report a problem</h3>

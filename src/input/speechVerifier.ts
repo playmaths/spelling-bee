@@ -170,3 +170,88 @@ export function readChunk(nBest: readonly string[], elapsedMs: number | null): H
   return { kind: 'WORD' }
 }
 
+
+/** One recognition result as the browser reports it. */
+export interface HeardResult {
+  final: boolean
+  /** Alternatives, best first. */
+  alternatives: string[]
+}
+
+/**
+ * Keeps track of what has been said in one listening session.
+ *
+ * Browsers report speech differently. Desktop Chrome adds one finished result per
+ * burst. Android Chrome often repeats everything so far in each new result
+ * ("a", then "a b", then "a b c"). Others go back and change a result they had
+ * already called finished. Reading only "the newest result" loses or doubles
+ * letters on some of them, so the whole list is read again on every event and
+ * turned into an ordered list of things she said:
+ *  - a result that grows ("a" -> "a b") is the same utterance, still growing;
+ *  - a new result that repeats the previous one and adds to it replaces it;
+ *  - a result that changes to something unrelated is a new utterance; the old one is kept.
+ */
+export function createSpellingSession() {
+  type Utterance = { raw: string; alternatives: string[]; began: number; chunk: HeardChunk }
+  const order: Utterance[] = []
+  const bySlot = new Map<number, Utterance>()
+  const seen = new Map<number, string>()
+  let mark: number | null = null
+  let forgotten = 0
+
+  const norm = (t: string) => t.trim().toLowerCase().replace(/\s+/g, ' ')
+  const grows = (from: string, to: string) => to.length > from.length && to.startsWith(from)
+  const classify = (u: Utterance, now: number) => {
+    u.chunk = readChunk(u.alternatives, now - u.began)
+  }
+
+  return {
+    /** She started making sound. */
+    speechStarted(now: number) {
+      mark ??= now
+    },
+    /** Everything said so far has been dealt with (she edited the tiles by hand): start counting afresh. */
+    forget() {
+      forgotten = order.length
+    },
+    /** Read the browser's full result list; returns what she has said since the last `forget`, and what is still being said. */
+    read(results: readonly HeardResult[], now: number): { chunks: HeardChunk[]; speaking: string } {
+      let speaking = ''
+      results.forEach((result, slot) => {
+        const raw = norm(result.alternatives[0] ?? '')
+        if (!result.final) {
+          speaking += ` ${raw}`
+          return
+        }
+        if (raw === '') return
+        if (seen.get(slot) === raw) return // nothing new in this result
+        seen.set(slot, raw)
+        const known = bySlot.get(slot)
+        if (known && known.raw === raw) return
+        if (known && grows(known.raw, raw)) {
+          known.raw = raw
+          known.alternatives = result.alternatives
+          classify(known, now)
+          return
+        }
+        const last = order[order.length - 1]
+        if (!known && last && order.length > forgotten && grows(last.raw, raw)) {
+          // The browser said it all again with more on the end.
+          last.raw = raw
+          last.alternatives = result.alternatives
+          classify(last, now)
+          bySlot.set(slot, last)
+          return
+        }
+        const fresh: Utterance = { raw, alternatives: result.alternatives, began: mark ?? now, chunk: { kind: 'NOTHING' } }
+        // With no start time, give her the benefit of the doubt (readChunk treats null as "long enough").
+        fresh.chunk = readChunk(result.alternatives, mark === null ? null : now - mark)
+        order.push(fresh)
+        bySlot.set(slot, fresh)
+      })
+      // The next burst is timed from the end of this one, so a pause counts in her favour.
+      if (results.some((r) => r.final)) mark = now
+      return { chunks: order.slice(forgotten).map((u) => u.chunk), speaking: speaking.trim() }
+    },
+  }
+}

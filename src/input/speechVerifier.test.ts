@@ -1,6 +1,15 @@
 import { describe, expect, it } from 'vitest'
 import { getWord } from '../data/index.ts'
-import { isSpelledOut, parseSpokenLetters, readChunk, spelledAlternatives, verifyDictation } from './speechVerifier.ts'
+import {
+  createSpellingSession,
+  isSpelledOut,
+  parseSpokenLetters,
+  readChunk,
+  spelledAlternatives,
+  verifyDictation,
+  type HeardChunk,
+  type HeardResult,
+} from './speechVerifier.ts'
 
 const practice = getWord('word_practice')!
 const sentence = getWord('word_sentence')!
@@ -102,5 +111,64 @@ describe('confirming a fuzzy letter', () => {
     expect(choices).toContain('T')
     expect(choices).toContain('E')
     expect(choices).toEqual([...choices].sort())
+  })
+})
+
+describe('createSpellingSession: one listening session, whatever the browser does', () => {
+  const fin = (...alternatives: string[]): HeardResult => ({ final: true, alternatives })
+  const letters = (chunks: HeardChunk[]) =>
+    chunks.flatMap((c) => (c.kind === 'LETTERS' ? parseSpokenLetters(c.transcripts[0]) : [])).join('')
+
+  it('desktop: one finished result per burst, in order', () => {
+    const s = createSpellingSession()
+    expect(letters(s.read([fin('g')], 1000).chunks)).toBe('G')
+    expect(letters(s.read([fin('g'), fin('h')], 2000).chunks)).toBe('GH')
+    expect(letters(s.read([fin('g'), fin('h'), fin('e r')], 3500).chunks)).toBe('GHER')
+  })
+
+  it('Android: each new result repeats everything so far', () => {
+    const s = createSpellingSession()
+    expect(letters(s.read([fin('g')], 1000).chunks)).toBe('G')
+    expect(letters(s.read([fin('g'), fin('g h')], 2000).chunks)).toBe('GH')
+    expect(letters(s.read([fin('g'), fin('g h'), fin('g h e')], 3000).chunks)).toBe('GHE')
+  })
+
+  it('a finished result that grows in place is still one utterance', () => {
+    const s = createSpellingSession()
+    s.read([fin('g')], 1000)
+    expect(letters(s.read([fin('g h')], 2000).chunks)).toBe('GH')
+  })
+
+  it('a finished result replaced by something else does not lose the first letter', () => {
+    const s = createSpellingSession()
+    expect(letters(s.read([fin('g')], 1000).chunks)).toBe('G')
+    expect(letters(s.read([fin('h')], 2000).chunks)).toBe('GH')
+    expect(letters(s.read([fin('e')], 3000).chunks)).toBe('GHE')
+  })
+
+  it('the same letter twice is two letters', () => {
+    const s = createSpellingSession()
+    s.read([fin('l')], 1000)
+    expect(letters(s.read([fin('l'), fin('l')], 2000).chunks)).toBe('LL')
+  })
+
+  it('reading the same results again changes nothing', () => {
+    const s = createSpellingSession()
+    s.read([fin('g'), fin('h')], 1000)
+    expect(letters(s.read([fin('g'), fin('h')], 1500).chunks)).toBe('GH')
+  })
+
+  it('shows what is still being said, and forgets what has been dealt with', () => {
+    const s = createSpellingSession()
+    const first = s.read([fin('g'), { final: false, alternatives: ['h e'] }], 1000)
+    expect(first.speaking).toBe('h e')
+    s.forget()
+    expect(letters(s.read([fin('g'), fin('h e')], 2500).chunks)).toBe('HE')
+  })
+
+  it('still refuses a quick whole word', () => {
+    const s = createSpellingSession()
+    s.speechStarted(1000)
+    expect(s.read([fin('rhino')], 1400).chunks).toEqual([{ kind: 'WORD' }])
   })
 })

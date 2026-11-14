@@ -2,6 +2,7 @@ import type { BeeWord, PatternNode, WordCard } from '../types/game.ts'
 import cardsJson from './cards.json'
 import { expandFamily, type CompactFamily } from './expand.ts'
 import patternsJson from './patterns.json'
+import rhymesJson from './rhymes.json'
 import wordsJson from './words.json'
 
 /**
@@ -54,3 +55,9 @@ const patternById = new Map(PATTERNS.map((p) => [p.patternId, p]))
 export const getWord = (id: string): BeeWord | undefined => wordById.get(id)
 export const getCard = (wordId: string): WordCard | undefined => cardById.get(wordId)
 export const getPattern = (patternId: string): PatternNode | undefined => patternById.get(patternId)
+
+/** A sound cue for the word card: a true rhyme, or a familiar word with the same last beat. */
+export type SoundCue = { rhyme: string } | { endsLike: string } | null
+export const RHYMES = rhymesJson as unknown as Record<string, SoundCue>
+export const getSoundCue = (word: string): SoundCue => RHYMES[word] ?? null
+

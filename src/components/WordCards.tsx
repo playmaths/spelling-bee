@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { CARDS, getWord } from '../data/index.ts'
+import { CARDS, getSoundCue, getWord } from '../data/index.ts'
 import { clipKeys } from '../lib/clips.ts'
 import { phonicsChunks, visualTips } from '../lib/phonics.ts'
 import { speak } from '../lib/speak.ts'
@@ -23,6 +23,7 @@ function HookedWord({ word, hook }: { word: string; hook: string }) {
 export function WordCardFace({ word, card }: { word: BeeWord; card: WordCard }) {
   const [story, setStory] = useState(false)
   const chunks = phonicsChunks(word)
+  const cue = getSoundCue(word.word)
   const tips = visualTips(chunks)
   const parts = [...new Set(word.meanings.map((m) => m.partOfSpeech))]
   return (
@@ -65,6 +66,12 @@ export function WordCardFace({ word, card }: { word: BeeWord; card: WordCard }) 
         </div>
         <p className="text-sm text-slate-600">
           Say it: <span className="font-semibold">{word.phoneticRespelling}</span>
+          {cue && (
+            <span data-testid="sound-cue">
+              {' '}
+              ({'rhyme' in cue ? 'rhymes with' : 'ends like'} <span className="font-semibold">{'rhyme' in cue ? cue.rhyme : cue.endsLike}</span>)
+            </span>
+          )}
         </p>
         {tips.map((t) => (
           <p key={t} className="text-sm text-slate-600">

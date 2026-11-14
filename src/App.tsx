@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { BeeStage } from './components/BeeStage.tsx'
 import { Compete } from './components/Compete.tsx'
+import { MeaningQuiz } from './components/MeaningQuiz.tsx'
 import { Play } from './components/Play.tsx'
 import { IconButton } from './components/IconButton.tsx'
 import { WordCards } from './components/WordCards.tsx'
@@ -20,7 +21,7 @@ import type { BeeWord } from './types/game.ts'
 
 const STORAGE_KEY = 'spelling-bee-prototype'
 const FAMILY_KEY = 'spelling-bee-family'
-type View = 'HOME' | 'PLAY' | 'MAP' | 'CARDS' | 'STAGE' | 'GROWNUPS' | 'BENCH' | 'INSIGHTS'
+type View = 'HOME' | 'PLAY' | 'MAP' | 'CARDS' | 'MEANINGS' | 'STAGE' | 'GROWNUPS' | 'BENCH' | 'INSIGHTS'
 
 function loadProgress(): Progress {
   try {
@@ -306,9 +307,18 @@ function App() {
           >
             ▶ Play
           </button>
-          <div className="flex gap-8">
+          <div className="grid grid-cols-2 justify-items-center gap-x-10 gap-y-6 sm:flex sm:gap-8">
             <IconButton icon="🌷" label="My garden" size="lg" onClick={() => setView('MAP')} />
             <IconButton icon="🃏" label="Cards" size="lg" onClick={() => setView('CARDS')} />
+            <IconButton
+              icon="💡"
+              label="Which word?"
+              size="lg"
+              onClick={() => {
+                usageCount('starts')
+                setView('MEANINGS')
+              }}
+            />
             <IconButton icon="🎤" label="Bee stage" size="lg" onClick={() => setView('STAGE')} />
           </div>
         </div>
@@ -335,6 +345,14 @@ function App() {
         />
       )}
       {view === 'CARDS' && <WordCards unlockAll={bypassCooldownForDemo} collected={Object.keys(progress.solved)} />}
+      {view === 'MEANINGS' && (
+        <MeaningQuiz
+          solved={progress.solved}
+          unlockAll={bypassCooldownForDemo}
+          target={calibrationFor(progress).target}
+          onHome={() => setView('HOME')}
+        />
+      )}
       {view === 'STAGE' && (
         <Compete
           progress={progress}

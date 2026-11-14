@@ -490,20 +490,21 @@ function App() {
       )}
       {view === 'CARDS' && <WordCards unlockAll={bypassCooldownForDemo} collected={Object.keys(progress.solved)} />}
       {view === 'DAILY' && todayCard && (
-        <div className="flex w-full flex-col items-center gap-5">
+        <div className="flex w-full flex-col items-center gap-3 sm:gap-5">
           <p className="text-lg font-semibold text-slate-600">☀️ Today's word</p>
           <WordCardFace word={today} card={todayCard} />
-          <IconButton
-            icon="✏️"
-            label="Try spelling it"
-            size="lg"
+          <button
+            type="button"
             onClick={() => {
               setSession([today])
               usageCount('starts')
               setSessionFrom('DAILY')
               setView('PLAY')
             }}
-          />
+            className="rounded-full bg-amber-400 px-8 py-3 text-xl font-bold shadow-lg active:scale-95"
+          >
+            ✏️ Try spelling it
+          </button>
         </div>
       )}
       {view === 'GOALS' && (

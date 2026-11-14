@@ -45,7 +45,12 @@ describe("today's goals", () => {
     const busy = Array.from({ length: 8 }, (_, i) => ({ ...go(`w${i}`, i % 2 ? 'STAGE' : 'SPELL', 9, { asks: 1 }), t: at(9) + i }))
     const first = awardStickers(state([...busy, { ...go('w0', 'STAGE', 12), t: at(12) }, { ...go('w2', 'STAGE', 12), t: at(12) + 1 }]), 'w0', DAY)
     expect(first.fresh).toEqual([STICKERS[0], STICKERS[1]])
-    expect([...stickerBook(first.progress)].sort()).toEqual([STICKERS[0], STICKERS[1]].sort())
+    const book = stickerBook(first.progress)
+    expect(book.map((e) => e.sticker).sort()).toEqual([STICKERS[0], STICKERS[1]].sort())
+    for (const e of book) {
+      expect(e.day).toBe(DAY)
+      expect(GOALS.map((g) => g.label)).toContain(e.label)
+    }
     const again = awardStickers(first.progress, 'w0', DAY)
     expect(again.fresh).toEqual([])
     expect(again.progress).toBe(first.progress)

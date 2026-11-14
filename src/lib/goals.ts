@@ -101,8 +101,18 @@ export function awardStickers(progress: Progress, dailyWordId: string, day = day
   return fresh.length ? { progress: { ...progress, stickers }, fresh } : { progress, fresh }
 }
 
+export interface StickerEntry {
+  sticker: string
+  /** The day it was earned (YYYY-MM-DD) and what for. */
+  day: string
+  label: string
+}
+
 /** Her sticker book, oldest first. */
-export const stickerBook = (progress: Progress): string[] =>
+export const stickerBook = (progress: Progress): StickerEntry[] =>
   Object.entries(progress.stickers ?? {})
     .sort(([a], [b]) => a.localeCompare(b))
-    .map(([, s]) => s)
+    .map(([key, sticker]) => {
+      const [day, goalId] = key.split('|')
+      return { sticker, day, label: GOALS.find((g) => g.id === goalId)?.label ?? 'A goal' }
+    })

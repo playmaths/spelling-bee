@@ -22,6 +22,7 @@ function HookedWord({ word, hook }: { word: string; hook: string }) {
 
 export function WordCardFace({ word, card }: { word: BeeWord; card: WordCard }) {
   const [story, setStory] = useState(false)
+  const [showTips, setShowTips] = useState(false)
   const chunks = phonicsChunks(word)
   const cue = getSoundCue(word.word)
   const tips = visualTips(chunks)
@@ -31,11 +32,21 @@ export function WordCardFace({ word, card }: { word: BeeWord; card: WordCard }) 
       data-testid="word-card"
       className="mx-auto flex w-full max-w-sm flex-col gap-2 rounded-3xl border-2 border-stone-200 bg-[#fbf8ef] p-4 shadow-lg sm:gap-3 sm:p-6"
     >
-      <h3 className="text-3xl font-bold tracking-tight text-slate-800 sm:text-4xl">
-        <HookedWord word={word.word} hook={card.hook} />
-      </h3>
+      <div className="flex items-center justify-between gap-2">
+        <h3 className="text-3xl font-bold tracking-tight text-slate-800 sm:text-4xl">
+          <HookedWord word={word.word} hook={card.hook} />
+        </h3>
+        {/* On a phone the picture sits beside the word, so the whole card fits one screen. */}
+        <span aria-hidden className="shrink-0 rounded-xl bg-gradient-to-b from-sky-100 to-emerald-50 px-2 py-1 text-2xl sm:hidden">
+          {card.emoji}
+        </span>
+      </div>
       <p className="text-sm text-slate-500">
-        {parts.join(', ')} <span className="mx-1 text-slate-300">|</span> {word.phoneticRespelling}
+        {parts.join(', ')}
+        <span className="hidden sm:inline">
+          {' '}
+          <span className="mx-1 text-slate-300">|</span> {word.phoneticRespelling}
+        </span>
         <button
           type="button"
           onClick={() => speak(word.word, false, clipKeys.word(word.word))}
@@ -45,7 +56,7 @@ export function WordCardFace({ word, card }: { word: BeeWord; card: WordCard }) 
           🔊
         </button>
       </p>
-      <div data-testid="phonics" className="flex flex-col gap-2 rounded-2xl bg-white/70 p-3">
+      <div data-testid="phonics" className="flex flex-col gap-1.5 rounded-2xl bg-white/70 p-2.5 sm:gap-2 sm:p-3">
         <div className="flex flex-wrap items-end gap-x-1 gap-y-2 text-xl font-bold tracking-wide text-slate-800 sm:gap-x-1.5 sm:text-2xl">
           {chunks.map((c, n) => (
             <span
@@ -74,7 +85,7 @@ export function WordCardFace({ word, card }: { word: BeeWord; card: WordCard }) 
           )}
         </p>
         {tips.map((t) => (
-          <p key={t} className="text-sm text-slate-600">
+          <p key={t} data-testid="pencil-tip" className={`text-sm text-slate-600 ${showTips ? '' : 'hidden sm:block'}`}>
             ✏️ {t}
           </p>
         ))}
@@ -89,20 +100,30 @@ export function WordCardFace({ word, card }: { word: BeeWord; card: WordCard }) 
       <p className="text-sm text-slate-500">{card.synonyms.join(', ')}</p>
       <div
         aria-hidden
-        className="flex h-24 items-center justify-center rounded-2xl bg-gradient-to-b from-sky-100 to-emerald-50 text-5xl sm:h-36 sm:text-6xl"
+        className="hidden h-24 items-center justify-center rounded-2xl bg-gradient-to-b from-sky-100 to-emerald-50 text-5xl sm:flex sm:h-36 sm:text-6xl"
       >
         {card.emoji}
       </div>
       <p className="text-center text-base font-medium leading-snug text-slate-700 sm:text-lg">
         <RichText text={card.sentence} />
       </p>
-      <div className="flex justify-center gap-3">
+      <div className="flex flex-wrap justify-center gap-2 sm:gap-3">
+        {tips.length > 0 && (
+          <button
+            type="button"
+            aria-expanded={showTips}
+            onClick={() => setShowTips((v) => !v)}
+            className="rounded-full bg-white px-3 py-2 text-sm font-semibold shadow sm:hidden"
+          >
+            ✏️ Tips
+          </button>
+        )}
         <button
           type="button"
           onClick={() => speak(card.sentence, false, clipKeys.card(word.word))}
-          className="rounded-full bg-white px-4 py-2 text-sm font-semibold shadow"
+          className="rounded-full bg-white px-3 py-2 text-sm font-semibold shadow sm:px-4"
         >
-          🔊 Read it to me
+          🔊 Read it
         </button>
         <button
           type="button"
@@ -111,7 +132,7 @@ export function WordCardFace({ word, card }: { word: BeeWord; card: WordCard }) 
             if (!story) speak(word.wordStory, false, clipKeys.text(word.wordStory))
             setStory((v) => !v)
           }}
-          className="rounded-full bg-white px-4 py-2 text-sm font-semibold shadow"
+          className="rounded-full bg-white px-3 py-2 text-sm font-semibold shadow sm:px-4"
         >
           📖 Its story
         </button>

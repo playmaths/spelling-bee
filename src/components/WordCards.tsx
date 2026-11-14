@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { CARDS, getWord } from '../data/index.ts'
 import { clipKeys } from '../lib/clips.ts'
+import { phonicsChunks, visualTips } from '../lib/phonics.ts'
 import { speak } from '../lib/speak.ts'
 import { LEVEL_FLOOR } from '../lib/unlocks.ts'
 import type { BeeWord, WordCard } from '../types/game.ts'
@@ -21,6 +22,8 @@ function HookedWord({ word, hook }: { word: string; hook: string }) {
 
 export function WordCardFace({ word, card }: { word: BeeWord; card: WordCard }) {
   const [story, setStory] = useState(false)
+  const chunks = phonicsChunks(word)
+  const tips = visualTips(chunks)
   const parts = [...new Set(word.meanings.map((m) => m.partOfSpeech))]
   return (
     <article
@@ -41,6 +44,34 @@ export function WordCardFace({ word, card }: { word: BeeWord; card: WordCard }) 
           🔊
         </button>
       </p>
+      <div data-testid="phonics" className="flex flex-col gap-2 rounded-2xl bg-white/70 p-3">
+        <div className="flex flex-wrap items-end gap-x-1.5 gap-y-2 text-2xl font-bold tracking-wide text-slate-800">
+          {chunks.map((c, n) => (
+            <span
+              key={n}
+              className={
+                c.focus
+                  ? 'rounded-full border-2 border-rose-400 bg-rose-50 px-2'
+                  : c.kind === 'TEAM'
+                    ? 'rounded-full border-2 border-sky-400 px-2'
+                    : c.kind === 'BLEND'
+                      ? 'border-b-4 border-emerald-500 px-0.5'
+                      : 'px-0.5'
+              }
+            >
+              {c.text}
+            </span>
+          ))}
+        </div>
+        <p className="text-sm text-slate-600">
+          Say it: <span className="font-semibold">{word.phoneticRespelling}</span>
+        </p>
+        {tips.map((t) => (
+          <p key={t} className="text-sm text-slate-600">
+            ✏️ {t}
+          </p>
+        ))}
+      </div>
       <ol className="list-inside list-decimal space-y-1 text-lg font-semibold leading-snug text-slate-800">
         {word.meanings.map((m, i) => (
           <li key={i}>

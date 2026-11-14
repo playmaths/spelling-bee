@@ -15,7 +15,7 @@ export interface GoalDef {
   label: string
   need: number
   /** How far today's attempts take her (may exceed `need`). */
-  count: (today: Attempt[], earlier: Attempt[], dailyWordId: string) => number
+  count: (today: Attempt[], earlier: Attempt[], dailyWordId: string, meaningsToday: number) => number
 }
 
 export const GOALS: GoalDef[] = [
@@ -40,6 +40,7 @@ export const GOALS: GoalDef[] = [
     },
   },
   { id: 'daily', icon: '☀️', label: "Try spelling today's word", need: 1, count: (t, _e, daily) => (t.some((a) => a.w === daily && a.how === 'SPELL') ? 1 : 0) },
+  { id: 'meanings', icon: '💡', label: 'Find 6 words in Which word?', need: 6, count: (_t, _e, _d, found) => found },
 ]
 
 /** Stickers, handed out in this order; when the sheet runs out it starts again. */
@@ -77,9 +78,10 @@ export function goalStates(progress: Progress, dailyWordId: string, day = dayKey
   const history = progress.history ?? []
   const today = history.filter((a) => dayKey(new Date(a.t)) === day)
   const earlier = history.filter((a) => dayKey(new Date(a.t)) < day)
+  const found = (progress.meanings ?? []).filter((t) => dayKey(new Date(t)) === day).length
   return goalsFor(day).map((goal) => {
     const sticker = progress.stickers?.[stickerKey(day, goal.id)]
-    const have = Math.min(goal.need, goal.count(today, earlier, dailyWordId))
+    const have = Math.min(goal.need, goal.count(today, earlier, dailyWordId, found))
     // A sticker once given stays given, even if old attempts later drop off the history.
     return { goal, have: sticker ? goal.need : have, done: !!sticker || have >= goal.need, ...(sticker ? { sticker } : {}) }
   })

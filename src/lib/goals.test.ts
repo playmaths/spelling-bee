@@ -23,13 +23,13 @@ describe("today's goals", () => {
 
   it('counts trying, not getting it right', () => {
     const today = ['a', 'b', 'c', 'd', 'e'].map((w, i) => go(w, 'PUZZLE', 9 + i))
-    expect(byId('words').count(today, [], 'x')).toBe(5)
-    expect(byId('spell').count(today, [], 'x')).toBe(0)
-    expect(byId('spell').count([go('a', 'SPELL', 9), go('b', 'STAGE', 10), go('a', 'SPELL', 11)], [], 'x')).toBe(2)
-    expect(byId('ask').count([go('a', 'PUZZLE', 9, { asks: 2 }), go('b', 'PUZZLE', 10)], [], 'x')).toBe(1)
-    expect(byId('new').count(today, [go('a', 'PUZZLE', 9)], 'x')).toBe(4)
-    expect(byId('daily').count([go('x', 'PUZZLE', 9)], [], 'x')).toBe(0)
-    expect(byId('daily').count([go('x', 'SPELL', 9)], [], 'x')).toBe(1)
+    expect(byId('words').count(today, [], 'x', 0)).toBe(5)
+    expect(byId('spell').count(today, [], 'x', 0)).toBe(0)
+    expect(byId('spell').count([go('a', 'SPELL', 9), go('b', 'STAGE', 10), go('a', 'SPELL', 11)], [], 'x', 0)).toBe(2)
+    expect(byId('ask').count([go('a', 'PUZZLE', 9, { asks: 2 }), go('b', 'PUZZLE', 10)], [], 'x', 0)).toBe(1)
+    expect(byId('new').count(today, [go('a', 'PUZZLE', 9)], 'x', 0)).toBe(4)
+    expect(byId('daily').count([go('x', 'PUZZLE', 9)], [], 'x', 0)).toBe(0)
+    expect(byId('daily').count([go('x', 'SPELL', 9)], [], 'x', 0)).toBe(1)
   })
 
   it("only counts today's attempts", () => {
@@ -52,6 +52,16 @@ describe("today's goals", () => {
     // Still shown as done after the attempts are gone.
     const later = goalStates({ ...first.progress, history: [] }, 'w0', DAY)
     expect(later.every((s) => s.done && s.sticker)).toBe(true)
+  })
+
+  it('counts words found in Which word? today, right first go or not', () => {
+    expect(byId('meanings').count([], [], 'x', 4)).toBe(4)
+    const p: Progress = { solved: {}, meanings: [at(9, 13), at(9), at(10), at(11)] }
+    const paid = awardStickers({ ...p, meanings: [...p.meanings!, at(12), at(13), at(14)] }, 'x', DAY)
+    const plays = goalsFor(DAY).some((g) => g.id === 'meanings')
+    expect(paid.fresh.length).toBe(plays ? 1 : 0)
+    const merged = mergeProgress(p, { solved: {}, meanings: [at(9), at(15)] })
+    expect(merged.meanings).toEqual([at(9, 13), at(9), at(10), at(11), at(15)])
   })
 
   it('pays nothing for an empty day', () => {

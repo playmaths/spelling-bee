@@ -16,11 +16,14 @@ export function MeaningQuiz({
   unlockAll,
   target,
   onHome,
+  onFound,
 }: {
   solved: Record<string, unknown>
   unlockAll: boolean
   target: number
   onHome: () => void
+  /** She found a word (on any try); counts toward the day's goals. */
+  onFound: () => void
 }) {
   const newRound = () => buildMeaningRound(solved, unlockAll, target, Math.floor(Math.random() * 1e6))
   const [round, setRound] = useState<MeaningQuestion[]>(newRound)
@@ -62,6 +65,7 @@ export function MeaningQuiz({
     if (found || wrong.includes(choice)) return
     if (choice === q.word.word) {
       setFound(true)
+      onFound()
       if (wrong.length === 0) setFirstGo((n) => n + 1)
       chime(wrong.length === 0 ? 'BLOOM' : 'GROW')
     } else {

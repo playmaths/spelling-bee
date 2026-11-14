@@ -20,6 +20,7 @@ export interface Attempt {
 }
 
 export const HISTORY_CAP = 800
+export const MEANINGS_CAP = 200
 
 export interface Progress {
   /** wordId -> best result so far. */
@@ -37,6 +38,8 @@ export interface Progress {
   ribbons?: Record<string, number>
   /** Her last attempts, oldest first (at most HISTORY_CAP). */
   history?: Attempt[]
+  /** When she found a word in "Which word?" (epoch ms, at most MEANINGS_CAP). Only used for daily goals. */
+  meanings?: number[]
   /** Stickers earned from daily goals: "day|goalId" -> sticker. */
   stickers?: Record<string, string>
 }

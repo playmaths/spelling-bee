@@ -19,7 +19,7 @@ import { fileReport, loadReports, sendReports, setReportContext, type Report } f
 import { clipKeys, loadClipList, voiceStatus } from './lib/clips.ts'
 import { fetchUsage, usageCount, usageOpen, type UsageRow } from './lib/usage.ts'
 import { getVoiceName, listVoices, setMuted, setVoiceName, speak } from './lib/speak.ts'
-import { pickSession, type Progress } from './lib/unlocks.ts'
+import { MEANINGS_CAP, pickSession, type Progress } from './lib/unlocks.ts'
 import type { BeeWord } from './types/game.ts'
 
 /** Prototype shell. One thing per screen; grown-up controls live behind the gear. */
@@ -426,6 +426,7 @@ function App() {
           unlockAll={bypassCooldownForDemo}
           target={calibrationFor(progress).target}
           onHome={() => setView('HOME')}
+          onFound={() => setProgress((p) => ({ ...p, meanings: [...(p.meanings ?? []), Date.now()].slice(-MEANINGS_CAP), savedAt: Date.now() }))}
         />
       )}
       {view === 'STAGE' && (

@@ -1,4 +1,4 @@
-import { HISTORY_CAP, type Attempt, type Progress } from './unlocks.ts'
+import { HISTORY_CAP, MEANINGS_CAP, type Attempt, type Progress } from './unlocks.ts'
 
 /**
  * Family-code sync, the same scheme as Number Garden and Sudoku:
@@ -50,6 +50,7 @@ export function mergeProgress(a: Progress, b: Progress): Progress {
   const beesWon = Math.max(a.beesWon ?? 0, b.beesWon ?? 0)
   const ribbons: Record<string, number> = { ...a.ribbons }
   for (const [k, v] of Object.entries(b.ribbons ?? {})) ribbons[k] = Math.max(ribbons[k] ?? 0, v)
+  const meanings = [...new Set([...(a.meanings ?? []), ...(b.meanings ?? [])])].sort((x, y) => x - y).slice(-MEANINGS_CAP)
   // A sticker earned on either device is kept; if both paid the same goal, the first device's stays.
   const stickers = { ...b.stickers, ...a.stickers }
   return {
@@ -62,6 +63,7 @@ export function mergeProgress(a: Progress, b: Progress): Progress {
     ...(beesWon ? { beesWon } : {}),
     ...(Object.keys(ribbons).length ? { ribbons } : {}),
     ...(Object.keys(stickers).length ? { stickers } : {}),
+    ...(meanings.length ? { meanings } : {}),
   }
 }
 
@@ -77,6 +79,7 @@ export function sameProgress(a: Progress, b: Progress): boolean {
       p.beesWon ?? 0,
       Object.entries(p.ribbons ?? {}).sort(),
       Object.keys(p.stickers ?? {}).sort(),
+      [...(p.meanings ?? [])].sort(),
     ])
   return shape(a) === shape(b)
 }

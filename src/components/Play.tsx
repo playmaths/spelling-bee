@@ -24,6 +24,7 @@ export function Play({
   solved,
   onHome,
   doneLabel = 'All done for today!',
+  spellOut = false,
 }: {
   words: BeeWord[]
   onAttempt: (attempt: NewAttempt) => void
@@ -31,6 +32,8 @@ export function Play({
   solved: Record<string, 'CLEAN' | 'DONE'>
   onHome: () => void
   doneLabel?: string
+  /** Spell every word out in full with the Judge, whatever its family (used by today's word). */
+  spellOut?: boolean
 }) {
   const [index, setIndex] = useState(0)
   const [step, setStep] = useState<Step>('PUZZLE')
@@ -68,7 +71,7 @@ export function Play({
         ))}
       </div>
 
-      {step === 'PUZZLE' && !spellsOut(word) && (
+      {step === 'PUZZLE' && !(spellOut || spellsOut(word)) && (
         <PuzzlePlay
           key={word.id}
           word={word}
@@ -80,7 +83,7 @@ export function Play({
           }}
         />
       )}
-      {step === 'PUZZLE' && spellsOut(word) && (
+      {step === 'PUZZLE' && (spellOut || spellsOut(word)) && (
         <>
           <JudgeRound
             key={word.id}

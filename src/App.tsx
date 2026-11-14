@@ -4,7 +4,9 @@ import { Compete } from './components/Compete.tsx'
 import { MeaningQuiz } from './components/MeaningQuiz.tsx'
 import { Play } from './components/Play.tsx'
 import { IconButton } from './components/IconButton.tsx'
-import { WordCards } from './components/WordCards.tsx'
+import { WordCardFace, WordCards } from './components/WordCards.tsx'
+import { getCard } from './data/index.ts'
+import { dailyWord } from './lib/daily.ts'
 import { WordMap } from './components/WordMap.tsx'
 import { isFamilyCode, newFamilyCode, normalizeCode, syncOnce } from './lib/familySync.ts'
 import { withAttempt, type NewAttempt } from './lib/attempts.ts'
@@ -21,7 +23,7 @@ import type { BeeWord } from './types/game.ts'
 
 const STORAGE_KEY = 'spelling-bee-prototype'
 const FAMILY_KEY = 'spelling-bee-family'
-type View = 'HOME' | 'PLAY' | 'MAP' | 'CARDS' | 'MEANINGS' | 'STAGE' | 'GROWNUPS' | 'BENCH' | 'INSIGHTS'
+type View = 'HOME' | 'PLAY' | 'MAP' | 'CARDS' | 'DAILY' | 'MEANINGS' | 'STAGE' | 'GROWNUPS' | 'BENCH' | 'INSIGHTS'
 
 function loadProgress(): Progress {
   try {
@@ -253,11 +255,13 @@ function App() {
     setFamilyStatus(code ? 'Connecting…' : '')
   }
 
+  const today = dailyWord(calibrationFor(progress).floor)
+  const todayCard = getCard(today.id)
   const blooms = Object.values(progress.solved).filter((r) => r === 'CLEAN').length
   const round = 'flex h-14 w-14 items-center justify-center rounded-full bg-white text-2xl shadow active:scale-95'
 
   return (
-    <main className="mx-auto flex min-h-dvh max-w-2xl flex-col items-center gap-8 bg-amber-50 p-4 text-slate-900 sm:p-8">
+    <main className="mx-auto flex min-h-dvh max-w-2xl flex-col items-center gap-5 bg-amber-50 p-4 sm:gap-8 text-slate-900 sm:p-8">
       <div className="flex w-full items-center justify-between">
         {view === 'HOME' ? (
           blooms > 0 ? (
@@ -291,8 +295,8 @@ function App() {
       </div>
 
       {view === 'HOME' && (
-        <div className="flex flex-1 flex-col items-center justify-center gap-10 pb-24">
-          <div className="text-8xl">🐝</div>
+        <div className="flex flex-1 flex-col items-center justify-center gap-6 pb-4 sm:gap-8 sm:pb-16">
+          <div className="text-7xl sm:text-8xl">🐝</div>
           <h1 className="sr-only">Spelling Bee</h1>
           <button
             type="button"
@@ -307,6 +311,22 @@ function App() {
           >
             ▶ Play
           </button>
+          {todayCard && (
+            <button
+              type="button"
+              data-testid="daily-word"
+              onClick={() => setView('DAILY')}
+              className="flex items-center gap-3 rounded-full bg-white px-6 py-3 shadow active:scale-95"
+            >
+              <span aria-hidden className="text-2xl">
+                ☀️
+              </span>
+              <span className="flex flex-col items-start leading-tight">
+                <span className="text-sm font-semibold text-slate-500">Today's word</span>
+                <span className="text-2xl font-bold text-slate-800">{today.word}</span>
+              </span>
+            </button>
+          )}
           <div className="grid grid-cols-2 justify-items-center gap-x-10 gap-y-6 sm:flex sm:gap-8">
             <IconButton icon="🌷" label="My garden" size="lg" onClick={() => setView('MAP')} />
             <IconButton icon="🃏" label="Cards" size="lg" onClick={() => setView('CARDS')} />
@@ -330,8 +350,9 @@ function App() {
           words={session}
           onAttempt={logAttempt}
           solved={progress.solved}
-          onHome={() => setView(sessionFrom)}
+          onHome={() => setView(sessionFrom === 'DAILY' ? 'HOME' : sessionFrom)}
           doneLabel={sessionFrom === 'HOME' ? 'All done for today!' : 'Well done!'}
+          spellOut={sessionFrom === 'DAILY'}
         />
       )}
       {view === 'MAP' && (
@@ -345,6 +366,23 @@ function App() {
         />
       )}
       {view === 'CARDS' && <WordCards unlockAll={bypassCooldownForDemo} collected={Object.keys(progress.solved)} />}
+      {view === 'DAILY' && todayCard && (
+        <div className="flex w-full flex-col items-center gap-5">
+          <p className="text-lg font-semibold text-slate-600">☀️ Today's word</p>
+          <WordCardFace word={today} card={todayCard} />
+          <IconButton
+            icon="✏️"
+            label="Try spelling it"
+            size="lg"
+            onClick={() => {
+              setSession([today])
+              usageCount('starts')
+              setSessionFrom('DAILY')
+              setView('PLAY')
+            }}
+          />
+        </div>
+      )}
       {view === 'MEANINGS' && (
         <MeaningQuiz
           solved={progress.solved}

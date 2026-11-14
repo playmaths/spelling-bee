@@ -5,6 +5,7 @@ import { seededShuffle, unlockedWords } from '../lib/unlocks.ts'
 import type { BeeWord } from '../types/game.ts'
 import { getCard } from '../data/index.ts'
 import { JudgeRound } from './BeeStage.tsx'
+import { Celebration } from './Celebration.tsx'
 import { WordCardFace } from './WordCards.tsx'
 
 export const ROUND_SIZE = 8
@@ -15,6 +16,7 @@ interface Result {
   attempt: string
   coaching: string | null
   memoryTrick: string | null
+  close: boolean
 }
 
 /**
@@ -153,6 +155,7 @@ export function Compete({
         attempt: state.lastDiagnosis?.attempt ?? '',
         coaching: state.coachNote?.coaching ?? null,
         memoryTrick: state.coachNote?.memoryTrick ?? null,
+        close: (state.lastDiagnosis?.errorTileIndex ?? 0) >= word.word.length / 2,
       },
     ])
     setAnswered(true)
@@ -166,6 +169,18 @@ export function Compete({
         ))}
       </div>
       <JudgeRound key={`${round}-${word.id}`} word={word} mode="CONTEST" onResolved={onResolved} />
+      {answered && (
+        <Celebration
+          key={`moment-${word.id}`}
+          speakIt={false}
+          moment={{
+            r: results[results.length - 1]?.correct ? 'CLEAN' : 'MISSED',
+            mystery: word.role === 'TRANSFER_PROBE',
+            close: results[results.length - 1]?.close,
+            seed: index + word.word.length,
+          }}
+        />
+      )}
       {answered && getCard(word.id) && <WordCardFace key={word.id} word={word} card={getCard(word.id)!} />}
       {answered && (
         <button

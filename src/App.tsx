@@ -272,6 +272,7 @@ function App() {
           key={session.map((w) => w.id).join()}
           words={session}
           onAttempt={logAttempt}
+          solved={progress.solved}
           onHome={() => setView(sessionFrom)}
           doneLabel={sessionFrom === 'HOME' ? 'All done for today!' : 'Well done!'}
         />

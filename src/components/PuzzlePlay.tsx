@@ -8,6 +8,7 @@ import { clipKeys } from '../lib/clips.ts'
 import { speak } from '../lib/speak.ts'
 import type { BeeWord } from '../types/game.ts'
 import { AskJudge } from './AskJudge.tsx'
+import { Celebration } from './Celebration.tsx'
 import { IconButton } from './IconButton.tsx'
 
 /** Tile indices that start a new syllable. */
@@ -63,9 +64,12 @@ export function DetectiveCheck({ word, onDone }: { word: BeeWord; onDone: () => 
 /** One deduction puzzle: hear the word, fill the gaps. Three flowers, no clock. */
 export function PuzzlePlay({
   word,
+  before,
   onDone,
 }: {
   word: BeeWord
+  /** How this word stood before this go: a sprout ('DONE') makes a clean solve a comeback. */
+  before?: 'CLEAN' | 'DONE'
   onDone: (clean: boolean, attempt: NewAttempt) => void
 }) {
   const [state, dispatch] = useReducer(puzzleReducer, undefined, () => createPuzzle(word))
@@ -83,6 +87,8 @@ export function PuzzlePlay({
   const active =
     state.gaps.find((g) => g.index === selected && g.value === null) ?? state.gaps.find((g) => g.value === null)
   const toggle = (t: 'PENCIL' | 'WRITE') => setTool((cur) => (cur === t ? 'TAP' : t))
+  const [usedPencil, setUsedPencil] = useState(false)
+  const attempt = puzzleAttempt(word.id, state.status === 'SOLVED', isCleanSolve(state), judge.intentCounts)
 
   return (
     <div className="flex w-full flex-col items-center gap-7">
@@ -144,9 +150,10 @@ export function PuzzlePlay({
                   key={c}
                   type="button"
                   aria-label={`Letter ${c}`}
-                  onClick={() =>
+                  onClick={() => {
+                    if (tool === 'PENCIL') setUsedPencil(true)
                     dispatch({ type: tool === 'PENCIL' ? 'TOGGLE_NOTE' : 'PLACE', index: active.index, letter: c })
-                  }
+                  }}
                   className={`h-20 w-20 rounded-full text-4xl font-bold shadow-lg active:scale-95 ${
                     out ? 'bg-slate-100 text-slate-300 line-through' : 'bg-white text-slate-800'
                   }`}
@@ -166,7 +173,7 @@ export function PuzzlePlay({
         />
       )}
 
-      {state.feedback && (
+      {state.feedback && !over && (
         <p data-testid="feedback" className="max-w-md text-center text-lg text-slate-700">
           {state.feedback}
         </p>
@@ -181,15 +188,21 @@ export function PuzzlePlay({
       )}
 
       {over && (
-        <button
-          type="button"
-          onClick={() =>
-            onDone(isCleanSolve(state), puzzleAttempt(word.id, state.status === 'SOLVED', isCleanSolve(state), judge.intentCounts))
-          }
-          className={NEXT}
+        <Celebration
+          speakIt
+          moment={{
+            r: attempt.r,
+            asked: (attempt.asks ?? 0) > 0,
+            mystery: word.role === 'TRANSFER_PROBE',
+            comeback: before === 'DONE',
+            pencil: usedPencil,
+            seed: word.word.length + word.word.charCodeAt(0),
+          }}
         >
-          {isCleanSolve(state) ? '🌸 ' : ''}Next ▶
-        </button>
+          <button type="button" onClick={() => onDone(isCleanSolve(state), attempt)} className={NEXT}>
+            Next ▶
+          </button>
+        </Celebration>
       )}
     </div>
   )

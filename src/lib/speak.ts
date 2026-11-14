@@ -47,6 +47,8 @@ export function setVoiceName(name: string) {
   }
 }
 
+export const isMuted = () => muted
+
 export function setMuted(value: boolean) {
   muted = value
   if (value) {

@@ -76,6 +76,15 @@ export function stopClip() {
  * the caller should fall back to the device voice. Files are fetched whole (in
  * parallel) so the service worker can cache them for offline use.
  */
+const isLetter = (key: string) => key.startsWith('l/')
+
+/** Milliseconds of quiet between two clips played in a row. */
+export function pauseBefore(previous: string, upcoming: string): number {
+  if (isLetter(previous) && isLetter(upcoming)) return 380
+  if (isLetter(upcoming) || isLetter(previous)) return 300
+  return 180
+}
+
 export async function playClips(keys: readonly string[]): Promise<boolean> {
   const p = getPlayer()
   if (!p || !hasClips(keys)) return false
@@ -97,7 +106,12 @@ export async function playClips(keys: readonly string[]): Promise<boolean> {
       p.src = urls[i++]
       p.play().catch(done)
     }
-    p.onended = next
+    // Leave a breath between pieces so a stitched line is not rushed, and a longer
+    // one between letter names, the way a bee judge spells a word out.
+    p.onended = () => {
+      if (i >= urls.length) return done()
+      window.setTimeout(next, pauseBefore(keys[i - 1], keys[i]))
+    }
     p.pause()
     next()
     return true

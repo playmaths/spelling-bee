@@ -16,6 +16,8 @@ import {
   wordClip,
 } from '../engine/voice.ts'
 
+import { PRAISE } from './praise.ts'
+
 export interface VoiceClip {
   key: string
   text: string
@@ -46,6 +48,7 @@ export function buildVoiceManifest(): { voice: string; clips: VoiceClip[] } {
   }
   for (const l of 'abcdefghijklmnopqrstuvwxyz') add(letterClip(l), l.toUpperCase())
   for (const text of Object.values(PHRASES)) say(text)
+  for (const text of Object.values(PRAISE)) say(text)
   for (let n = 1; n <= MAX_BEATS; n++) say(beatsPhrase(n))
   for (let n = 1; n <= MAX_BOXES; n++) say(boxPhrase(n))
 

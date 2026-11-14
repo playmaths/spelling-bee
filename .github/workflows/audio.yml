@@ -12,6 +12,7 @@ on:
       - 'src/engine/voice.ts'
       - 'src/engine/judgeStateMachine.ts'
       - 'src/lib/voiceManifest.ts'
+      - 'src/lib/praise.ts'
       - 'scripts/generate_audio.py'
       - '.github/workflows/audio.yml'
   workflow_dispatch:

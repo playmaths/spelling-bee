@@ -50,6 +50,8 @@ export function mergeProgress(a: Progress, b: Progress): Progress {
   const beesWon = Math.max(a.beesWon ?? 0, b.beesWon ?? 0)
   const ribbons: Record<string, number> = { ...a.ribbons }
   for (const [k, v] of Object.entries(b.ribbons ?? {})) ribbons[k] = Math.max(ribbons[k] ?? 0, v)
+  // A sticker earned on either device is kept; if both paid the same goal, the first device's stays.
+  const stickers = { ...b.stickers, ...a.stickers }
   return {
     solved,
     sessions: Math.max(a.sessions ?? 0, b.sessions ?? 0),
@@ -59,6 +61,7 @@ export function mergeProgress(a: Progress, b: Progress): Progress {
     ...(stageLevel ? { stageLevel } : {}),
     ...(beesWon ? { beesWon } : {}),
     ...(Object.keys(ribbons).length ? { ribbons } : {}),
+    ...(Object.keys(stickers).length ? { stickers } : {}),
   }
 }
 
@@ -73,6 +76,7 @@ export function sameProgress(a: Progress, b: Progress): boolean {
       p.stageLevel ?? 0,
       p.beesWon ?? 0,
       Object.entries(p.ribbons ?? {}).sort(),
+      Object.keys(p.stickers ?? {}).sort(),
     ])
   return shape(a) === shape(b)
 }

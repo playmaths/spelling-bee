@@ -7,6 +7,9 @@ import { IconButton } from './components/IconButton.tsx'
 import { WordCardFace, WordCards } from './components/WordCards.tsx'
 import { getCard } from './data/index.ts'
 import { dailyWord } from './lib/daily.ts'
+import { GoalsScreen, NewSticker } from './components/Goals.tsx'
+import { awardStickers, goalStates, stickerBook } from './lib/goals.ts'
+import { chime } from './lib/sfx.ts'
 import { WordMap } from './components/WordMap.tsx'
 import { isFamilyCode, newFamilyCode, normalizeCode, syncOnce } from './lib/familySync.ts'
 import { withAttempt, type NewAttempt } from './lib/attempts.ts'
@@ -23,7 +26,7 @@ import type { BeeWord } from './types/game.ts'
 
 const STORAGE_KEY = 'spelling-bee-prototype'
 const FAMILY_KEY = 'spelling-bee-family'
-type View = 'HOME' | 'PLAY' | 'MAP' | 'CARDS' | 'DAILY' | 'MEANINGS' | 'STAGE' | 'GROWNUPS' | 'BENCH' | 'INSIGHTS'
+type View = 'HOME' | 'PLAY' | 'MAP' | 'CARDS' | 'DAILY' | 'GOALS' | 'MEANINGS' | 'STAGE' | 'GROWNUPS' | 'BENCH' | 'INSIGHTS'
 
 function loadProgress(): Progress {
   try {
@@ -257,6 +260,18 @@ function App() {
 
   const today = dailyWord(calibrationFor(progress).floor)
   const todayCard = getCard(today.id)
+  const goals = goalStates(progress, today.id)
+  // A finished goal pays its sticker at once; she is told on the home screen, never mid-word.
+  const [newStickers, setNewStickers] = useState<string[]>([])
+  useEffect(() => {
+    const paid = awardStickers(progress, today.id)
+    if (paid.fresh.length === 0) return
+    setProgress({ ...paid.progress, savedAt: Date.now() })
+    setNewStickers((s) => [...s, ...paid.fresh])
+  }, [progress, today.id])
+  useEffect(() => {
+    if (view === 'HOME' && newStickers.length > 0) chime('BLOOM')
+  }, [view, newStickers.length])
   const blooms = Object.values(progress.solved).filter((r) => r === 'CLEAN').length
   const round = 'flex h-14 w-14 items-center justify-center rounded-full bg-white text-2xl shadow active:scale-95'
 
@@ -311,22 +326,43 @@ function App() {
           >
             ▶ Play
           </button>
-          {todayCard && (
+          <div className="flex flex-wrap items-stretch justify-center gap-3">
+            {todayCard && (
+              <button
+                type="button"
+                data-testid="daily-word"
+                onClick={() => setView('DAILY')}
+                className="flex items-center gap-2 rounded-full bg-white px-5 py-3 shadow active:scale-95"
+              >
+                <span aria-hidden className="text-2xl">
+                  ☀️
+                </span>
+                <span className="flex flex-col items-start leading-tight">
+                  <span className="text-sm font-semibold text-slate-500">Today's word</span>
+                  <span className="text-xl font-bold text-slate-800">{today.word}</span>
+                </span>
+              </button>
+            )}
             <button
               type="button"
-              data-testid="daily-word"
-              onClick={() => setView('DAILY')}
-              className="flex items-center gap-3 rounded-full bg-white px-6 py-3 shadow active:scale-95"
+              data-testid="goals-button"
+              onClick={() => setView('GOALS')}
+              aria-label={`Today's goals: ${goals.filter((g) => g.done).length} of ${goals.length} done`}
+              className="flex items-center gap-2 rounded-full bg-white px-5 py-3 shadow active:scale-95"
             >
-              <span aria-hidden className="text-2xl">
-                ☀️
-              </span>
               <span className="flex flex-col items-start leading-tight">
-                <span className="text-sm font-semibold text-slate-500">Today's word</span>
-                <span className="text-2xl font-bold text-slate-800">{today.word}</span>
+                <span className="text-sm font-semibold text-slate-500">Today's goals</span>
+                <span className="text-xl">
+                  {goals.map((g) => (
+                    <span key={g.goal.id} className={g.sticker ? '' : 'opacity-60 grayscale'}>
+                      {g.sticker ?? '⭐'}
+                    </span>
+                  ))}
+                </span>
               </span>
             </button>
-          )}
+          </div>
+          {newStickers.length > 0 && <NewSticker stickers={newStickers} onClose={() => setNewStickers([])} />}
           <div className="grid grid-cols-2 justify-items-center gap-x-10 gap-y-6 sm:flex sm:gap-8">
             <IconButton icon="🌷" label="My garden" size="lg" onClick={() => setView('MAP')} />
             <IconButton icon="🃏" label="Cards" size="lg" onClick={() => setView('CARDS')} />
@@ -383,6 +419,7 @@ function App() {
           />
         </div>
       )}
+      {view === 'GOALS' && <GoalsScreen goals={goals} book={stickerBook(progress)} />}
       {view === 'MEANINGS' && (
         <MeaningQuiz
           solved={progress.solved}

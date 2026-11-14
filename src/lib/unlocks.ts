@@ -37,6 +37,8 @@ export interface Progress {
   ribbons?: Record<string, number>
   /** Her last attempts, oldest first (at most HISTORY_CAP). */
   history?: Attempt[]
+  /** Stickers earned from daily goals: "day|goalId" -> sticker. */
+  stickers?: Record<string, string>
 }
 
 export const SESSION_SIZE = 5

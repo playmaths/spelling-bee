@@ -29,9 +29,9 @@ export function WordCardFace({ word, card }: { word: BeeWord; card: WordCard }) 
   return (
     <article
       data-testid="word-card"
-      className="mx-auto flex w-full max-w-sm flex-col gap-3 rounded-3xl border-2 border-stone-200 bg-[#fbf8ef] p-6 shadow-lg"
+      className="mx-auto flex w-full max-w-sm flex-col gap-2 rounded-3xl border-2 border-stone-200 bg-[#fbf8ef] p-4 shadow-lg sm:gap-3 sm:p-6"
     >
-      <h3 className="text-4xl font-bold tracking-tight text-slate-800">
+      <h3 className="text-3xl font-bold tracking-tight text-slate-800 sm:text-4xl">
         <HookedWord word={word.word} hook={card.hook} />
       </h3>
       <p className="text-sm text-slate-500">
@@ -46,15 +46,15 @@ export function WordCardFace({ word, card }: { word: BeeWord; card: WordCard }) 
         </button>
       </p>
       <div data-testid="phonics" className="flex flex-col gap-2 rounded-2xl bg-white/70 p-3">
-        <div className="flex flex-wrap items-end gap-x-1.5 gap-y-2 text-2xl font-bold tracking-wide text-slate-800">
+        <div className="flex flex-wrap items-end gap-x-1 gap-y-2 text-xl font-bold tracking-wide text-slate-800 sm:gap-x-1.5 sm:text-2xl">
           {chunks.map((c, n) => (
             <span
               key={n}
               className={
                 c.focus
-                  ? 'rounded-full border-2 border-rose-400 bg-rose-50 px-2'
+                  ? 'rounded-full border-2 border-rose-400 bg-rose-50 px-1.5'
                   : c.kind === 'TEAM'
-                    ? 'rounded-full border-2 border-sky-400 px-2'
+                    ? 'rounded-full border-2 border-sky-400 px-1.5'
                     : c.kind === 'BLEND'
                       ? 'border-b-4 border-emerald-500 px-0.5'
                       : 'px-0.5'
@@ -79,7 +79,7 @@ export function WordCardFace({ word, card }: { word: BeeWord; card: WordCard }) 
           </p>
         ))}
       </div>
-      <ol className="list-inside list-decimal space-y-1 text-lg font-semibold leading-snug text-slate-800">
+      <ol className="list-inside list-decimal space-y-1 text-base font-semibold leading-snug text-slate-800 sm:text-lg">
         {word.meanings.map((m, i) => (
           <li key={i}>
             <span className="font-normal text-slate-500">({m.partOfSpeech})</span> {m.kidDefinition}
@@ -89,11 +89,11 @@ export function WordCardFace({ word, card }: { word: BeeWord; card: WordCard }) 
       <p className="text-sm text-slate-500">{card.synonyms.join(', ')}</p>
       <div
         aria-hidden
-        className="flex h-36 items-center justify-center rounded-2xl bg-gradient-to-b from-sky-100 to-emerald-50 text-6xl"
+        className="flex h-24 items-center justify-center rounded-2xl bg-gradient-to-b from-sky-100 to-emerald-50 text-5xl sm:h-36 sm:text-6xl"
       >
         {card.emoji}
       </div>
-      <p className="text-center text-lg font-medium leading-snug text-slate-700">
+      <p className="text-center text-base font-medium leading-snug text-slate-700 sm:text-lg">
         <RichText text={card.sentence} />
       </p>
       <div className="flex justify-center gap-3">
@@ -137,15 +137,25 @@ export function WordCards({ unlockAll, collected }: { unlockAll: boolean; collec
   const step = (d: number) => setCurrent((c) => (c + d + deck.length) % deck.length)
   const arrow = 'h-14 w-14 shrink-0 rounded-full bg-white text-2xl shadow active:scale-95'
 
+  // On a phone the card takes the full width and the arrows sit under it;
+  // on wider screens the arrows sit either side.
   return (
-    <div className="flex items-center justify-center gap-3">
-      <button type="button" aria-label="Previous card" onClick={() => step(-1)} className={arrow}>
+    <div className="flex w-full flex-col items-center gap-4 sm:flex-row sm:justify-center sm:gap-3">
+      <button type="button" aria-label="Previous card" onClick={() => step(-1)} className={`${arrow} hidden sm:block`}>
         ◀
       </button>
       <WordCardFace key={shown.word.id} word={shown.word} card={shown.card} />
-      <button type="button" aria-label="Next card" onClick={() => step(1)} className={arrow}>
+      <button type="button" aria-label="Next card" onClick={() => step(1)} className={`${arrow} hidden sm:block`}>
         ▶
       </button>
+      <div className="sticky bottom-3 flex gap-10 sm:hidden">
+        <button type="button" aria-label="Previous card" onClick={() => step(-1)} className={arrow}>
+          ◀
+        </button>
+        <button type="button" aria-label="Next card" onClick={() => step(1)} className={arrow}>
+          ▶
+        </button>
+      </div>
     </div>
   )
 }

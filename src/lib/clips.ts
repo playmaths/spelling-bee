@@ -33,33 +33,101 @@ let player: HTMLAudioElement | null = null
 let unlocked = false
 let playing = 0
 
-// A tiny silent WAV, played inside the first tap so iOS lets later clips play.
-const SILENCE = 'data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQAAAAA='
+/** What the recorded voice is doing, for the "Voice check" on the grown-ups screen. */
+export const voiceStatus = {
+  /** How many recordings the site offers; null while loading or if the list could not be read. */
+  recordings: null as number | null,
+  listError: null as string | null,
+  /** Whether a tap has given this page permission to play sound. */
+  unlocked: false,
+  /** Why the last attempt to play a recording failed, if it did. */
+  lastError: null as string | null,
+  lastUsed: null as 'RECORDED' | 'DEVICE' | null,
+}
+
+/** A real (if silent) tenth of a second of audio: an empty file does not count as playing on phones. */
+function silentWav(): string {
+  const rate = 8000
+  const samples = rate / 10
+  const buf = new ArrayBuffer(44 + samples * 2)
+  const v = new DataView(buf)
+  const text = (at: number, t: string) => [...t].forEach((ch, k) => v.setUint8(at + k, ch.charCodeAt(0)))
+  text(0, 'RIFF')
+  v.setUint32(4, 36 + samples * 2, true)
+  text(8, 'WAVEfmt ')
+  v.setUint32(16, 16, true)
+  v.setUint16(20, 1, true)
+  v.setUint16(22, 1, true)
+  v.setUint32(24, rate, true)
+  v.setUint32(28, rate * 2, true)
+  v.setUint16(32, 2, true)
+  v.setUint16(34, 16, true)
+  text(36, 'data')
+  v.setUint32(40, samples * 2, true)
+  return URL.createObjectURL(new Blob([buf], { type: 'audio/wav' }))
+}
 
 function getPlayer(): HTMLAudioElement | null {
   if (typeof Audio === 'undefined') return null
-  if (!player) player = new Audio()
+  if (!player) {
+    player = new Audio()
+    player.preload = 'auto'
+    player.setAttribute('playsinline', '')
+  }
   return player
 }
+
+const GESTURES = ['pointerdown', 'touchend', 'click', 'keydown'] as const
+
+/**
+ * Phones only let a page play sound once the person has tapped, and then only on
+ * an audio player that was started inside a tap. So the first taps play a moment of
+ * silence on the one shared player; after that it may play recordings at any time.
+ * It keeps trying on each tap until one succeeds.
+ */
+function unlock() {
+  const p = getPlayer()
+  if (!p || unlocked || unlocking) return
+  unlocking = true
+  p.src = silentWav()
+  p.play()
+    .then(() => {
+      unlocked = true
+      voiceStatus.unlocked = true
+      GESTURES.forEach((g) => window.removeEventListener(g, unlock, true))
+    })
+    .catch((e: unknown) => {
+      voiceStatus.lastError = `could not start sound: ${(e as Error)?.name ?? e}`
+    })
+    .finally(() => {
+      unlocking = false
+    })
+}
+let unlocking = false
 
 /** Call once at start-up. Safe anywhere: with no recordings the app simply uses the device voice. */
 export function initClips() {
   if (typeof window === 'undefined' || typeof fetch === 'undefined' || !/^https?:$/.test(location.protocol)) return
-  fetch(`${base()}index.json`)
-    .then((r) => (r.ok ? r.json() : []))
-    .then((keys: unknown) => {
-      if (Array.isArray(keys)) available = new Set(keys as string[])
+  loadClipList()
+  GESTURES.forEach((g) => window.addEventListener(g, unlock, true))
+}
+
+/** Reads which recordings exist. Tried again by the voice check if it failed (for example, offline at start-up). */
+export function loadClipList(): Promise<void> {
+  return fetch(`${base()}index.json`, { cache: 'no-cache' })
+    .then((r) => {
+      if (!r.ok) throw new Error(`HTTP ${r.status}`)
+      return r.json()
     })
-    .catch(() => {})
-  const unlock = () => {
-    const p = getPlayer()
-    if (!p || unlocked) return
-    unlocked = true
-    p.src = SILENCE
-    p.play().catch(() => {})
-    window.removeEventListener('pointerdown', unlock)
-  }
-  window.addEventListener('pointerdown', unlock)
+    .then((keys: unknown) => {
+      if (!Array.isArray(keys)) throw new Error('unexpected list')
+      available = new Set(keys as string[])
+      voiceStatus.recordings = available.size
+      voiceStatus.listError = null
+    })
+    .catch((e: unknown) => {
+      voiceStatus.listError = String((e as Error)?.message ?? e)
+    })
 }
 
 export const hasClip = (key: string | undefined): key is string => !!key && !!available?.has(key)
@@ -109,6 +177,7 @@ export async function playClips(keys: readonly string[]): Promise<boolean> {
   run = r
   if ((await r.urls[0]) === null) {
     r.done = true
+    voiceStatus.lastError = `could not download ${keys[0]}`
     return false
   }
   if (ticket !== playing) return true // something newer was asked for meanwhile
@@ -134,8 +203,20 @@ export async function playClips(keys: readonly string[]): Promise<boolean> {
     }
     window.setTimeout(() => void step(), pauseBefore(r.keys[r.i - 1], r.keys[r.i]))
   }
-  p.pause()
-  void step()
+  // Start the first clip here, so that if the phone refuses to play it the caller
+  // hears about it and can use the device voice instead of leaving her in silence.
+  try {
+    p.pause()
+    p.src = (await r.urls[0]) as string
+    r.i = 1
+    await p.play()
+    voiceStatus.lastError = null
+  } catch (e: unknown) {
+    if (ticket !== playing) return true
+    r.done = true
+    voiceStatus.lastError = `the phone refused to play it: ${(e as Error)?.name ?? e}`
+    return false
+  }
   return true
 }
 

@@ -3,7 +3,7 @@
  * silently does nothing where speech is unavailable.
  */
 
-import { appendClips, hasClips, playClips, stopClip } from './clips.ts'
+import { appendClips, hasClips, playClips, stopClip, voiceStatus } from './clips.ts'
 
 const VOICE_KEY = 'spelling-bee-voice'
 let muted = false
@@ -87,10 +87,12 @@ export function speak(text: string, slow = false, clip?: string | readonly strin
   const clips = typeof clip === 'string' ? [clip] : clip
   if (hasClips(clips)) {
     void playClips(clips).then((ok) => {
+      voiceStatus.lastUsed = ok ? 'RECORDED' : 'DEVICE'
       if (!ok && !muted) speakWithDevice(text, slow)
     })
     return
   }
+  voiceStatus.lastUsed = 'DEVICE'
   speakWithDevice(text, slow)
 }
 

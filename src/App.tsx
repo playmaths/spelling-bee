@@ -10,6 +10,7 @@ import { withAttempt, type NewAttempt } from './lib/attempts.ts'
 import { afterRound, calibrationFor } from './lib/awards.ts'
 import { ParentInsights } from './components/ParentInsights.tsx'
 import { fileReport, loadReports, sendReports, setReportContext, type Report } from './lib/report.ts'
+import { clipKeys, loadClipList, voiceStatus } from './lib/clips.ts'
 import { fetchUsage, usageCount, usageOpen, type UsageRow } from './lib/usage.ts'
 import { getVoiceName, listVoices, setMuted, setVoiceName, speak } from './lib/speak.ts'
 import { pickSession, type Progress } from './lib/unlocks.ts'
@@ -63,6 +64,51 @@ function VoicePicker() {
         ))}
       </select>
     </label>
+  )
+}
+
+function VoiceCheck() {
+  const [, refresh] = useState(0)
+  const [result, setResult] = useState('')
+  const test = () => {
+    setResult('Listening for the result…')
+    const run = () => {
+      speak('practice', false, clipKeys.word('practice'))
+      window.setTimeout(() => {
+        setResult(
+          voiceStatus.lastUsed === 'RECORDED'
+            ? 'Played the recorded voice.'
+            : `Used the device voice${voiceStatus.lastError ? `, because ${voiceStatus.lastError}` : voiceStatus.recordings === null ? ', because the list of recordings is not loaded' : ', because that recording is not in the list'}.`,
+        )
+        refresh((n) => n + 1)
+      }, 2500)
+    }
+    if (voiceStatus.recordings === null) void loadClipList().then(run)
+    else run()
+  }
+  return (
+    <section className="flex flex-col gap-2 rounded-2xl bg-white p-4 shadow-sm">
+      <h3 className="font-bold">Voice check</h3>
+      <p data-testid="voice-status" className="text-base text-slate-600">
+        {voiceStatus.recordings !== null
+          ? `${voiceStatus.recordings} recordings available.`
+          : voiceStatus.listError
+            ? `Recordings not loaded (${voiceStatus.listError}).`
+            : 'Recordings not loaded yet.'}{' '}
+        {voiceStatus.unlocked ? 'Sound is switched on for this page.' : 'Sound has not been started on this page yet.'}
+      </p>
+      <button type="button" onClick={test} className="self-start rounded-full bg-slate-800 px-5 py-2 font-bold text-white">
+        Test the voice
+      </button>
+      {result && (
+        <p data-testid="voice-result" className="text-base text-slate-700">
+          {result}
+        </p>
+      )}
+      <p className="text-sm text-slate-500">
+        If a phone uses the device voice, check it is not on silent, then tell us what this line says.
+      </p>
+    </section>
   )
 }
 
@@ -397,6 +443,7 @@ function App() {
               </>
             )}
           </section>
+          <VoiceCheck />
           <UsageTable />
           <section className="flex flex-col gap-2 rounded-2xl bg-white p-4 shadow-sm">
             <h3 className="font-bold">Report a problem</h3>

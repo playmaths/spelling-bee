@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { pickPraise, type Moment } from '../lib/praise.ts'
 import { chime } from '../lib/sfx.ts'
-import { speak } from '../lib/speak.ts'
+import { speak, speakAfter } from '../lib/speak.ts'
 
 const PETALS = [0, 45, 90, 135, 180, 225, 270, 315]
 const VISITORS = ['🦋', '🐝', '🐞', '🌈']
@@ -11,14 +11,23 @@ const VISITORS = ['🦋', '🐝', '🐞', '🌈']
  * each time), a helped one opens as a bud, and a miss plants a seedling that will
  * bloom when she gets the word on another day. The line praises what she did.
  */
-export function Celebration({ moment, speakIt, children }: { moment: Moment; speakIt: boolean; children?: React.ReactNode }) {
+export function Celebration({
+  moment,
+  speech,
+  children,
+}: {
+  moment: Moment
+  /** NOW: say the praise at once. AFTER: wait for the Judge's verdict to finish first. */
+  speech: 'NOW' | 'AFTER'
+  children?: React.ReactNode
+}) {
   const praise = pickPraise(moment)
   const kind = moment.r === 'CLEAN' ? 'BLOOM' : moment.r === 'HELPED' ? 'GROW' : 'SPROUT'
 
   useEffect(() => {
     chime(kind)
-    // Where the Judge has just spoken a verdict, the praise is shown but not spoken over it.
-    if (speakIt) speak(praise.text, false, praise.clip)
+    if (speech === 'NOW') speak(praise.text, false, praise.clip)
+    else speakAfter(praise.text, praise.clip)
     // Once, when the moment appears.
   }, []) // eslint-disable-line
 

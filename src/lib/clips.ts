@@ -71,11 +71,6 @@ export function stopClip() {
   player?.pause()
 }
 
-/**
- * Plays recordings one after another. Resolves true if playback started, false if
- * the caller should fall back to the device voice. Files are fetched whole (in
- * parallel) so the service worker can cache them for offline use.
- */
 const isLetter = (key: string) => key.startsWith('l/')
 
 /** Milliseconds of quiet between two clips played in a row. */
@@ -85,37 +80,73 @@ export function pauseBefore(previous: string, upcoming: string): number {
   return 180
 }
 
+interface Run {
+  ticket: number
+  keys: string[]
+  /** One pending download per clip; null if that clip could not be fetched. */
+  urls: Promise<string | null>[]
+  i: number
+  done: boolean
+}
+let run: Run | null = null
+
+const load = (key: string): Promise<string | null> =>
+  fetch(`${base()}${key}.mp3`)
+    .then((r) => (r.ok ? r.blob() : Promise.reject(new Error(key))))
+    .then((b) => URL.createObjectURL(b))
+    .catch(() => null)
+
+/**
+ * Plays recordings one after another. Resolves true if playback started, false if
+ * the caller should fall back to the device voice. Files are fetched whole (in
+ * parallel) so the service worker can cache them for offline use.
+ */
 export async function playClips(keys: readonly string[]): Promise<boolean> {
   const p = getPlayer()
   if (!p || !hasClips(keys)) return false
   const ticket = ++playing
-  try {
-    const blobs = await Promise.all(
-      keys.map(async (key) => {
-        const r = await fetch(`${base()}${key}.mp3`)
-        if (!r.ok) throw new Error(key)
-        return r.blob()
-      }),
-    )
-    if (ticket !== playing) return true // something newer was asked for meanwhile
-    const urls = blobs.map((b) => URL.createObjectURL(b))
-    const done = () => urls.forEach((u) => URL.revokeObjectURL(u))
-    let i = 0
-    const next = () => {
-      if (ticket !== playing || i >= urls.length) return done()
-      p.src = urls[i++]
-      p.play().catch(done)
-    }
-    // Leave a breath between pieces so a stitched line is not rushed, and a longer
-    // one between letter names, the way a bee judge spells a word out.
-    p.onended = () => {
-      if (i >= urls.length) return done()
-      window.setTimeout(next, pauseBefore(keys[i - 1], keys[i]))
-    }
-    p.pause()
-    next()
-    return true
-  } catch {
+  const r: Run = { ticket, keys: [...keys], urls: keys.map(load), i: 0, done: false }
+  run = r
+  if ((await r.urls[0]) === null) {
+    r.done = true
     return false
   }
+  if (ticket !== playing) return true // something newer was asked for meanwhile
+  const step = async (): Promise<void> => {
+    if (ticket !== playing || r.i >= r.urls.length) {
+      r.done = true
+      return
+    }
+    const url = await r.urls[r.i++]
+    if (ticket !== playing) return
+    if (!url) return step()
+    p.src = url
+    p.play().catch(() => {
+      r.done = true
+    })
+  }
+  // Leave a breath between pieces so a stitched line is not rushed, and a longer
+  // one between letter names, the way a bee judge spells a word out.
+  p.onended = () => {
+    if (r.i >= r.urls.length) {
+      r.done = true
+      return
+    }
+    window.setTimeout(() => void step(), pauseBefore(r.keys[r.i - 1], r.keys[r.i]))
+  }
+  p.pause()
+  void step()
+  return true
+}
+
+/**
+ * Adds more recordings to the end of whatever is being said now (the Judge's
+ * verdict, then the praise). Returns false if nothing is playing, so the caller
+ * can simply say it straight away.
+ */
+export function appendClips(keys: readonly string[]): boolean {
+  if (!run || run.done || run.ticket !== playing || !hasClips(keys)) return false
+  run.keys.push(...keys)
+  run.urls.push(...keys.map(load))
+  return true
 }

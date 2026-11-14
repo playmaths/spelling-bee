@@ -16,7 +16,9 @@ export interface Check {
 export function recognitionCheckFor(word: BeeWord): Check {
   const index = PATTERNS.findIndex((p) => p.patternId === word.patternId)
   const pattern = PATTERNS[index]
-  const correct = pattern.secret ?? pattern.kidRule
+  // A word may explain itself ("SHINE drops its silent E before the Y is added");
+  // otherwise the family's general secret is the answer.
+  const correct = word.secret ?? pattern.secret ?? pattern.kidRule
   const n = PATTERNS.length
   const distractors: string[] = []
   for (let step = 1; distractors.length < 2 && step <= n; step++) {

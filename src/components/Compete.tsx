@@ -172,7 +172,7 @@ export function Compete({
       {answered && (
         <Celebration
           key={`moment-${word.id}`}
-          speakIt={false}
+          speech="AFTER"
           moment={{
             r: results[results.length - 1]?.correct ? 'CLEAN' : 'MISSED',
             mystery: word.role === 'TRANSFER_PROBE',

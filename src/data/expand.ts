@@ -32,6 +32,9 @@ export interface CompactWord {
   hook: string
   syn: string[]
   card: string
+  /** Why THIS word is spelled this way, when the family's general line would not make sense for it
+   *  (shiny: "SHINE drops its silent E before the Y is added."). */
+  why?: string
   /** Optional word-specific memory trick (otherwise the hook is used). */
   trick?: string
 }
@@ -116,6 +119,7 @@ export function expandFamily(family: CompactFamily): { pattern: PatternNode; wor
       graphemeMap,
       traps: c.traps.map((t) => trapFor(word, t, family, trick)),
       wordStory: c.story,
+      ...(c.why ? { secret: c.why } : {}),
     }
   })
 

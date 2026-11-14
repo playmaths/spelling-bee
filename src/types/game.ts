@@ -50,6 +50,7 @@ export interface BeeWord {
   graphemeMap: GraphemeChunk[];
   traps: WordTrap[];
   wordStory: string;                 // Optional 0-point etymology/fun fact for Curiosity Index
+  secret?: string;                   // Why this particular word is spelled this way (overrides the family's secret)
 }
 
 export interface PatternNode {

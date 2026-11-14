@@ -189,7 +189,7 @@ export function PuzzlePlay({
 
       {over && (
         <Celebration
-          speakIt
+          speech="NOW"
           moment={{
             r: attempt.r,
             asked: (attempt.asks ?? 0) > 0,

@@ -15,6 +15,13 @@ describe('recognitionCheckFor', () => {
     expect(p.secret!.length).toBeLessThanOrEqual(160)
   })
 
+  it('explains the word itself where the family line would not fit', () => {
+    const check = recognitionCheckFor(getWord('word_shiny')!)
+    expect(check.correctAnswer).toBe('SHINE drops its silent E before the Y is added.')
+    expect(check.correctAnswer).not.toMatch(/I-N-G/)
+    expect(recognitionCheckFor(getWord('word_planning')!).correctAnswer).toBe('PLAN doubles its N before I-N-G is added.')
+  })
+
   it.each(WORDS.map((w) => [w.word, w] as const))('%s gets three distinct options with one right answer', (_, w) => {
     const check = recognitionCheckFor(w)
     expect(new Set(check.options).size).toBe(3)

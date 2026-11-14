@@ -96,7 +96,7 @@ export function Play({
           />
           {spelled !== null && (
             <Celebration
-              speakIt={false}
+              speech="AFTER"
               moment={{
                 r: spelled.attempt.r,
                 asked: (spelled.attempt.asks ?? 0) > 0,

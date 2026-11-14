@@ -3,7 +3,7 @@
  * silently does nothing where speech is unavailable.
  */
 
-import { hasClips, playClips, stopClip } from './clips.ts'
+import { appendClips, hasClips, playClips, stopClip } from './clips.ts'
 
 const VOICE_KEY = 'spelling-bee-voice'
 let muted = false
@@ -57,7 +57,7 @@ export function setMuted(value: boolean) {
   }
 }
 
-function speakWithDevice(text: string, slow: boolean) {
+function speakWithDevice(text: string, slow: boolean, afterCurrent = false) {
   const s = synth()
   if (!s) return
   const clean = text.replace(/\*/g, '').replace(/\p{Extended_Pictographic}/gu, '')
@@ -71,7 +71,7 @@ function speakWithDevice(text: string, slow: boolean) {
     utterance.lang = 'en-US'
   }
   utterance.rate = slow ? 0.55 : 0.88
-  s.cancel()
+  if (!afterCurrent) s.cancel() // the device queues an utterance spoken without cancelling
   s.speak(utterance)
 }
 
@@ -92,3 +92,17 @@ export function speak(text: string, slow = false, clip?: string | readonly strin
   }
   speakWithDevice(text, slow)
 }
+
+/**
+ * Says something once whatever is being said now has finished (the Judge's verdict,
+ * then the praise), instead of cutting it off.
+ */
+export function speakAfter(text: string, clip?: string | readonly string[]) {
+  if (muted) return
+  const clips = typeof clip === 'string' ? [clip] : clip
+  if (clips && appendClips(clips)) return
+  const s = synth()
+  if (s?.speaking || s?.pending) return speakWithDevice(text, false, true)
+  speak(text, false, clip)
+}
+

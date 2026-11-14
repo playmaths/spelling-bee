@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { classifyAttempt } from '../engine/diagnosticClassifier.ts'
-import { CARDS, PATTERNS, WORDS, getCard, getWord } from './index.ts'
+import { CARDS, PATTERNS, RHYMES, WORDS, getCard, getPattern, getSoundCue, getWord } from './index.ts'
 
 const wholeWord = (w: string) => new RegExp(`\\b${w}\\b`, 'i')
 
@@ -110,3 +110,24 @@ describe('word cards', () => {
     expect(c.emoji).not.toBe('')
   })
 })
+
+describe('sound cues', () => {
+  it('has an entry (a cue, or a deliberate blank) for every word and nothing else', () => {
+    expect(Object.keys(RHYMES).sort()).toEqual(WORDS.map((w) => w.word).sort())
+    const blanks = WORDS.filter((w) => getSoundCue(w.word) === null).length
+    expect(blanks).toBeLessThan(WORDS.length * 0.05)
+  })
+
+  it.each(WORDS.map((w) => [w.word, w] as const))('%s: the cue is a different, plain word and never a held-back word of its family', (_, w) => {
+    const cue = getSoundCue(w.word)
+    if (!cue) return
+    const other = 'rhyme' in cue ? cue.rhyme : cue.endsLike
+    expect(other).toMatch(/^[a-z]+$/)
+    expect(other).not.toBe(w.word)
+    if (w.role !== 'TRANSFER_PROBE') {
+      const probes = getPattern(w.patternId)!.transferProbeIds.map((id) => getWord(id)!.word)
+      expect(probes).not.toContain(other)
+    }
+  })
+})
+

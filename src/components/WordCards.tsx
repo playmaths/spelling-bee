@@ -36,17 +36,18 @@ export function WordCardFace({ word, card }: { word: BeeWord; card: WordCard }) 
         <h3 className="text-3xl font-bold tracking-tight text-slate-800 sm:text-4xl">
           <HookedWord word={word.word} hook={card.hook} />
         </h3>
-        {/* On a phone the picture sits beside the word, so the whole card fits one screen. */}
-        <span aria-hidden className="shrink-0 rounded-xl bg-gradient-to-b from-sky-100 to-emerald-50 px-2 py-1 text-2xl sm:hidden">
-          {card.emoji}
-        </span>
+        {/* On a phone the "hear it" button sits beside the word, which leaves room for the picture below. */}
+        <button
+          type="button"
+          onClick={() => speak(word.word, false, clipKeys.word(word.word))}
+          aria-label="Hear the word"
+          className="shrink-0 rounded-full bg-white px-3 py-1.5 text-xl shadow-sm sm:hidden"
+        >
+          🔊
+        </button>
       </div>
-      <p className="text-sm text-slate-500">
-        {parts.join(', ')}
-        <span className="hidden sm:inline">
-          {' '}
-          <span className="mx-1 text-slate-300">|</span> {word.phoneticRespelling}
-        </span>
+      <p className="hidden text-sm text-slate-500 sm:block">
+        {parts.join(', ')} <span className="mx-1 text-slate-300">|</span> {word.phoneticRespelling}
         <button
           type="button"
           onClick={() => speak(word.word, false, clipKeys.word(word.word))}
@@ -100,7 +101,7 @@ export function WordCardFace({ word, card }: { word: BeeWord; card: WordCard }) 
       <p className="text-sm text-slate-500">{card.synonyms.join(', ')}</p>
       <div
         aria-hidden
-        className="hidden h-24 items-center justify-center rounded-2xl bg-gradient-to-b from-sky-100 to-emerald-50 text-5xl sm:flex sm:h-36 sm:text-6xl"
+        className="flex h-24 items-center justify-center rounded-2xl bg-gradient-to-b from-sky-100 to-emerald-50 text-6xl sm:h-36"
       >
         {card.emoji}
       </div>

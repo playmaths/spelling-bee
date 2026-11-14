@@ -342,7 +342,7 @@ export function SpellEntry({
 
       {!disabled && (
         <>
-          <div className="flex items-start justify-center gap-3">
+          <div className="flex flex-wrap items-start justify-center gap-x-2 gap-y-3 sm:gap-x-3">
             {(
               [
                 ['KEYS', '🔤', 'Tap'],
@@ -359,7 +359,7 @@ export function SpellEntry({
               type="button"
                             onClick={onSubmit}
               disabled={!letters || suspects.length > 0}
-              className="ml-4 rounded-full bg-emerald-500 px-8 py-3 text-xl font-bold text-white shadow-lg disabled:opacity-30"
+              className="ml-1 rounded-full bg-emerald-500 px-5 py-3 text-xl font-bold sm:ml-4 sm:px-8 text-white shadow-lg disabled:opacity-30"
             >
               Done ✓
             </button>

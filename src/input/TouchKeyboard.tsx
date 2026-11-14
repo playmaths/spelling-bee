@@ -11,16 +11,16 @@ export function TouchKeyboard({
   disabled?: boolean
 }) {
   return (
-    <div className="flex flex-col items-center gap-1.5" data-testid="touch-keyboard">
+    <div className="flex w-full max-w-lg flex-col items-center gap-1.5" data-testid="touch-keyboard">
       {ROWS.map((row, r) => (
-        <div key={row} className="flex gap-1.5">
+        <div key={row} className="flex w-full justify-center gap-1 sm:gap-1.5">
           {[...row].map((k) => (
             <button
               key={k}
               type="button"
               disabled={disabled}
               onClick={() => onLetter(k)}
-              className="h-11 w-8 rounded-lg border border-slate-300 bg-white text-lg font-semibold shadow-sm active:bg-amber-100 disabled:opacity-40 sm:h-12 sm:w-11"
+              className="h-11 w-[calc((100%-2.25rem)/10)] max-w-11 rounded-lg border border-slate-300 bg-white text-lg font-semibold shadow-sm active:bg-amber-100 disabled:opacity-40 sm:h-12"
             >
               {k}
             </button>
@@ -31,7 +31,7 @@ export function TouchKeyboard({
               disabled={disabled}
               onClick={onBackspace}
               aria-label="Delete last letter"
-              className="h-11 w-12 rounded-lg border border-slate-300 bg-slate-100 text-lg shadow-sm active:bg-amber-100 disabled:opacity-40 sm:h-12 sm:w-14"
+              className="h-11 w-[calc((100%-2.25rem)/10*1.5)] max-w-14 rounded-lg border border-slate-300 bg-slate-100 text-lg shadow-sm active:bg-amber-100 disabled:opacity-40 sm:h-12"
             >
               ⌫
             </button>

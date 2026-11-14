@@ -61,7 +61,7 @@ function VoicePicker() {
           setName(e.target.value)
           speak('Your word is mysterious.')
         }}
-        className="max-w-56 rounded-lg border border-slate-300 bg-white px-2 py-1"
+        className="min-w-0 max-w-56 rounded-lg border border-slate-300 bg-white px-2 py-1"
       >
         {voices.map((v) => (
           <option key={v.name} value={v.name}>
@@ -454,7 +454,7 @@ function App() {
       {view === 'INSIGHTS' && <ParentInsights progress={progress} onBack={() => setView('GROWNUPS')} />}
 
       {view === 'GROWNUPS' && (
-        <div className="flex flex-col gap-5 text-lg text-slate-700">
+        <div className="flex w-full min-w-0 max-w-xl flex-col gap-5 text-lg text-slate-700">
           <h2 className="text-2xl font-bold">Grown-ups</h2>
           <button
             type="button"

@@ -6,6 +6,8 @@ import { IconButton } from './components/IconButton.tsx'
 import { WordCards } from './components/WordCards.tsx'
 import { WordMap } from './components/WordMap.tsx'
 import { isFamilyCode, newFamilyCode, normalizeCode, syncOnce } from './lib/familySync.ts'
+import { withAttempt, type NewAttempt } from './lib/attempts.ts'
+import { ParentInsights } from './components/ParentInsights.tsx'
 import { fileReport, loadReports, sendReports, setReportContext, type Report } from './lib/report.ts'
 import { fetchUsage, usageCount, usageOpen, type UsageRow } from './lib/usage.ts'
 import { getVoiceName, listVoices, setMuted, setVoiceName, speak } from './lib/speak.ts'
@@ -16,7 +18,7 @@ import type { BeeWord } from './types/game.ts'
 
 const STORAGE_KEY = 'spelling-bee-prototype'
 const FAMILY_KEY = 'spelling-bee-family'
-type View = 'HOME' | 'PLAY' | 'MAP' | 'CARDS' | 'STAGE' | 'GROWNUPS' | 'BENCH'
+type View = 'HOME' | 'PLAY' | 'MAP' | 'CARDS' | 'STAGE' | 'GROWNUPS' | 'BENCH' | 'INSIGHTS'
 
 function loadProgress(): Progress {
   try {
@@ -148,12 +150,10 @@ function App() {
     if (view !== 'GROWNUPS') setReportContext(view === 'PLAY' ? `play: ${session.map((w) => w.word).join(', ')}` : view.toLowerCase())
   }, [view, session])
 
-  const record = (wordId: string, clean: boolean) =>
-    {
-    usageCount('wins')
-    setProgress((p) =>
-      p.solved[wordId] === 'CLEAN' ? p : { ...p, savedAt: Date.now(), solved: { ...p.solved, [wordId]: clean ? 'CLEAN' : 'DONE' } },
-    )
+  /** Every finished word, from puzzles, spell-outs and the bee stage, feeds the parent report. */
+  const logAttempt = (attempt: NewAttempt) => {
+    if (attempt.how !== 'STAGE') usageCount('wins')
+    setProgress((p) => withAttempt(p, attempt, Date.now()))
   }
   // Family sync (same scheme as Number Garden and Sudoku): pull on open and on
   // returning to the app, push 1.5 seconds after any progress.
@@ -271,7 +271,7 @@ function App() {
         <Play
           key={session.map((w) => w.id).join()}
           words={session}
-          onResult={record}
+          onAttempt={logAttempt}
           onHome={() => setView(sessionFrom)}
           doneLabel={sessionFrom === 'HOME' ? 'All done for today!' : 'Well done!'}
         />
@@ -292,6 +292,7 @@ function App() {
           solved={progress.solved}
           unlockAll={bypassCooldownForDemo}
           seen={progress.stageSeen ?? []}
+          onAttempt={logAttempt}
           onAsked={(ids, startedOver) => {
             usageCount('starts')
             setProgress((p) => ({
@@ -303,10 +304,18 @@ function App() {
         />
       )}
       {view === 'BENCH' && <BeeStage />}
+      {view === 'INSIGHTS' && <ParentInsights progress={progress} onBack={() => setView('GROWNUPS')} />}
 
       {view === 'GROWNUPS' && (
         <div className="flex flex-col gap-5 text-lg text-slate-700">
           <h2 className="text-2xl font-bold">Grown-ups</h2>
+          <button
+            type="button"
+            onClick={() => setView('INSIGHTS')}
+            className="self-start rounded-full bg-amber-400 px-6 py-3 text-xl font-bold shadow"
+          >
+            📊 How she is doing
+          </button>
           <label className="flex items-center gap-2">
             <input
               type="checkbox"

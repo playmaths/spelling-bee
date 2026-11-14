@@ -1,4 +1,4 @@
-import type { Progress } from './unlocks.ts'
+import { HISTORY_CAP, type Attempt, type Progress } from './unlocks.ts'
 
 /**
  * Family-code sync, the same scheme as Number Garden and Sudoku:
@@ -43,18 +43,27 @@ export function mergeProgress(a: Progress, b: Progress): Progress {
     if (solved[id] !== 'CLEAN') solved[id] = result
   }
   const stageSeen = [...new Set([...(a.stageSeen ?? []), ...(b.stageSeen ?? [])])]
+  const attempts = new Map<string, Attempt>()
+  for (const x of [...(a.history ?? []), ...(b.history ?? [])]) attempts.set(`${x.t}|${x.w}|${x.how}`, x)
+  const history = [...attempts.values()].sort((x, y) => x.t - y.t).slice(-HISTORY_CAP)
   return {
     solved,
     sessions: Math.max(a.sessions ?? 0, b.sessions ?? 0),
     savedAt: Math.max(a.savedAt ?? 0, b.savedAt ?? 0),
     ...(stageSeen.length ? { stageSeen } : {}),
+    ...(history.length ? { history } : {}),
   }
 }
 
 /** Same content, whatever the key order or write clock. */
 export function sameProgress(a: Progress, b: Progress): boolean {
   const shape = (p: Progress) =>
-    JSON.stringify([Object.entries(p.solved).sort(), p.sessions ?? 0, [...(p.stageSeen ?? [])].sort()])
+    JSON.stringify([
+      Object.entries(p.solved).sort(),
+      p.sessions ?? 0,
+      [...(p.stageSeen ?? [])].sort(),
+      (p.history ?? []).map((x) => `${x.t}|${x.w}|${x.how}`).sort(),
+    ])
   return shape(a) === shape(b)
 }
 
@@ -73,7 +82,14 @@ export async function pullFamily(code: string, f: Fetch = fetch): Promise<PullRe
     if (r.status === 404) return { kind: 'EMPTY' }
     if (!r.ok) return { kind: 'ERROR', status: r.status }
     const doc = (await r.json()) as { fields?: { data?: { stringValue?: string } } }
-    let d: { app?: string; solved?: Progress['solved']; sessions?: number; savedAt?: number; stageSeen?: string[] }
+    let d: {
+      app?: string
+      solved?: Progress['solved']
+      sessions?: number
+      savedAt?: number
+      stageSeen?: string[]
+      history?: Attempt[]
+    }
     try {
       d = JSON.parse(doc.fields?.data?.stringValue ?? '')
     } catch {
@@ -82,7 +98,10 @@ export async function pullFamily(code: string, f: Fetch = fetch): Promise<PullRe
     // All three apps share the `families` collection. A code made by another app
     // holds that app's saved game, and writing here would destroy it.
     if (d?.app !== APP || typeof d.solved !== 'object' || d.solved === null) return { kind: 'OTHER_APP' }
-    return { kind: 'OK', progress: { solved: d.solved, sessions: d.sessions, savedAt: d.savedAt, stageSeen: d.stageSeen } }
+    return {
+      kind: 'OK',
+      progress: { solved: d.solved, sessions: d.sessions, savedAt: d.savedAt, stageSeen: d.stageSeen, history: d.history },
+    }
   } catch {
     return { kind: 'OFFLINE' }
   }
@@ -98,6 +117,7 @@ export async function pushFamily(code: string, progress: Progress, f: Fetch = fe
     sessions: progress.sessions ?? 0,
     savedAt: progress.savedAt ?? 0,
     stageSeen: progress.stageSeen ?? [],
+    history: progress.history ?? [],
   }
   const body = {
     fields: { data: { stringValue: JSON.stringify(data) }, savedAt: { integerValue: String(progress.savedAt ?? 0) } },

@@ -3,6 +3,24 @@ import type { BeeWord } from '../types/game.ts'
 
 const WORDS_BY_ID = new Map(WORDS.map((w) => [w.id, w]))
 
+/** One go at one word, kept for the parent report. Short keys: this list is synced. */
+export interface Attempt {
+  /** When (epoch ms). */
+  t: number
+  /** Word id. */
+  w: string
+  /** A fill-the-gap puzzle, a full spell-out while learning, or the bee stage. */
+  how: 'PUZZLE' | 'SPELL' | 'STAGE'
+  /** Right first time with no help; right after help or a second try; or not solved. */
+  r: 'CLEAN' | 'HELPED' | 'MISSED'
+  /** For spelled-out words that went wrong: the kind of mistake (an ErrorBucket). */
+  b?: string
+  /** How many questions she asked the Judge first (meaning, sentence, slow, clue). */
+  asks?: number
+}
+
+export const HISTORY_CAP = 800
+
 export interface Progress {
   /** wordId -> best result so far. */
   solved: Record<string, 'CLEAN' | 'DONE'>
@@ -12,6 +30,8 @@ export interface Progress {
   savedAt?: number
   /** Words already asked on the bee stage, so a new round asks different ones. */
   stageSeen?: string[]
+  /** Her last attempts, oldest first (at most HISTORY_CAP). */
+  history?: Attempt[]
 }
 
 export const SESSION_SIZE = 5

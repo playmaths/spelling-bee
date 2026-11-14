@@ -3,6 +3,7 @@ import { createJudge, judgeReducer } from '../engine/judgeStateMachine.ts'
 import { MAX_STRIKES, createPuzzle, isCleanSolve, puzzleReducer } from '../engine/puzzleEngine.ts'
 import { StylusTileCanvas } from '../input/StylusTileCanvas.tsx'
 import { recognitionCheckFor } from '../lib/recognition.ts'
+import { puzzleAttempt, type NewAttempt } from '../lib/attempts.ts'
 import { clipKeys } from '../lib/clips.ts'
 import { speak } from '../lib/speak.ts'
 import type { BeeWord } from '../types/game.ts'
@@ -60,7 +61,13 @@ export function DetectiveCheck({ word, onDone }: { word: BeeWord; onDone: () => 
 }
 
 /** One deduction puzzle: hear the word, fill the gaps. Three flowers, no clock. */
-export function PuzzlePlay({ word, onDone }: { word: BeeWord; onDone: (clean: boolean) => void }) {
+export function PuzzlePlay({
+  word,
+  onDone,
+}: {
+  word: BeeWord
+  onDone: (clean: boolean, attempt: NewAttempt) => void
+}) {
   const [state, dispatch] = useReducer(puzzleReducer, undefined, () => createPuzzle(word))
   const [judge, ask] = useReducer(judgeReducer, undefined, () => createJudge(word, 'ADVENTURE'))
   const [selected, setSelected] = useState<number | null>(null)
@@ -174,7 +181,13 @@ export function PuzzlePlay({ word, onDone }: { word: BeeWord; onDone: (clean: bo
       )}
 
       {over && (
-        <button type="button" onClick={() => onDone(isCleanSolve(state))} className={NEXT}>
+        <button
+          type="button"
+          onClick={() =>
+            onDone(isCleanSolve(state), puzzleAttempt(word.id, state.status === 'SOLVED', isCleanSolve(state), judge.intentCounts))
+          }
+          className={NEXT}
+        >
           {isCleanSolve(state) ? '🌸 ' : ''}Next ▶
         </button>
       )}

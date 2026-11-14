@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { getCard, getPattern } from '../data/index.ts'
+import { attemptFromJudge, type NewAttempt } from '../lib/attempts.ts'
 import type { BeeWord } from '../types/game.ts'
 import { JudgeRound } from './BeeStage.tsx'
 import { DetectiveCheck, PuzzlePlay } from './PuzzlePlay.tsx'
@@ -18,19 +19,19 @@ export const spellsOut = (word: BeeWord) => SPELL_OUT_KINDS.has(getPattern(word.
 /** Today's five words, one at a time: puzzle, one "why" question, then the card as the reward. */
 export function Play({
   words,
-  onResult,
+  onAttempt,
   onHome,
   doneLabel = 'All done for today!',
 }: {
   words: BeeWord[]
-  onResult: (wordId: string, clean: boolean) => void
+  onAttempt: (attempt: NewAttempt) => void
   onHome: () => void
   doneLabel?: string
 }) {
   const [index, setIndex] = useState(0)
   const [step, setStep] = useState<Step>('PUZZLE')
   const [marks, setMarks] = useState<boolean[]>([])
-  const [spelled, setSpelled] = useState<boolean | null>(null)
+  const [spelled, setSpelled] = useState<NewAttempt | null>(null)
 
   if (index >= words.length) {
     return (
@@ -64,8 +65,8 @@ export function Play({
         <PuzzlePlay
           key={word.id}
           word={word}
-          onDone={(clean) => {
-            onResult(word.id, clean)
+          onDone={(clean, attempt) => {
+            onAttempt(attempt)
             setMarks((m) => [...m, clean])
             setStep('CHECK')
           }}
@@ -78,19 +79,19 @@ export function Play({
             word={word}
             mode="ADVENTURE"
             hideLength
-            onResolved={(s) => setSpelled(s.firstTryUnassisted)}
+            onResolved={(s) => setSpelled(attemptFromJudge(s, 'SPELL'))}
           />
           {spelled !== null && (
             <button
               type="button"
               onClick={() => {
-                onResult(word.id, spelled)
-                setMarks((m) => [...m, spelled])
+                onAttempt(spelled)
+                setMarks((m) => [...m, spelled.r === 'CLEAN'])
                 setStep('CHECK')
               }}
               className="rounded-full bg-emerald-500 px-10 py-4 text-2xl font-bold text-white shadow-lg"
             >
-              {spelled ? '🌸 ' : ''}Next ▶
+              {spelled.r === 'CLEAN' ? '🌸 ' : ''}Next ▶
             </button>
           )}
         </>

@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import type { JudgeState } from '../engine/judgeStateMachine.ts'
+import { attemptFromJudge, type NewAttempt } from '../lib/attempts.ts'
 import { seededShuffle, unlockedWords } from '../lib/unlocks.ts'
 import type { BeeWord } from '../types/game.ts'
 import { getCard } from '../data/index.ts'
@@ -44,12 +45,14 @@ export function Compete({
   unlockAll,
   seen,
   onAsked,
+  onAttempt,
 }: {
   solved: Record<string, unknown>
   unlockAll: boolean
   /** Words already asked on the stage in earlier rounds. */
   seen: readonly string[]
   onAsked: (wordIds: string[], startedOver: boolean) => void
+  onAttempt: (attempt: NewAttempt) => void
 }) {
   const [round, setRound] = useState(0)
   const [words, setWords] = useState<BeeWord[] | null>(null)
@@ -141,6 +144,7 @@ export function Compete({
 
   const word = words[index]
   const onResolved = (state: JudgeState) => {
+    onAttempt(attemptFromJudge(state, 'STAGE'))
     setResults((r) => [
       ...r,
       {

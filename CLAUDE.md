@@ -15,7 +15,7 @@ A static, offline-capable Progressive Web App (PWA) hosted on GitHub Pages for a
 ## 3. Core Product Capabilities
 
 ### Capability 1: Deterministic Conversational Judge (`src/engine/judgeStateMachine.ts`)
-the learner interacts with a friendly animated Judge rather than hunting through menus. Grading is 100% deterministic while responses feel conversational.
+The learner interacts with a friendly animated Judge rather than hunting through menus. Grading is 100% deterministic while responses feel conversational.
 - **Three Distinct Operations:**
   1. `INTENT_STREAM`: Parses spoken or tapped requests (`"Can you use it in a sentence?"`, `"What does it mean?"`, `"Say it slowly"`, `"Word clue"`).
   2. `DICTATION_STREAM`: Captures spoken letter sequences, Apple Pencil per-tile handwriting strokes, or custom on-screen keyboard taps into the Sudoku slot array.
@@ -93,7 +93,7 @@ Governed by `GameMode = 'ADVENTURE' | 'CONTEST'`:
 ## 6. Current Build Notes (prototype)
 - **Word bank:** 60 families, 562 words. Play serves only words at or above difficulty 2.2 (`LEVEL_FLOOR` in `src/lib/unlocks.ts`); benchmark words: practice 2.2, knowledge 2.6, mysterious 2.8, temperature 3.3, rhythm 3.5. The first nine families are hand-written in `src/data/patterns.json`, `words.json` and `cards.json`. Every other family is one compact file in `src/data/families/<patternId>.json`, expanded at load time by `src/data/expand.ts` (ids, tile indices, blanked sentences, grapheme maps and trap wiring are derived, never typed).
 - **Adding a family:** copy `src/data/families/silent-mb.json`, then run `node scripts/check-family.mjs src/data/families/<file>.json` and `npx vitest run`. Each family has 10 words: 2 anchors (`A`), 4 guided (`G`), 4 transfer probes (`P`).
-- **`kind`** on a family is a hidden label for the engine and the parent report. the learner never navigates by group: Play picks her words (`src/lib/unlocks.ts`), and "My garden" only shows what she has solved.
+- **`kind`** on a family is a hidden label for the engine and the parent report. The learner never navigates by group: Play picks her words (`src/lib/unlocks.ts`), and "My garden" only shows what she has solved.
 - **Two ways to play a word** (`src/components/Play.tsx`): a fill-the-gap deduction puzzle (`src/engine/puzzleEngine.ts`, three strikes, pencil marks, Look/Explain/Fill coach), or full spell-out with the Judge for families where the number of letters is the lesson (`joining-rules`, `prefixes`).
 - **Quarantine at data level:** a probe word may not appear in its own family's rule, hints, taught-word text or cards (enforced by `src/data/data.test.ts`). The 24-hour cooldown is not built yet; probes unlock once the family's taught words are solved.
 - **UI rule:** one thing per screen, every icon labelled, nothing spoken until she taps. Grown-up controls are behind the gear on the home screen.

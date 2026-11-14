@@ -4,7 +4,7 @@ import { chunkAt } from './diagnosticClassifier.ts'
 /**
  * Sudoku-style deduction puzzle (prototype).
  * Most letters are givens; the tricky tiles are gaps with pencil candidates.
- * the learner hears the word, crosses out candidates, and commits. Three strikes, no score.
+ * She hears the word, crosses out candidates, and commits. Three strikes, no score.
  * Pure reducer, like the Judge.
  */
 
@@ -12,7 +12,7 @@ export interface Gap {
   index: number
   answer: string
   candidates: string[]
-  /** Pencil marks the learner (or a strike) has crossed out. */
+  /** Pencil marks she (or a strike) has crossed out. */
   eliminated: string[]
   value: string | null
   filledByCoach: boolean

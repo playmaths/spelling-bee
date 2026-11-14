@@ -18,6 +18,7 @@ export function scoreVoice(v: { name: string; lang: string; localService?: boole
   if (/natural|neural|enhanced|premium|siri/i.test(v.name)) score += 6
   if (/online/i.test(v.name)) score += 2
   if (/google (us|uk) english/i.test(v.name)) score += 4
+  // These are names of system voices shipped with phones and computers, not people.
   if (/\b(samantha|ava|allison|zoe|aria|jenny|sonia|libby|karen|moira|serena)\b/i.test(v.name)) score += 3
   if (/\b(zira|hazel|susan)\b/i.test(v.name)) score += 1
   if (/\b(david|mark|george)\b/i.test(v.name)) score -= 1

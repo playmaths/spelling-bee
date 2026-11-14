@@ -257,6 +257,8 @@ function App() {
   const [view, setView] = useState<View>('HOME')
   const [session, setSession] = useState<BeeWord[]>([])
   const [sessionFrom, setSessionFrom] = useState<View>('HOME')
+  /** A session started from the "spell 3 words" goal spells every word out in full. */
+  const [forceSpell, setForceSpell] = useState(false)
   const [mute, setMute] = useState(false)
   const [bypassCooldownForDemo, setBypass] = useState(false)
   const [progress, setProgress] = useState<Progress>(loadProgress)
@@ -400,6 +402,7 @@ function App() {
             type="button"
             onClick={() => {
               setSession(pickSession(progress, bypassCooldownForDemo, undefined, calibrationFor(progress).target))
+              setForceSpell(false)
               setProgress((p) => ({ ...p, sessions: (p.sessions ?? 0) + 1 }))
               usageCount('starts')
               setSessionFrom('HOME')
@@ -471,7 +474,7 @@ function App() {
           solved={progress.solved}
           onHome={() => setView(sessionFrom === 'DAILY' ? 'HOME' : sessionFrom)}
           doneLabel={sessionFrom === 'HOME' ? 'All done for today!' : 'Well done!'}
-          spellOut={sessionFrom === 'DAILY'}
+          spellOut={sessionFrom === 'DAILY' || forceSpell}
         />
       )}
       {view === 'MAP' && (
@@ -479,6 +482,7 @@ function App() {
           progress={progress}
           onPlay={(words) => {
             setSession(words)
+            setForceSpell(false)
             setSessionFrom('MAP')
             setView('PLAY')
           }}
@@ -502,7 +506,24 @@ function App() {
           />
         </div>
       )}
-      {view === 'GOALS' && <GoalsScreen goals={goals} book={stickerBook(progress)} />}
+      {view === 'GOALS' && (
+        <GoalsScreen
+          goals={goals}
+          book={stickerBook(progress)}
+          onGo={(id) => {
+            // Each goal opens the place where it can be done.
+            if (id === 'stage') return setView('STAGE')
+            if (id === 'daily') return setView('DAILY')
+            usageCount('starts')
+            if (id === 'meanings') return setView('MEANINGS')
+            setSession(pickSession(progress, bypassCooldownForDemo, undefined, calibrationFor(progress).target))
+            setProgress((p) => ({ ...p, sessions: (p.sessions ?? 0) + 1 }))
+            setForceSpell(id === 'spell')
+            setSessionFrom('HOME')
+            setView('PLAY')
+          }}
+        />
+      )}
       {view === 'MEANINGS' && (
         <MeaningQuiz
           solved={progress.solved}

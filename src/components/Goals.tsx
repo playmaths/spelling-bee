@@ -1,24 +1,32 @@
 import type { GoalState } from '../lib/goals.ts'
 
 /** Today's two goals with their progress, and every sticker she has earned so far. */
-export function GoalsScreen({ goals, book }: { goals: GoalState[]; book: string[] }) {
+export function GoalsScreen({ goals, book, onGo }: { goals: GoalState[]; book: string[]; onGo: (goalId: string) => void }) {
   return (
     <section data-testid="goals" className="flex w-full max-w-md flex-col items-center gap-5">
       <h2 className="text-2xl font-bold text-slate-700">⭐ Today's goals</h2>
       <div className="flex w-full flex-col gap-3">
         {goals.map((s) => (
-          <div key={s.goal.id} data-testid="goal" className={`flex items-center gap-3 rounded-3xl p-4 shadow ${s.done ? 'bg-emerald-50' : 'bg-white'}`}>
+          <button
+            key={s.goal.id}
+            type="button"
+            data-testid="goal"
+            onClick={() => onGo(s.goal.id)}
+            className={`flex items-center gap-3 rounded-3xl p-4 text-left shadow active:scale-[0.98] ${s.done ? 'bg-emerald-50' : 'bg-white'}`}
+          >
             <span aria-hidden className="text-3xl">
               {s.goal.icon}
             </span>
-            <div className="flex flex-1 flex-col gap-2">
-              <p className="text-lg font-semibold leading-snug text-slate-800">{s.goal.label}</p>
-              <div className="flex gap-1.5" aria-label={`${s.have} of ${s.goal.need}`}>
+            <span className="flex flex-1 flex-col gap-2">
+              <span className="text-lg font-semibold leading-snug text-slate-800">
+                {s.goal.label} {!s.done && <span className="text-amber-500">▶</span>}
+              </span>
+              <span className="flex gap-1.5" aria-label={`${s.have} of ${s.goal.need}`}>
                 {Array.from({ length: s.goal.need }, (_, n) => (
                   <span key={n} className={`h-3.5 w-3.5 rounded-full ${n < s.have ? 'bg-emerald-400' : 'bg-stone-200'}`} />
                 ))}
-              </div>
-            </div>
+              </span>
+            </span>
             <span
               aria-label={s.sticker ? 'Sticker earned' : 'A sticker is waiting'}
               className={`flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl text-4xl ${
@@ -27,10 +35,10 @@ export function GoalsScreen({ goals, book }: { goals: GoalState[]; book: string[
             >
               {s.sticker ?? '?'}
             </span>
-          </div>
+          </button>
         ))}
       </div>
-      <p className="text-base text-slate-500">New goals tomorrow.</p>
+      <p className="text-base text-slate-500">Tap a goal to start. New goals tomorrow.</p>
       <h3 className="mt-2 text-xl font-bold text-slate-700">My sticker book</h3>
       {book.length === 0 ? (
         <p className="text-lg text-slate-500">Finish a goal to get your first sticker.</p>

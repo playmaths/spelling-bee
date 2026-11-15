@@ -19,7 +19,7 @@ import { fileReport, loadReports, sendReports, setReportContext, type Report } f
 import { clipKeys, hasClip, loadClipList, voiceStatus } from './lib/clips.ts'
 import { TRIAL_WORD, VOICE_TRIALS } from './lib/voiceManifest.ts'
 import { fetchUsage, usageCount, usageOpen, type UsageRow } from './lib/usage.ts'
-import { getVoiceName, listVoices, setMuted, setVoiceName, speak } from './lib/speak.ts'
+import { getVoiceName, isMuted, listVoices, setMuted, setVoiceName, speak } from './lib/speak.ts'
 import { MEANINGS_CAP, pickSession, type Progress } from './lib/unlocks.ts'
 import type { BeeWord } from './types/game.ts'
 
@@ -80,15 +80,24 @@ function VoiceCheck() {
   const test = () => {
     setResult('Listening for the result…')
     const run = () => {
+      voiceStatus.lastUsed = null
       speak('practice', false, clipKeys.word('practice'))
-      window.setTimeout(() => {
+      const began = Date.now()
+      // The answer can take a few seconds when a recording is slow to arrive.
+      const timer = window.setInterval(() => {
+        if (voiceStatus.lastUsed === null && Date.now() - began < 9000) return
+        window.clearInterval(timer)
         setResult(
-          voiceStatus.lastUsed === 'RECORDED'
-            ? 'Played the recorded voice.'
-            : `Used the device voice${voiceStatus.lastError ? `, because ${voiceStatus.lastError}` : voiceStatus.recordings === null ? ', because the list of recordings is not loaded' : ', because that recording is not in the list'}.`,
+          isMuted()
+            ? 'The Judge is muted (see the box above), so nothing was played.'
+            : voiceStatus.lastUsed === 'RECORDED'
+              ? 'Played the recorded voice.'
+              : voiceStatus.lastUsed === null
+                ? 'Nothing started within 9 seconds.'
+                : `Used the device voice${voiceStatus.lastError ? `, because ${voiceStatus.lastError}` : voiceStatus.recordings === null ? ', because the list of recordings is not loaded' : ', because that recording is not in the list'}.`,
         )
         refresh((n) => n + 1)
-      }, 2500)
+      }, 300)
     }
     if (voiceStatus.recordings === null) void loadClipList().then(run)
     else run()

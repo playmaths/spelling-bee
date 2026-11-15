@@ -77,33 +77,28 @@ function getPlayer(): HTMLAudioElement | null {
   return player
 }
 
-const GESTURES = ['pointerdown', 'touchend', 'click', 'keydown'] as const
+const GESTURES = ['touchend', 'click', 'keydown'] as const
 
 /**
- * Phones only let a page play sound once the person has tapped, and then only on
- * an audio player that was started inside a tap. So the first taps play a moment of
- * silence on the one shared player; after that it may play recordings at any time.
- * It keeps trying on each tap until one succeeds.
+ * Phones only let a page play sound on an audio player that was first started
+ * inside a tap. So the very first tap starts a moment of silence on the one shared
+ * player. It is tried once only: it must never take the player away from a
+ * recording that a later tap has started.
  */
 function unlock() {
+  GESTURES.forEach((g) => window.removeEventListener(g, unlock, true))
   const p = getPlayer()
-  if (!p || unlocked || unlocking) return
-  unlocking = true
+  if (!p || unlocked || run) return
   p.src = silentWav()
   p.play()
     .then(() => {
       unlocked = true
       voiceStatus.unlocked = true
-      GESTURES.forEach((g) => window.removeEventListener(g, unlock, true))
     })
-    .catch((e: unknown) => {
-      voiceStatus.lastError = `could not start sound: ${(e as Error)?.name ?? e}`
-    })
-    .finally(() => {
-      unlocking = false
+    .catch(() => {
+      // A recording started first, or the browser said no; playing a recording reports its own errors.
     })
 }
-let unlocking = false
 
 /** Call once at start-up. Safe anywhere: with no recordings the app simply uses the device voice. */
 export function initClips() {
@@ -158,11 +153,43 @@ interface Run {
 }
 let run: Run | null = null
 
-const load = (key: string): Promise<string | null> =>
-  fetch(`${base()}${key}.mp3`)
-    .then((r) => (r.ok ? r.blob() : Promise.reject(new Error(key))))
-    .then((b) => URL.createObjectURL(b))
-    .catch(() => null)
+/** Gives up on a promise that is taking too long, so she is never left in silence. */
+function within<T>(ms: number, work: Promise<T>, late: T): Promise<T> {
+  return new Promise((resolve) => {
+    const timer = setTimeout(() => resolve(late), ms)
+    work.then(
+      (v) => {
+        clearTimeout(timer)
+        resolve(v)
+      },
+      () => {
+        clearTimeout(timer)
+        resolve(late)
+      },
+    )
+  })
+}
+
+/** Recordings already downloaded in this visit (a word is often heard several times). */
+const fetched = new Map<string, string>()
+const FETCH_MS = 4000
+const START_MS = 3000
+
+const load = (key: string): Promise<string | null> => {
+  const have = fetched.get(key)
+  if (have) return Promise.resolve(have)
+  return within(
+    FETCH_MS,
+    fetch(`${base()}${key}.mp3`)
+      .then((r) => (r.ok ? r.blob() : Promise.reject(new Error(key))))
+      .then((b) => {
+        const url = URL.createObjectURL(b)
+        if (fetched.size < 300) fetched.set(key, url)
+        return url as string | null
+      }),
+    null,
+  )
+}
 
 /**
  * Plays recordings one after another. Resolves true if playback started, false if
@@ -177,7 +204,7 @@ export async function playClips(keys: readonly string[]): Promise<boolean> {
   run = r
   if ((await r.urls[0]) === null) {
     r.done = true
-    voiceStatus.lastError = `could not download ${keys[0]}`
+    voiceStatus.lastError = `could not download ${keys[0]} in time`
     return false
   }
   if (ticket !== playing) return true // something newer was asked for meanwhile
@@ -209,12 +236,24 @@ export async function playClips(keys: readonly string[]): Promise<boolean> {
     p.pause()
     p.src = (await r.urls[0]) as string
     r.i = 1
-    await p.play()
+    const started = await within(
+      START_MS,
+      p.play().then(
+        () => 'OK',
+        (e: unknown) => `refused (${(e as Error)?.name ?? e})`,
+      ),
+      'did not start in time',
+    )
+    if (ticket !== playing) return true
+    if (started !== 'OK') throw new Error(started)
+    unlocked = true
+    voiceStatus.unlocked = true
     voiceStatus.lastError = null
   } catch (e: unknown) {
     if (ticket !== playing) return true
     r.done = true
-    voiceStatus.lastError = `the phone refused to play it: ${(e as Error)?.name ?? e}`
+    p.pause() // so a late start cannot talk over the device voice
+    voiceStatus.lastError = `this device would not play the recording: ${(e as Error)?.message ?? e}`
     return false
   }
   return true

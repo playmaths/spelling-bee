@@ -16,7 +16,8 @@ import { withAttempt, type NewAttempt } from './lib/attempts.ts'
 import { afterRound, calibrationFor } from './lib/awards.ts'
 import { ParentInsights } from './components/ParentInsights.tsx'
 import { fileReport, loadReports, sendReports, setReportContext, type Report } from './lib/report.ts'
-import { clipKeys, loadClipList, voiceStatus } from './lib/clips.ts'
+import { clipKeys, hasClip, loadClipList, voiceStatus } from './lib/clips.ts'
+import { TRIAL_WORD, VOICE_TRIALS } from './lib/voiceManifest.ts'
 import { fetchUsage, usageCount, usageOpen, type UsageRow } from './lib/usage.ts'
 import { getVoiceName, listVoices, setMuted, setVoiceName, speak } from './lib/speak.ts'
 import { MEANINGS_CAP, pickSession, type Progress } from './lib/unlocks.ts'
@@ -114,6 +115,22 @@ function VoiceCheck() {
       <p className="text-sm text-slate-500">
         If a phone uses the device voice, check it is not on silent, then tell us what this line says.
       </p>
+      <p className="mt-2 text-base font-semibold text-slate-700">Compare recordings of "{TRIAL_WORD}"</p>
+      <div className="flex flex-wrap gap-2">
+        {VOICE_TRIALS.map((v) => (
+          <button
+            key={v.id}
+            type="button"
+            data-testid="voice-trial"
+            disabled={!hasClip(`v/${v.id}-${TRIAL_WORD}`)}
+            onClick={() => speak(TRIAL_WORD, false, `v/${v.id}-${TRIAL_WORD}`)}
+            className="h-12 w-12 rounded-full bg-slate-100 text-lg font-bold shadow-sm active:scale-95 disabled:opacity-30"
+          >
+            {v.label}
+          </button>
+        ))}
+      </div>
+      <p className="text-sm text-slate-500">Five takes of the same word. Tell us which letters sound clean on this device.</p>
     </section>
   )
 }

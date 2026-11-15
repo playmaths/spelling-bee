@@ -23,7 +23,7 @@ def picture(samples, rate):
 
 
 out = sys.argv[1]
-for key in ["w/practice", "w/gherkin", "w/frighten", "w/niece", "w/knowledge", "s/practice", "l/a", "l/k"]:
+for key in ["v/a-practice", "v/b-practice", "v/c-practice", "v/d-practice", "v/e-practice", "w/practice", "w/gherkin", "w/frighten", "w/niece", "w/knowledge", "s/practice", "l/a", "l/k"]:
     try:
         samples, rate = sf.read(f"{out}/{key}.mp3")
         print(f"{key:14s} {picture(samples, rate)}")

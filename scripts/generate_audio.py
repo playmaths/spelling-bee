@@ -56,7 +56,8 @@ for clip in manifest["clips"]:
     key, text, speed = clip["key"], clip["text"], clip["speed"]
     wanted.add(key)
     single = key.startswith(SINGLE)
-    recipe = f"|{SINGLE_RECIPE}" if single else ""
+    trial = key[2] if key.startswith("v/") else ""  # comparison takes: v/a-word ... v/e-word
+    recipe = f"|{SINGLE_RECIPE}" if single else f"|trial-{trial}-1" if trial else ""
     digest = hashlib.sha1(f"{voice}|{speed}|{text}{recipe}".encode()).hexdigest()
     path = os.path.join(out, key + ".mp3")
     if done.get(key) == digest and os.path.exists(path):
@@ -66,9 +67,13 @@ for clip in manifest["clips"]:
         left += 1
         continue
     try:
-        samples, rate = kokoro.create(text + "." if single else text, voice=voice, speed=speed, lang="en-us")
-        if single:
+        sentence = single or trial in ("a", "b", "c", "d")
+        samples, rate = kokoro.create(text + "." if sentence else text, voice=voice, speed=speed, lang="en-us")
+        if single or trial in ("a", "b", "c"):
             samples = tidy(samples, rate)
+        elif trial == "d":
+            quiet = np.zeros(int(0.3 * rate), dtype=np.float32)
+            samples = np.concatenate([quiet, np.asarray(samples, dtype=np.float32).reshape(-1), quiet])
         os.makedirs(os.path.dirname(path), exist_ok=True)
         sf.write(path, samples, rate, format="MP3")
         done[key] = digest

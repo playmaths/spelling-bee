@@ -30,6 +30,16 @@ const NORMAL = 0.9
 const WORD = 0.75
 const SLOW = 0.55
 
+export const TRIAL_WORD = 'practice'
+/** Ways of recording a single word, to be compared by ear on a real phone. */
+export const VOICE_TRIALS = [
+  { id: 'a', label: 'A', speed: 0.75 }, // as used now: slow, cut tight
+  { id: 'b', label: 'B', speed: 0.9 }, // a little faster, cut tight
+  { id: 'c', label: 'C', speed: 1.0 }, // normal speed, cut tight
+  { id: 'd', label: 'D', speed: 0.75 }, // slow, with a quiet moment before and after
+  { id: 'e', label: 'E', speed: 0.75 }, // slow, exactly as the voice model gives it
+] as const
+
 /**
  * Every recording the app can ask for, most important first. CI records this list
  * (scripts/generate_audio.py). Built from the same code the app uses to choose
@@ -82,5 +92,8 @@ export function buildVoiceManifest(): { voice: string; clips: VoiceClip[] } {
   }
   for (const w of WORDS) say(w.wordStory)
 
+  // Five takes of one word, for the grown-ups' "Compare recordings" check.
+  // The recording script treats each letter differently (see VARIANTS there).
+  for (const v of VOICE_TRIALS) add(`v/${v.id}-${TRIAL_WORD}`, TRIAL_WORD, v.speed)
   return { voice: 'af_heart', clips: [...clips.values()] }
 }

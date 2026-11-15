@@ -14,6 +14,7 @@ on:
       - 'src/lib/voiceManifest.ts'
       - 'src/lib/praise.ts'
       - 'scripts/generate_audio.py'
+      - 'scripts/describe_clips.py'
       - '.github/workflows/audio.yml'
   workflow_dispatch:
 
@@ -66,6 +67,10 @@ jobs:
       - name: Record
         id: record
         run: python scripts/generate_audio.py audio-manifest.json public/audio 150
+      - name: Describe a few recordings (for checking from the log)
+        if: always()
+        continue-on-error: true
+        run: python scripts/describe_clips.py public/audio af_heart
       - name: Keep the recordings
         if: always()
         uses: actions/cache/save@v4

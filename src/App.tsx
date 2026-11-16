@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { BeeStage } from './components/BeeStage.tsx'
 import { Compete } from './components/Compete.tsx'
 import { MeaningQuiz } from './components/MeaningQuiz.tsx'
+import { TileGame } from './components/TileGame.tsx'
 import { Play } from './components/Play.tsx'
 import { IconButton } from './components/IconButton.tsx'
 import { WordCardFace, WordCards } from './components/WordCards.tsx'
@@ -27,7 +28,7 @@ import type { BeeWord } from './types/game.ts'
 
 const STORAGE_KEY = 'spelling-bee-prototype'
 const FAMILY_KEY = 'spelling-bee-family'
-type View = 'HOME' | 'PLAY' | 'MAP' | 'CARDS' | 'DAILY' | 'GOALS' | 'MEANINGS' | 'STAGE' | 'GROWNUPS' | 'BENCH' | 'INSIGHTS'
+type View = 'HOME' | 'PLAY' | 'MAP' | 'CARDS' | 'DAILY' | 'GOALS' | 'TILES' | 'MEANINGS' | 'STAGE' | 'GROWNUPS' | 'BENCH' | 'INSIGHTS'
 
 function loadProgress(): Progress {
   try {
@@ -438,13 +439,13 @@ function App() {
           >
             ▶ Play
           </button>
-          <div className="flex flex-wrap items-stretch justify-center gap-3">
+          <div className="flex flex-wrap items-stretch justify-center gap-2">
             {todayCard && (
               <button
                 type="button"
                 data-testid="daily-word"
                 onClick={() => setView('DAILY')}
-                className="flex items-center gap-2 rounded-full bg-white px-5 py-3 shadow active:scale-95"
+                className="flex items-center gap-2 rounded-full bg-white px-4 py-3 shadow active:scale-95"
               >
                 <span aria-hidden className="text-2xl">
                   ☀️
@@ -460,10 +461,13 @@ function App() {
               data-testid="goals-button"
               onClick={() => setView('GOALS')}
               aria-label={`Today's goals: ${goals.filter((g) => g.done).length} of ${goals.length} done`}
-              className="flex items-center gap-2 rounded-full bg-white px-5 py-3 shadow active:scale-95"
+              className="flex items-center gap-2 rounded-full bg-white px-4 py-3 shadow active:scale-95"
             >
               <span className="flex flex-col items-start leading-tight">
-                <span className="text-sm font-semibold text-slate-500">Today's goals</span>
+                <span className="text-sm font-semibold text-slate-500">
+                  <span className="min-[400px]:hidden">Goals</span>
+                  <span className="hidden min-[400px]:inline">Today's goals</span>
+                </span>
                 <span className="text-xl">
                   {goals.map((g) => (
                     <span key={g.goal.id} className={g.sticker ? '' : 'opacity-60 grayscale'}>
@@ -475,7 +479,7 @@ function App() {
             </button>
           </div>
           {newStickers.length > 0 && <NewSticker stickers={newStickers} onClose={() => setNewStickers([])} />}
-          <div className="grid grid-cols-2 justify-items-center gap-x-10 gap-y-6 sm:flex sm:gap-8">
+          <div className="grid grid-cols-3 justify-items-center gap-x-4 gap-y-5 sm:flex sm:gap-8">
             <IconButton icon="🌷" label="My garden" size="lg" onClick={() => setView('MAP')} />
             <IconButton icon="🃏" label="Cards" size="lg" onClick={() => setView('CARDS')} />
             <IconButton
@@ -485,6 +489,15 @@ function App() {
               onClick={() => {
                 usageCount('starts')
                 setView('MEANINGS')
+              }}
+            />
+            <IconButton
+              icon="🧩"
+              label="Bee tiles"
+              size="lg"
+              onClick={() => {
+                usageCount('starts')
+                setView('TILES')
               }}
             />
             <IconButton icon="🎤" label="Bee stage" size="lg" onClick={() => setView('STAGE')} />
@@ -543,12 +556,19 @@ function App() {
             if (id === 'daily') return setView('DAILY')
             usageCount('starts')
             if (id === 'meanings') return setView('MEANINGS')
+            if (id === 'tiles') return setView('TILES')
             setSession(pickSession(progress, bypassCooldownForDemo, undefined, calibrationFor(progress).target))
             setProgress((p) => ({ ...p, sessions: (p.sessions ?? 0) + 1 }))
             setForceSpell(id === 'spell')
             setSessionFrom('HOME')
             setView('PLAY')
           }}
+        />
+      )}
+      {view === 'TILES' && (
+        <TileGame
+          onHome={() => setView('HOME')}
+          onWord={() => setProgress((p) => ({ ...p, tiles: [...(p.tiles ?? []), Date.now()].slice(-MEANINGS_CAP), savedAt: Date.now() }))}
         />
       )}
       {view === 'MEANINGS' && (

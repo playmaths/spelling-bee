@@ -23,13 +23,13 @@ describe("today's goals", () => {
 
   it('counts trying, not getting it right', () => {
     const today = ['a', 'b', 'c', 'd', 'e'].map((w, i) => go(w, 'PUZZLE', 9 + i))
-    expect(byId('words').count(today, [], 'x', 0)).toBe(5)
-    expect(byId('spell').count(today, [], 'x', 0)).toBe(0)
-    expect(byId('spell').count([go('a', 'SPELL', 9), go('b', 'STAGE', 10), go('a', 'SPELL', 11)], [], 'x', 0)).toBe(2)
-    expect(byId('ask').count([go('a', 'PUZZLE', 9, { asks: 2 }), go('b', 'PUZZLE', 10)], [], 'x', 0)).toBe(1)
-    expect(byId('new').count(today, [go('a', 'PUZZLE', 9)], 'x', 0)).toBe(4)
-    expect(byId('daily').count([go('x', 'PUZZLE', 9)], [], 'x', 0)).toBe(0)
-    expect(byId('daily').count([go('x', 'SPELL', 9)], [], 'x', 0)).toBe(1)
+    expect(byId('words').count(today, [], 'x', 0, 0)).toBe(5)
+    expect(byId('spell').count(today, [], 'x', 0, 0)).toBe(0)
+    expect(byId('spell').count([go('a', 'SPELL', 9), go('b', 'STAGE', 10), go('a', 'SPELL', 11)], [], 'x', 0, 0)).toBe(2)
+    expect(byId('ask').count([go('a', 'PUZZLE', 9, { asks: 2 }), go('b', 'PUZZLE', 10)], [], 'x', 0, 0)).toBe(1)
+    expect(byId('new').count(today, [go('a', 'PUZZLE', 9)], 'x', 0, 0)).toBe(4)
+    expect(byId('daily').count([go('x', 'PUZZLE', 9)], [], 'x', 0, 0)).toBe(0)
+    expect(byId('daily').count([go('x', 'SPELL', 9)], [], 'x', 0, 0)).toBe(1)
   })
 
   it("only counts today's attempts", () => {
@@ -60,7 +60,8 @@ describe("today's goals", () => {
   })
 
   it('counts words found in Which word? today, right first go or not', () => {
-    expect(byId('meanings').count([], [], 'x', 4)).toBe(4)
+    expect(byId('meanings').count([], [], 'x', 4, 0)).toBe(4)
+    expect(byId('tiles').count([], [], 'x', 0, 3)).toBe(3)
     const p: Progress = { solved: {}, meanings: [at(9, 13), at(9), at(10), at(11)] }
     const paid = awardStickers({ ...p, meanings: [...p.meanings!, at(12), at(13), at(14)] }, 'x', DAY)
     const plays = goalsFor(DAY).some((g) => g.id === 'meanings')

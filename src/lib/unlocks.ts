@@ -40,6 +40,8 @@ export interface Progress {
   history?: Attempt[]
   /** When she found a word in "Which word?" (epoch ms, at most MEANINGS_CAP). Only used for daily goals. */
   meanings?: number[]
+  /** When she played a word in the tile game (epoch ms, at most MEANINGS_CAP). Only used for daily goals. */
+  tiles?: number[]
   /** Stickers earned from daily goals: "day|goalId" -> sticker. */
   stickers?: Record<string, string>
 }

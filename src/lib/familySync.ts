@@ -51,6 +51,7 @@ export function mergeProgress(a: Progress, b: Progress): Progress {
   const ribbons: Record<string, number> = { ...a.ribbons }
   for (const [k, v] of Object.entries(b.ribbons ?? {})) ribbons[k] = Math.max(ribbons[k] ?? 0, v)
   const meanings = [...new Set([...(a.meanings ?? []), ...(b.meanings ?? [])])].sort((x, y) => x - y).slice(-MEANINGS_CAP)
+  const tiles = [...new Set([...(a.tiles ?? []), ...(b.tiles ?? [])])].sort((x, y) => x - y).slice(-MEANINGS_CAP)
   // A sticker earned on either device is kept; if both paid the same goal, the first device's stays.
   const stickers = { ...b.stickers, ...a.stickers }
   return {
@@ -64,6 +65,7 @@ export function mergeProgress(a: Progress, b: Progress): Progress {
     ...(Object.keys(ribbons).length ? { ribbons } : {}),
     ...(Object.keys(stickers).length ? { stickers } : {}),
     ...(meanings.length ? { meanings } : {}),
+    ...(tiles.length ? { tiles } : {}),
   }
 }
 
@@ -80,6 +82,7 @@ export function sameProgress(a: Progress, b: Progress): boolean {
       Object.entries(p.ribbons ?? {}).sort(),
       Object.keys(p.stickers ?? {}).sort(),
       [...(p.meanings ?? [])].sort(),
+      [...(p.tiles ?? [])].sort(),
     ])
   return shape(a) === shape(b)
 }

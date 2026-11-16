@@ -3,11 +3,20 @@
   "endsLike": "license"
  },
  "absorb": null,
+ "accidentally": {
+  "endsLike": "totally"
+ },
+ "accommodate": {
+  "endsLike": "date"
+ },
  "achieve": {
   "rhyme": "leave"
  },
  "acorn": {
   "endsLike": "unicorn"
+ },
+ "activity": {
+  "endsLike": "gravity"
  },
  "actor": {
   "rhyme": "tractor"
@@ -36,6 +45,9 @@
  "afraid": {
   "rhyme": "played"
  },
+ "aisle": {
+  "rhyme": "smile"
+ },
  "alarm": {
   "rhyme": "farm"
  },
@@ -62,6 +74,9 @@
  },
  "amazing": {
   "rhyme": "raising"
+ },
+ "ambitious": {
+  "rhyme": "delicious"
  },
  "ambulance": {
   "endsLike": "balance"
@@ -90,6 +105,9 @@
  "aquarium": {
   "endsLike": "stadium"
  },
+ "aquatic": {
+  "endsLike": "attic"
+ },
  "architect": {
   "endsLike": "protect"
  },
@@ -103,6 +121,12 @@
  "arriving": {
   "rhyme": "driving"
  },
+ "artificial": {
+  "rhyme": "official"
+ },
+ "ascend": {
+  "rhyme": "friend"
+ },
  "assign": {
   "rhyme": "line"
  },
@@ -115,14 +139,32 @@
  "astronaut": {
   "rhyme": "caught"
  },
+ "athletic": {
+  "rhyme": "magnetic"
+ },
  "attack": {
   "rhyme": "snack"
  },
  "attention": {
   "rhyme": "mention"
  },
+ "audible": {
+  "endsLike": "terrible"
+ },
  "audience": {
   "endsLike": "science"
+ },
+ "auditorium": {
+  "endsLike": "museum"
+ },
+ "autograph": {
+  "endsLike": "laugh"
+ },
+ "automatic": {
+  "rhyme": "attic"
+ },
+ "autumn": {
+  "endsLike": "bottom"
  },
  "avalanche": {
   "rhyme": "branch"
@@ -160,6 +202,12 @@
  "barrel": {
   "rhyme": "carol"
  },
+ "basically": {
+  "endsLike": "quickly"
+ },
+ "beautician": {
+  "rhyme": "mission"
+ },
  "beautiful": {
   "endsLike": "wonderful"
  },
@@ -172,11 +220,15 @@
  "behalf": {
   "rhyme": "laugh"
  },
+ "beige": null,
  "believe": {
   "rhyme": "sleeve"
  },
  "beneath": {
   "rhyme": "teeth"
+ },
+ "beneficial": {
+  "rhyme": "official"
  },
  "beret": {
   "rhyme": "today"
@@ -192,6 +244,9 @@
  },
  "biggest": {
   "endsLike": "longest"
+ },
+ "biology": {
+  "rhyme": "apology"
  },
  "blossom": {
   "rhyme": "possum"
@@ -250,6 +305,9 @@
  "bureau": {
   "endsLike": "zero"
  },
+ "burrito": {
+  "rhyme": "mosquito"
+ },
  "butterfly": {
   "rhyme": "sky"
  },
@@ -258,6 +316,9 @@
  },
  "cabbage": {
   "endsLike": "garbage"
+ },
+ "cafeteria": {
+  "rhyme": "bacteria"
  },
  "calendar": {
   "endsLike": "under"
@@ -268,6 +329,9 @@
  "calm": null,
  "calves": {
   "rhyme": "halves"
+ },
+ "canyon": {
+  "endsLike": "onion"
  },
  "capture": {
   "endsLike": "nature"
@@ -296,8 +360,14 @@
  "cashew": {
   "rhyme": "shoe"
  },
+ "caught": {
+  "rhyme": "thought"
+ },
  "cauliflower": {
   "rhyme": "shower"
+ },
+ "cautious": {
+  "endsLike": "precious"
  },
  "ceiling": {
   "rhyme": "feeling"
@@ -347,6 +417,9 @@
  "chowder": {
   "rhyme": "louder"
  },
+ "cinnamon": {
+  "endsLike": "lemon"
+ },
  "circus": {
   "endsLike": "focus"
  },
@@ -368,8 +441,12 @@
  "colorful": {
   "endsLike": "powerful"
  },
+ "column": null,
  "comfortable": {
   "endsLike": "vegetable"
+ },
+ "committee": {
+  "rhyme": "kitty"
  },
  "compass": {
   "endsLike": "octopus"
@@ -383,6 +460,9 @@
  "complete": {
   "rhyme": "seat"
  },
+ "condemn": {
+  "rhyme": "them"
+ },
  "conductor": {
   "endsLike": "doctor"
  },
@@ -391,6 +471,15 @@
  },
  "confusion": {
   "endsLike": "television"
+ },
+ "conquer": {
+  "endsLike": "soccer"
+ },
+ "conscious": {
+  "endsLike": "precious"
+ },
+ "construct": {
+  "rhyme": "ducked"
  },
  "corduroy": {
   "rhyme": "boy"
@@ -407,30 +496,52 @@
  "countries": {
   "endsLike": "trees"
  },
+ "coyote": {
+  "endsLike": "party"
+ },
  "crayon": {
   "endsLike": "neon"
  },
  "creature": {
   "rhyme": "teacher"
  },
+ "crescent": {
+  "endsLike": "present"
+ },
  "cricket": {
   "rhyme": "ticket"
+ },
+ "critique": {
+  "rhyme": "peek"
  },
  "crochet": {
   "rhyme": "day"
  },
+ "croquet": {
+  "rhyme": "today"
+ },
  "crowd": {
   "rhyme": "loud"
+ },
+ "crucial": {
+  "endsLike": "special"
  },
  "crutch": {
   "rhyme": "much"
  },
+ "cupboard": {
+  "endsLike": "lizard"
+ },
  "curfew": {
   "endsLike": "nephew"
+ },
+ "curiosity": {
+  "endsLike": "city"
  },
  "curious": {
   "rhyme": "furious"
  },
+ "dachshund": null,
  "dairy": {
   "rhyme": "fairy"
  },
@@ -445,6 +556,9 @@
  },
  "daughter": {
   "rhyme": "water"
+ },
+ "debris": {
+  "rhyme": "tree"
  },
  "debt": {
   "rhyme": "pet"
@@ -467,8 +581,14 @@
  "degree": {
   "rhyme": "key"
  },
+ "delicious": {
+  "rhyme": "suspicious"
+ },
  "delight": {
   "rhyme": "kite"
+ },
+ "descend": {
+  "rhyme": "friend"
  },
  "describe": {
   "rhyme": "tribe"
@@ -478,6 +598,9 @@
  },
  "destroy": {
   "rhyme": "joy"
+ },
+ "dictionary": {
+  "endsLike": "hairy"
  },
  "difference": {
   "endsLike": "sentence"
@@ -497,8 +620,17 @@
  "disappear": {
   "rhyme": "cheer"
  },
+ "discipline": {
+  "endsLike": "goblin"
+ },
+ "discovery": {
+  "endsLike": "bakery"
+ },
  "discussion": {
   "endsLike": "ocean"
+ },
+ "disguise": {
+  "rhyme": "eyes"
  },
  "dislike": {
   "rhyme": "bike"
@@ -517,6 +649,9 @@
  },
  "distance": {
   "endsLike": "sentence"
+ },
+ "distraught": {
+  "rhyme": "bought"
  },
  "dollar": {
   "endsLike": "color"
@@ -542,6 +677,12 @@
  "elbow": {
   "endsLike": "rainbow"
  },
+ "electrician": {
+  "rhyme": "mission"
+ },
+ "electricity": {
+  "endsLike": "city"
+ },
  "elegant": {
   "endsLike": "elephant"
  },
@@ -557,6 +698,9 @@
  "emoji": null,
  "employ": {
   "rhyme": "boy"
+ },
+ "energetic": {
+  "rhyme": "magnetic"
  },
  "energy": {
   "endsLike": "allergy"
@@ -576,6 +720,9 @@
  "entertain": {
   "rhyme": "plane"
  },
+ "enthusiastic": {
+  "rhyme": "fantastic"
+ },
  "entrance": {
   "endsLike": "silence"
  },
@@ -585,8 +732,20 @@
  "equipped": {
   "rhyme": "skipped"
  },
+ "erupt": {
+  "rhyme": "interrupt"
+ },
  "escape": {
   "rhyme": "grape"
+ },
+ "especially": {
+  "endsLike": "family"
+ },
+ "essential": {
+  "rhyme": "potential"
+ },
+ "etiquette": {
+  "endsLike": "ticket"
  },
  "example": {
   "rhyme": "sample"
@@ -615,20 +774,44 @@
  "fabulous": {
   "endsLike": "jealous"
  },
+ "factory": {
+  "endsLike": "history"
+ },
  "family": {
   "endsLike": "broccoli"
+ },
+ "fantastic": {
+  "rhyme": "plastic"
+ },
+ "fascinate": {
+  "endsLike": "decorate"
  },
  "fasten": {
   "endsLike": "lesson"
  },
+ "fatigue": {
+  "rhyme": "league"
+ },
  "fearless": {
   "endsLike": "careless"
+ },
+ "ferocious": {
+  "endsLike": "delicious"
  },
  "festival": {
   "endsLike": "carnival"
  },
  "fidget": {
   "endsLike": "gadget"
+ },
+ "fiesta": {
+  "rhyme": "siesta"
+ },
+ "finally": {
+  "endsLike": "family"
+ },
+ "fluorescent": {
+  "rhyme": "crescent"
  },
  "folk": {
   "rhyme": "joke"
@@ -641,6 +824,9 @@
  },
  "fortress": {
   "endsLike": "actress"
+ },
+ "freight": {
+  "rhyme": "late"
  },
  "frighten": {
   "rhyme": "tighten"
@@ -660,11 +846,20 @@
  "gadget": {
   "endsLike": "fidget"
  },
+ "gaiety": {
+  "endsLike": "variety"
+ },
+ "gallery": {
+  "endsLike": "celery"
+ },
  "gelato": {
   "endsLike": "potato"
  },
  "general": {
   "endsLike": "several"
+ },
+ "generosity": {
+  "rhyme": "curiosity"
  },
  "generous": {
   "endsLike": "dangerous"
@@ -683,6 +878,9 @@
  },
  "ginger": {
   "endsLike": "danger"
+ },
+ "giraffe": {
+  "rhyme": "laugh"
  },
  "glasses": {
   "rhyme": "classes"
@@ -705,18 +903,49 @@
  "grabbed": {
   "rhyme": "dabbed"
  },
+ "gracious": {
+  "rhyme": "spacious"
+ },
+ "gradually": {
+  "endsLike": "usually"
+ },
+ "granddaughter": {
+  "endsLike": "water"
+ },
  "grandmother": {
   "rhyme": "brother"
  },
+ "gravity": {
+  "rhyme": "cavity"
+ },
+ "guacamole": {
+  "rhyme": "slowly"
+ },
+ "guess": {
+  "rhyme": "yes"
+ },
  "guest": {
   "rhyme": "dressed"
+ },
+ "guidance": {
+  "endsLike": "distance"
+ },
+ "guilty": null,
+ "guitar": {
+  "rhyme": "star"
  },
  "haiku": {
   "endsLike": "cuckoo"
  },
  "halves": null,
+ "hamburger": {
+  "endsLike": "finger"
+ },
  "hammock": {
   "endsLike": "stomach"
+ },
+ "hamster": {
+  "endsLike": "monster"
  },
  "happiness": {
   "endsLike": "kindness"
@@ -728,6 +957,9 @@
   "endsLike": "bravest"
  },
  "hatchet": null,
+ "haughty": {
+  "rhyme": "naughty"
+ },
  "heard": {
   "rhyme": "bird"
  },
@@ -739,6 +971,9 @@
  },
  "hiccup": {
   "rhyme": "pickup"
+ },
+ "history": {
+  "rhyme": "mystery"
  },
  "hockey": {
   "rhyme": "rocky"
@@ -761,17 +996,35 @@
  "hospital": {
   "endsLike": "little"
  },
+ "humidity": {
+  "endsLike": "city"
+ },
+ "hurricane": {
+  "endsLike": "rain"
+ },
  "hurried": {
   "rhyme": "worried"
  },
  "hustle": {
   "rhyme": "muscle"
  },
+ "hymn": {
+  "rhyme": "swim"
+ },
  "ignore": {
   "rhyme": "four"
  },
+ "illegal": {
+  "rhyme": "eagle"
+ },
+ "illogical": {
+  "endsLike": "magical"
+ },
  "illusion": {
   "rhyme": "confusion"
+ },
+ "imaginary": {
+  "endsLike": "dictionary"
  },
  "imagine": {
   "endsLike": "engine"
@@ -779,20 +1032,48 @@
  "imagining": {
   "endsLike": "opening"
  },
+ "immature": {
+  "rhyme": "sure"
+ },
+ "impatient": {
+  "endsLike": "patient"
+ },
+ "imperfect": {
+  "endsLike": "perfect"
+ },
  "importance": {
   "endsLike": "distance"
  },
  "important": {
   "endsLike": "instant"
  },
+ "impossible": {
+  "endsLike": "terrible"
+ },
+ "incomplete": {
+  "rhyme": "feet"
+ },
+ "incorrect": {
+  "rhyme": "checked"
+ },
  "incredible": {
   "endsLike": "terrible"
+ },
+ "initial": {
+  "rhyme": "official"
+ },
+ "inspect": {
+  "rhyme": "checked"
  },
  "instant": {
   "endsLike": "distant"
  },
  "instrument": {
   "endsLike": "moment"
+ },
+ "interrupt": null,
+ "intrigue": {
+  "rhyme": "league"
  },
  "invention": {
   "rhyme": "attention"
@@ -802,6 +1083,19 @@
  },
  "invite": {
   "rhyme": "night"
+ },
+ "irregular": {
+  "endsLike": "popular"
+ },
+ "irresponsible": {
+  "endsLike": "possible"
+ },
+ "island": null,
+ "isle": {
+  "rhyme": "pile"
+ },
+ "islet": {
+  "rhyme": "pilot"
  },
  "jackal": {
   "rhyme": "tackle"
@@ -830,6 +1124,9 @@
  "justice": {
   "endsLike": "lettuce"
  },
+ "kaleidoscope": {
+  "endsLike": "rope"
+ },
  "kangaroo": {
   "rhyme": "blue"
  },
@@ -839,6 +1136,9 @@
  "karate": null,
  "ketchup": {
   "endsLike": "cup"
+ },
+ "kilometer": {
+  "endsLike": "computer"
  },
  "kimono": {
   "endsLike": "piano"
@@ -870,12 +1170,22 @@
  "knuckle": {
   "rhyme": "buckle"
  },
+ "laboratory": {
+  "endsLike": "story"
+ },
  "laugh": {
   "rhyme": "giraffe"
+ },
+ "laughable": {
+  "endsLike": "vegetable"
+ },
+ "laughter": {
+  "rhyme": "after"
  },
  "launch": null,
  "laundry": null,
  "lawyer": null,
+ "league": null,
  "library": {
   "endsLike": "cherry"
  },
@@ -903,8 +1213,23 @@
  "machine": {
   "rhyme": "bean"
  },
+ "machinery": {
+  "rhyme": "greenery"
+ },
  "mackerel": {
   "endsLike": "barrel"
+ },
+ "magically": {
+  "endsLike": "quickly"
+ },
+ "magician": {
+  "rhyme": "position"
+ },
+ "magnetic": {
+  "rhyme": "athletic"
+ },
+ "majestic": {
+  "endsLike": "fantastic"
  },
  "mammal": {
   "rhyme": "camel"
@@ -917,6 +1242,9 @@
  },
  "marvelous": {
   "endsLike": "jealous"
+ },
+ "mathematician": {
+  "rhyme": "mission"
  },
  "mattress": {
   "endsLike": "waitress"
@@ -941,6 +1269,9 @@
  },
  "mermaid": {
   "endsLike": "made"
+ },
+ "microscope": {
+  "endsLike": "soap"
  },
  "mighty": {
   "endsLike": "pretty"
@@ -972,11 +1303,15 @@
  "moisten": {
   "endsLike": "listen"
  },
+ "mosque": null,
  "mosquito": {
   "rhyme": "burrito"
  },
  "mountain": {
   "rhyme": "fountain"
+ },
+ "musician": {
+  "rhyme": "mission"
  },
  "mustache": {
   "endsLike": "splash"
@@ -990,11 +1325,23 @@
  "nation": {
   "rhyme": "station"
  },
+ "naturally": {
+  "endsLike": "usually"
+ },
  "nature": {
   "endsLike": "teacher"
  },
+ "naughtiness": {
+  "endsLike": "happiness"
+ },
  "naughty": {
   "endsLike": "kitty"
+ },
+ "necessary": {
+  "endsLike": "cherry"
+ },
+ "neighbor": {
+  "rhyme": "labor"
  },
  "neighborhood": {
   "endsLike": "wood"
@@ -1026,14 +1373,38 @@
  "numb": {
   "rhyme": "drum"
  },
+ "nutritious": {
+  "rhyme": "delicious"
+ },
+ "occasion": {
+  "endsLike": "vision"
+ },
  "octopus": {
   "endsLike": "circus"
  },
  "office": {
   "endsLike": "surface"
  },
+ "official": {
+  "rhyme": "initial"
+ },
  "ointment": {
   "endsLike": "moment"
+ },
+ "onslaught": {
+  "endsLike": "thought"
+ },
+ "opaque": {
+  "rhyme": "cake"
+ },
+ "opportunity": {
+  "endsLike": "community"
+ },
+ "opposite": {
+  "endsLike": "visit"
+ },
+ "optician": {
+  "rhyme": "position"
  },
  "orbit": {
   "endsLike": "rabbit"
@@ -1053,6 +1424,9 @@
  "origami": {
   "rhyme": "salami"
  },
+ "outweigh": {
+  "rhyme": "away"
+ },
  "pajamas": {
   "rhyme": "llamas"
  },
@@ -1062,8 +1436,14 @@
  "parachute": {
   "endsLike": "boot"
  },
+ "paragraph": {
+  "endsLike": "giraffe"
+ },
  "parent": {
   "endsLike": "different"
+ },
+ "partial": {
+  "endsLike": "special"
  },
  "partner": {
   "endsLike": "corner"
@@ -1089,11 +1469,17 @@
  "peacock": {
   "endsLike": "clock"
  },
+ "pediatrician": {
+  "rhyme": "position"
+ },
  "perfect": {
   "endsLike": "subject"
  },
  "performance": {
   "endsLike": "balance"
+ },
+ "periscope": {
+  "endsLike": "rope"
  },
  "permission": {
   "rhyme": "magician"
@@ -1107,6 +1493,15 @@
  "photograph": {
   "endsLike": "laugh"
  },
+ "physician": {
+  "rhyme": "position"
+ },
+ "physique": {
+  "rhyme": "squeak"
+ },
+ "picturesque": {
+  "rhyme": "desk"
+ },
  "piece": {
   "rhyme": "geese"
  },
@@ -1115,6 +1510,9 @@
  },
  "planning": {
   "rhyme": "scanning"
+ },
+ "plaque": {
+  "rhyme": "back"
  },
  "plateau": {
   "rhyme": "toe"
@@ -1125,8 +1523,15 @@
  "plumber": {
   "rhyme": "summer"
  },
+ "pneumatic": {
+  "rhyme": "attic"
+ },
+ "pneumonia": null,
  "poison": {
   "endsLike": "reason"
+ },
+ "politician": {
+  "rhyme": "position"
  },
  "porcupine": {
   "endsLike": "nine"
@@ -1137,8 +1542,14 @@
  "portable": {
   "endsLike": "vegetable"
  },
+ "possess": {
+  "rhyme": "dress"
+ },
  "possible": {
   "endsLike": "terrible"
+ },
+ "potential": {
+  "rhyme": "essential"
  },
  "powerful": {
   "endsLike": "colorful"
@@ -1148,6 +1559,15 @@
  },
  "prairie": {
   "rhyme": "fairy"
+ },
+ "precious": {
+  "endsLike": "delicious"
+ },
+ "predict": {
+  "rhyme": "picked"
+ },
+ "prehistoric": {
+  "endsLike": "historic"
  },
  "prepare": {
   "rhyme": "chair"
@@ -1173,11 +1593,33 @@
  "professor": {
   "rhyme": "dresser"
  },
+ "psalm": {
+  "rhyme": "calm"
+ },
+ "pseudonym": {
+  "endsLike": "synonym"
+ },
+ "psychologist": {
+  "endsLike": "artist"
+ },
+ "psychology": {
+  "endsLike": "apology"
+ },
+ "pterodactyl": null,
+ "pterosaur": {
+  "endsLike": "dinosaur"
+ },
+ "pumpernickel": {
+  "endsLike": "pickle"
+ },
  "pyramid": {
   "endsLike": "lid"
  },
  "quarter": {
   "rhyme": "shorter"
+ },
+ "quartz": {
+  "rhyme": "sports"
  },
  "question": {
   "rhyme": "suggestion"
@@ -1194,11 +1636,20 @@
  "radishes": {
   "endsLike": "wishes"
  },
+ "raspberry": {
+  "endsLike": "strawberry"
+ },
+ "really": {
+  "endsLike": "freely"
+ },
  "receipt": {
   "rhyme": "feet"
  },
  "receive": {
   "rhyme": "leave"
+ },
+ "recommend": {
+  "rhyme": "friend"
  },
  "reflexes": {
   "endsLike": "boxes"
@@ -1208,6 +1659,9 @@
  },
  "reign": {
   "rhyme": "train"
+ },
+ "reindeer": {
+  "endsLike": "cheer"
  },
  "rejoice": {
   "rhyme": "voice"
@@ -1239,6 +1693,9 @@
  "restless": {
   "endsLike": "careless"
  },
+ "retaught": {
+  "rhyme": "thought"
+ },
  "retrieve": {
   "rhyme": "leave"
  },
@@ -1261,6 +1718,9 @@
  "ridiculous": {
   "endsLike": "fabulous"
  },
+ "rucksack": {
+  "endsLike": "snack"
+ },
  "rustle": {
   "rhyme": "muscle"
  },
@@ -1277,12 +1737,28 @@
  "saucer": {
   "endsLike": "dancer"
  },
+ "sauerkraut": {
+  "endsLike": "shout"
+ },
  "scarves": {
   "rhyme": "carves"
+ },
+ "scene": {
+  "rhyme": "green"
+ },
+ "scenic": {
+  "endsLike": "picnic"
  },
  "science": {
   "rhyme": "giants"
  },
+ "scientific": {
+  "rhyme": "terrific"
+ },
+ "scientist": {
+  "endsLike": "dentist"
+ },
+ "scissors": null,
  "scratch": {
   "rhyme": "attach"
  },
@@ -1328,8 +1804,14 @@
  "silence": {
   "endsLike": "balance"
  },
+ "skein": {
+  "rhyme": "rain"
+ },
  "sleeve": {
   "rhyme": "leave"
+ },
+ "sleigh": {
+  "rhyme": "play"
  },
  "slightly": {
   "rhyme": "politely"
@@ -1340,14 +1822,35 @@
  "sneeze": {
   "rhyme": "cheese"
  },
+ "social": {
+  "endsLike": "special"
+ },
+ "society": {
+  "rhyme": "variety"
+ },
+ "solemn": {
+  "rhyme": "column"
+ },
+ "sombrero": {
+  "endsLike": "arrow"
+ },
  "sorbet": {
   "rhyme": "day"
+ },
+ "spacious": {
+  "endsLike": "precious"
  },
  "spaghetti": {
   "rhyme": "confetti"
  },
  "sparkle": {
   "endsLike": "uncle"
+ },
+ "special": {
+  "endsLike": "social"
+ },
+ "spectator": {
+  "endsLike": "later"
  },
  "speechless": {
   "endsLike": "helpless"
@@ -1391,6 +1894,9 @@
  "stretch": {
   "rhyme": "fetch"
  },
+ "strudel": {
+  "rhyme": "noodle"
+ },
  "student": {
   "endsLike": "different"
  },
@@ -1402,6 +1908,9 @@
  },
  "subtle": {
   "rhyme": "shuttle"
+ },
+ "success": {
+  "rhyme": "guess"
  },
  "successful": {
   "endsLike": "helpful"
@@ -1424,6 +1933,12 @@
  "surround": {
   "rhyme": "frowned"
  },
+ "surveillance": {
+  "endsLike": "balance"
+ },
+ "suspicious": {
+  "rhyme": "delicious"
+ },
  "swimmer": {
   "rhyme": "shimmer"
  },
@@ -1439,11 +1954,23 @@
  "target": {
   "endsLike": "nugget"
  },
+ "taught": {
+  "rhyme": "bought"
+ },
  "teacher": {
   "rhyme": "creature"
  },
  "teammate": {
   "endsLike": "plate"
+ },
+ "technician": {
+  "rhyme": "mission"
+ },
+ "technique": {
+  "rhyme": "week"
+ },
+ "telephone": {
+  "endsLike": "bone"
  },
  "telescope": {
   "endsLike": "soap"
@@ -1458,8 +1985,17 @@
  "terrible": {
   "endsLike": "possible"
  },
+ "terrific": {
+  "endsLike": "traffic"
+ },
+ "territory": {
+  "endsLike": "story"
+ },
  "themselves": {
   "rhyme": "shelves"
+ },
+ "thermometer": {
+  "rhyme": "kilometer"
  },
  "thicket": {
   "rhyme": "ticket"
@@ -1500,11 +2036,17 @@
  "tomorrow": {
   "rhyme": "borrow"
  },
+ "tongue": {
+  "rhyme": "young"
+ },
  "tonight": {
   "rhyme": "white"
  },
  "toothbrush": {
   "endsLike": "crush"
+ },
+ "tornado": {
+  "endsLike": "avocado"
  },
  "tortilla": null,
  "tough": {
@@ -1512,6 +2054,12 @@
  },
  "towel": {
   "rhyme": "vowel"
+ },
+ "traffic": {
+  "endsLike": "terrific"
+ },
+ "transport": {
+  "rhyme": "short"
  },
  "travel": {
   "rhyme": "gravel"
@@ -1549,6 +2097,9 @@
  "typical": {
   "endsLike": "tropical"
  },
+ "typically": {
+  "endsLike": "quickly"
+ },
  "umbrella": {
   "endsLike": "gorilla"
  },
@@ -1573,12 +2124,19 @@
  "unusual": {
   "endsLike": "casual"
  },
+ "unveil": {
+  "rhyme": "mail"
+ },
  "upright": {
   "endsLike": "bite"
+ },
+ "usually": {
+  "endsLike": "actually"
  },
  "vacation": {
   "rhyme": "station"
  },
+ "vague": null,
  "valley": {
   "rhyme": "alley"
  },
@@ -1588,17 +2146,29 @@
  "value": {
   "endsLike": "menu"
  },
+ "vanilla": {
+  "rhyme": "gorilla"
+ },
+ "variety": {
+  "rhyme": "society"
+ },
  "vision": {
   "rhyme": "collision"
  },
  "visitor": {
   "endsLike": "janitor"
  },
+ "vocabulary": {
+  "endsLike": "dictionary"
+ },
  "volcano": {
   "endsLike": "piano"
  },
  "vulture": {
   "endsLike": "picture"
+ },
+ "waltz": {
+  "rhyme": "salts"
  },
  "washable": {
   "endsLike": "terrible"
@@ -1608,6 +2178,9 @@
  },
  "weather": {
   "rhyme": "feather"
+ },
+ "weightless": {
+  "endsLike": "careless"
  },
  "wheelbarrow": {
   "endsLike": "arrow"
@@ -1650,6 +2223,9 @@
  },
  "yesterday": {
   "endsLike": "play"
+ },
+ "yodel": {
+  "endsLike": "poodle"
  },
  "yolk": {
   "rhyme": "joke"

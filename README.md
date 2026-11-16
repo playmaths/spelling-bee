@@ -4,7 +4,7 @@ A spelling game for a young reader: fill-the-gap word puzzles, picture word card
 
 Play it at **https://playmaths.github.io/spelling-bee/**. On a phone or tablet use *Add to Home Screen*: the web manifest and service worker make it an installed app with its own icon that works offline.
 
-- 60 word families, 562 words, pitched from grade 3 spelling upward.
+- 80 word families, 762 words, pitched from grade 3 spelling upward.
 - Progress is saved in the browser. A **family code** (grown-ups screen, behind the gear) keeps one garden on every device through the same Firestore project as Number Garden and Sudoku. No account, no sign-in.
 - This is a prototype. `CLAUDE.md` holds the product spec and, in section 6, what is and is not built.
 

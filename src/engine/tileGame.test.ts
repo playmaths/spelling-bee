@@ -11,6 +11,7 @@ import {
   newGame,
   playMove,
   RACK_SIZE,
+  settle,
   swapTiles,
   type Board,
   type Placement,
@@ -121,6 +122,31 @@ describe('the game', () => {
   })
 })
 
+describe('how a game ends', () => {
+  const start = { ...newGame(1), racks: { YOU: ['C', 'A', 'T'], BEE: ['K', 'K', 'K'] }, bag: [] as string[] }
+
+  it('ends when someone uses their last letter', () => {
+    const g = playMove(start, 'YOU', across('cat', CENTER, 2), dict)
+    expect(g).toMatchObject({ over: true, ended: 'OUT_OF_LETTERS' })
+    expect(g.owners[CENTER][2]).toBe('YOU')
+  })
+
+  it('ends at a standstill: no word fits for either side and no letters are left to swap', () => {
+    const board = withWord(emptyBoard(), across('cat', CENTER, 2))
+    const stuck = { ...start, board, racks: { YOU: ['K', 'K'], BEE: ['K', 'K', 'K'] } }
+    expect(settle(stuck, dict)).toMatchObject({ over: true, ended: 'STANDSTILL' })
+    // Not a standstill while one side can still play, or can still take new letters.
+    expect(settle({ ...stuck, racks: { YOU: ['S'], BEE: ['K'] } }, dict).over).toBe(false)
+    expect(settle({ ...stuck, bag: ['A', 'T', 'S'] }, dict).over).toBe(false)
+  })
+
+  it('says why four quiet turns ended it', () => {
+    let g = newGame(3)
+    for (const p of ['YOU', 'BEE', 'YOU', 'BEE'] as const) g = swapTiles(g, p)
+    expect(g.ended).toBe('QUIET')
+  })
+})
+
 describe('finding moves', () => {
   it('finds every word a rack can make on the first turn, all over the star', () => {
     const moves = findMoves(emptyBoard(), ['C', 'A', 'T', 'S', 'O', 'N'], dict)
@@ -154,8 +180,12 @@ describe('whole games with the real word book', () => {
       } else {
         g = beeTurn(g, TILE_DICTIONARY)
       }
+      g = settle(g, TILE_DICTIONARY)
     }
     expect(g.over).toBe(true)
+    expect(g.ended).toBeDefined()
+    // Every letter on the board belongs to whoever played it.
+    g.board.forEach((row, r) => row.forEach((cell, c) => expect(!!cell).toBe(!!g.owners[r][c])))
     expect(g.scores.YOU + g.scores.BEE).toBeGreaterThan(20)
     // Every run of two or more letters on the finished board is a real word.
     const lines = [...g.board.map((row) => row.map((c) => c ?? ' ').join('')), ...g.board[0].map((_, c) => g.board.map((row) => row[c] ?? ' ').join(''))]

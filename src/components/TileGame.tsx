@@ -3,10 +3,12 @@ import { getWord } from '../data/index.ts'
 import {
   analyse,
   beeTurn,
+  canSwap,
   CENTER,
   hintMove,
   newGame,
   playMove,
+  settle,
   SIZE,
   swapTiles,
   type Move,
@@ -19,6 +21,9 @@ import { TILE_DICTIONARY } from '../lib/tileWords.ts'
 import { IconButton } from './IconButton.tsx'
 
 const SAVE_KEY = 'spelling-bee-tiles'
+/** Her letters are honey yellow, the bee's are sky blue, on the board and on the score chips. */
+const MY_TILE = 'border-amber-400 bg-amber-100'
+const BEE_TILE = 'border-sky-400 bg-sky-100'
 type Dir = 'ACROSS' | 'DOWN'
 /** A letter she has put on the board but not played yet; `i` is its place in her rack. */
 interface Pending {
@@ -31,7 +36,7 @@ interface Pending {
 function loadGame(): TileState {
   try {
     const saved = JSON.parse(localStorage.getItem(SAVE_KEY) ?? 'null') as TileState | null
-    if (saved && Array.isArray(saved.board) && saved.board.length === SIZE && !saved.over) return saved
+    if (saved && Array.isArray(saved.board) && saved.board.length === SIZE && Array.isArray(saved.owners) && !saved.over) return saved
   } catch {
     // start a new game
   }
@@ -70,6 +75,13 @@ export function TileGame({ onWord, onHome }: { onWord: () => void; onHome: () =>
     const timer = window.setTimeout(() => setGame((g) => beeTurn(g, TILE_DICTIONARY)), 1100)
     return () => window.clearTimeout(timer)
   }, [game.turn, game.over])
+
+  // A game must not hang: if no word fits for either side, it ends here.
+  useEffect(() => {
+    setGame((g) => settle(g, TILE_DICTIONARY))
+  }, [game.board, game.turn])
+  /** On her turn: is there any word she could make? */
+  const noWord = useMemo(() => game.turn === 'YOU' && !game.over && hintMove(game, TILE_DICTIONARY) === null, [game])
 
   useEffect(() => {
     if (game.over) chime(game.scores.YOU >= game.scores.BEE ? 'BLOOM' : 'GROW')
@@ -159,7 +171,7 @@ export function TileGame({ onWord, onHome }: { onWord: () => void; onHome: () =>
       setPicked(null)
       setCursor(null)
       setHint({ move, shown: 0 })
-      setNote(`A ${move.word.length}-letter word fits in the blue squares.`)
+      setNote(`A ${move.word.length}-letter word fits in the purple squares.`)
       return
     }
     const first = move.placements[0]
@@ -194,7 +206,14 @@ export function TileGame({ onWord, onHome }: { onWord: () => void; onHome: () =>
         <p className="text-xl text-slate-600">
           You {YOU} · Bee {BEE}
         </p>
-        <p className="text-lg text-slate-600">Good game. Every word on that board is real.</p>
+        <p data-testid="tiles-why" className="text-lg text-slate-600">
+          {game.ended === 'OUT_OF_LETTERS'
+            ? 'All the letters are used up.'
+            : game.ended === 'STANDSTILL'
+              ? 'No more words fit on the board.'
+              : 'Nobody could make a word for four turns.'}{' '}
+          Good game!
+        </p>
         <div className="flex gap-8">
           <IconButton
             icon="🔁"
@@ -215,11 +234,11 @@ export function TileGame({ onWord, onHome }: { onWord: () => void; onHome: () =>
   return (
     <section data-testid="tiles" className="flex w-full max-w-md flex-col items-center gap-3">
       <div className="flex w-full items-center justify-between text-lg font-bold text-slate-700">
-        <span data-testid="tiles-you" className={`rounded-full px-3 py-1 ${myTurn ? 'bg-amber-300' : 'bg-white'}`}>
+        <span data-testid="tiles-you" className={`rounded-lg border-2 px-3 py-1 ${MY_TILE} ${myTurn ? 'ring-2 ring-slate-500' : ''}`}>
           You {game.scores.YOU}
         </span>
         <span className="text-sm font-semibold text-slate-500">{game.bag.length} letters left</span>
-        <span data-testid="tiles-bee" className={`rounded-full px-3 py-1 ${!myTurn ? 'bg-amber-300' : 'bg-white'}`}>
+        <span data-testid="tiles-bee" className={`rounded-lg border-2 px-3 py-1 ${BEE_TILE} ${!myTurn ? 'ring-2 ring-slate-500' : ''}`}>
           🐝 {game.scores.BEE}
         </span>
       </div>
@@ -237,13 +256,13 @@ export function TileGame({ onWord, onHome }: { onWord: () => void; onHome: () =>
                 onClick={() => tapSquare(r, c)}
                 className={`flex aspect-square items-center justify-center rounded-lg border-2 text-xl font-bold sm:text-2xl ${
                   cell
-                    ? `border-amber-300 bg-amber-50 text-slate-800 ${lastCell(r, c) ? 'ring-2 ring-amber-500' : ''}`
+                    ? `${game.owners[r][c] === 'BEE' ? BEE_TILE : MY_TILE} text-slate-800 ${lastCell(r, c) ? 'ring-2 ring-slate-500' : ''}`
                     : mine
                       ? tone
                       : here
-                        ? 'border-dashed border-sky-500 bg-sky-50 text-sky-500'
+                        ? 'border-dashed border-violet-500 bg-violet-50 text-violet-500'
                         : hinted(r, c)
-                          ? 'animate-pulse border-sky-300 bg-sky-200'
+                          ? 'animate-pulse border-violet-300 bg-violet-200'
                           : 'border-transparent bg-emerald-50 text-amber-400'
                 }`}
               >
@@ -262,7 +281,14 @@ export function TileGame({ onWord, onHome }: { onWord: () => void; onHome: () =>
               ? game.last.kind === 'PLAY'
                 ? ''
                 : 'The bee had no word and took new letters. Your turn!'
-              : 'Tap a square, then tap your letters.')}
+              : noWord
+                ? ''
+                : 'Tap a square, then tap your letters.')}
+        {!status && myTurn && noWord && (
+          <span data-testid="tiles-noword" className="block text-rose-700">
+            No word fits these letters. Tap {canSwap(game, 'YOU') ? 'New letters' : 'Skip'}.
+          </span>
+        )}
         {!status && myTurn && game.last?.by === 'BEE' && game.last.kind === 'PLAY' && (
           <button type="button" onClick={() => sayWord(game.last!.words[0])} className="rounded-full bg-white px-3 py-1 shadow-sm">
             🐝 made {game.last.words.join(' and ')} (+{game.last.score}) 🔊
@@ -278,7 +304,7 @@ export function TileGame({ onWord, onHome }: { onWord: () => void; onHome: () =>
             disabled={!myTurn || used.has(i)}
             onClick={() => tapRack(i)}
             className={`flex h-12 w-11 items-center justify-center rounded-lg border-2 text-2xl font-bold shadow active:scale-95 ${
-              used.has(i) ? 'border-stone-200 bg-stone-100 text-transparent shadow-none' : picked === i ? 'border-sky-500 bg-sky-100' : 'border-amber-300 bg-amber-50'
+              used.has(i) ? 'border-stone-200 bg-stone-100 text-transparent shadow-none' : picked === i ? 'border-violet-500 bg-violet-100' : MY_TILE
             } disabled:opacity-60`}
           >
             {l}
@@ -298,7 +324,7 @@ export function TileGame({ onWord, onHome }: { onWord: () => void; onHome: () =>
         </button>
         <IconButton icon="↩️" label="Take back" onClick={clear} disabled={!myTurn || pending.length === 0} />
         <IconButton icon="💡" label="Stuck?" onClick={stuck} disabled={!myTurn} />
-        <IconButton icon="🔄" label={game.bag.length >= game.racks.YOU.length ? 'New letters' : 'Skip'} onClick={swap} disabled={!myTurn} />
+        <IconButton icon="🔄" label={canSwap(game, 'YOU') ? 'New letters' : 'Skip'} onClick={swap} disabled={!myTurn} />
       </div>
     </section>
   )

@@ -163,6 +163,8 @@ export interface LastMove {
 }
 export interface TileState {
   board: Board
+  /** Who put each letter down, so her tiles and the bee's can be told apart. */
+  owners: (Player | null)[][]
   bag: string[]
   racks: Record<Player, string[]>
   scores: Record<Player, number>
@@ -171,6 +173,8 @@ export interface TileState {
   /** Turns in a row with no word; four ends the game. */
   quiet: number
   over: boolean
+  /** Why it ended: someone used every letter, four turns passed with no word, or no word fits for either side. */
+  ended?: 'OUT_OF_LETTERS' | 'QUIET' | 'STANDSTILL'
   seed: number
 }
 
@@ -205,6 +209,7 @@ export function newGame(seed: number): TileState {
   const [bag, next] = shuffled(all, seed >>> 0)
   return {
     board: emptyBoard(),
+    owners: Array.from({ length: SIZE }, () => Array<Player | null>(SIZE).fill(null)),
     racks: { YOU: bag.slice(0, RACK_SIZE), BEE: bag.slice(RACK_SIZE, RACK_SIZE * 2) },
     bag: bag.slice(RACK_SIZE * 2),
     scores: { YOU: 0, BEE: 0 },
@@ -236,13 +241,18 @@ export function playMove(state: TileState, by: Player, placements: readonly Plac
   const kept = without(state.racks[by], placements.map((p) => p.l.toUpperCase()))
   if (a.state !== 'VALID' || !kept) return state
   const board = state.board.map((row) => [...row])
-  for (const p of placements) board[p.r][p.c] = p.l.toUpperCase()
+  const owners = state.owners.map((row) => [...row])
+  for (const p of placements) {
+    board[p.r][p.c] = p.l.toUpperCase()
+    owners[p.r][p.c] = by
+  }
   const draw = Math.min(RACK_SIZE - kept.length, state.bag.length)
   const rack = [...kept, ...state.bag.slice(0, draw)]
   const bag = state.bag.slice(draw)
   return {
     ...state,
     board,
+    owners,
     bag,
     racks: { ...state.racks, [by]: rack },
     scores: { ...state.scores, [by]: state.scores[by] + a.score },
@@ -250,6 +260,7 @@ export function playMove(state: TileState, by: Player, placements: readonly Plac
     last: { by, cells: placements.map((p) => [p.r, p.c]), words: a.words.map((w) => w.text), score: a.score, kind: 'PLAY' },
     quiet: 0,
     over: rack.length === 0,
+    ...(rack.length === 0 ? { ended: 'OUT_OF_LETTERS' as const } : {}),
   }
 }
 
@@ -258,7 +269,7 @@ export function swapTiles(state: TileState, by: Player): TileState {
   if (state.over || state.turn !== by) return state
   const rack = state.racks[by]
   const quiet = state.quiet + 1
-  const base = { ...state, turn: otherPlayer(by), quiet, over: quiet >= 4 }
+  const base = { ...state, turn: otherPlayer(by), quiet, over: quiet >= 4, ...(quiet >= 4 ? { ended: 'QUIET' as const } : {}) }
   if (state.bag.length < rack.length) return { ...base, last: { by, cells: [], words: [], score: 0, kind: 'SKIP' } }
   const [mixed, seed] = shuffled([...state.bag, ...rack], state.seed)
   return {
@@ -355,4 +366,17 @@ export function hintMove(state: TileState, dict: Dictionary): Move | null {
   // Prefer a word that needs at least two of her letters, so the hint leaves her something to work out.
   const two = moves.filter((m) => m.placements.length >= 2)
   return (two.length ? two : moves).sort((a, b) => Math.abs(a.word.length - 4) - Math.abs(b.word.length - 4) || b.score - a.score || a.word.localeCompare(b.word))[0]
+}
+
+/** Whether swapping is still possible (there must be enough letters left to swap with). */
+export const canSwap = (state: TileState, by: Player) => state.bag.length >= state.racks[by].length
+
+/**
+ * A game must not hang. If no word fits for either side and nobody can take new
+ * letters, it is a standstill and the game ends here with the scores as they are.
+ */
+export function settle(state: TileState, dict: Dictionary): TileState {
+  if (state.over) return state
+  const stuck = (p: Player) => !canSwap(state, p) && findMoves(state.board, state.racks[p], dict).length === 0
+  return stuck('YOU') && stuck('BEE') ? { ...state, over: true, ended: 'STANDSTILL' } : state
 }

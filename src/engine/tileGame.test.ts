@@ -3,6 +3,7 @@ import { TILE_DICTIONARY } from '../lib/tileWords.ts'
 import {
   analyse,
   beeTurn,
+  bonusAt,
   CENTER,
   emptyBoard,
   findMoves,
@@ -74,7 +75,37 @@ describe('analyse: she is told how her letters stand before she plays', () => {
     // TO under AT: AT/TO stacked makes AT (down? no) -> both cross words must be real.
     const ok = analyse(board, across('so', CENTER + 1, 3), dict)
     expect(ok.state).toBe('VALID') // AS and TO downwards
-    expect(ok.score).toBe(2 + 2 + 2)
+    expect(ok.score).toBe(3 + 2 + 3) // the O sits on a flower square, so it counts double in SO and in TO
+  })
+})
+
+describe('bonus squares', () => {
+  it('a flower square doubles the letter put on it', () => {
+    const board = withWord(emptyBoard(), across('cat', CENTER, 2))
+    // ART down from the A: R lands on the flower square at row 4, column 3? No: (4,3) is plain, so 3 points.
+    expect(analyse(board, [{ r: CENTER + 1, c: 3, l: 'R' }, { r: CENTER + 2, c: 3, l: 'T' }], dict).score).toBe(3)
+    // TO down from the T: O lands on the flower square at (4,4).
+    expect(bonusAt(4, 4)).toBe('LETTER')
+    expect(analyse(board, [{ r: CENTER + 1, c: 4, l: 'O' }], dict).score).toBe(3)
+  })
+
+  it('a honey square doubles the whole word, once', () => {
+    expect(bonusAt(5, 5)).toBe('WORD')
+    const board = withWord(emptyBoard(), [{ r: 3, c: 5, l: 'C' }, { r: 4, c: 5, l: 'A' }])
+    const a = analyse(board, [{ r: 5, c: 5, l: 'T' }], dict)
+    expect(a.score).toBe(6)
+    expect(a.message).toBe('CAT is a word! 6 points. Double word!')
+    // Later, adding S under it does not double again.
+    const later = withWord(board, [{ r: 5, c: 5, l: 'T' }])
+    expect(analyse(later, [{ r: 6, c: 5, l: 'S' }], dict).score).toBe(4)
+  })
+
+  it('the board is the same from every side', () => {
+    for (let r = 0; r < 7; r++) for (let c = 0; c < 7; c++) {
+      expect(bonusAt(r, c)).toBe(bonusAt(c, r))
+      expect(bonusAt(r, c)).toBe(bonusAt(6 - r, 6 - c))
+    }
+    expect(bonusAt(CENTER, CENTER)).toBeNull()
   })
 })
 

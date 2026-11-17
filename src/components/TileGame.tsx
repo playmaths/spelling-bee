@@ -3,6 +3,7 @@ import { getWord } from '../data/index.ts'
 import {
   analyse,
   beeTurn,
+  bonusAt,
   canSwap,
   CENTER,
   hintMove,
@@ -21,6 +22,7 @@ import { TILE_DICTIONARY } from '../lib/tileWords.ts'
 import { IconButton } from './IconButton.tsx'
 
 const SAVE_KEY = 'spelling-bee-tiles'
+const SEEN_KEY = 'spelling-bee-tiles-howto'
 /** Her letters are honey yellow, the bee's are sky blue, on the board and on the score chips. */
 const MY_TILE = 'border-amber-400 bg-amber-100'
 const BEE_TILE = 'border-sky-400 bg-sky-100'
@@ -60,6 +62,23 @@ export function TileGame({ onWord, onHome }: { onWord: () => void; onHome: () =>
   const [picked, setPicked] = useState<number | null>(null)
   const [hint, setHint] = useState<{ move: Move; shown: number } | null>(null)
   const [note, setNote] = useState<string | null>(null)
+  /** The order she sees her letters in (she can mix them); the game itself keeps its own order. */
+  const [order, setOrder] = useState<number[]>([])
+  const [howTo, setHowTo] = useState(() => {
+    try {
+      return localStorage.getItem(SEEN_KEY) === null
+    } catch {
+      return false
+    }
+  })
+  const closeHowTo = () => {
+    setHowTo(false)
+    try {
+      localStorage.setItem(SEEN_KEY, '1')
+    } catch {
+      // she will simply see it again next time
+    }
+  }
 
   useEffect(() => {
     try {
@@ -185,17 +204,32 @@ export function TileGame({ onWord, onHome }: { onWord: () => void; onHome: () =>
     setNote(move.placements.length > 1 ? 'There is one letter of it. What could the word be?' : null)
   }
 
+  // Her letters in the order she last mixed them; new letters join at the end.
+  const rackSize = game.racks.YOU.length
+  const shownOrder = [...order.filter((i) => i < rackSize), ...Array.from({ length: rackSize }, (_, i) => i).filter((i) => !order.includes(i))]
+  /** Mixing the letters around often shows her a word she had not seen. */
+  const mix = () => {
+    const next = [...shownOrder]
+    for (let i = next.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1))
+      ;[next[i], next[j]] = [next[j], next[i]]
+    }
+    // Make sure something actually moves.
+    if (next.length > 1 && next.every((v, n) => v === shownOrder[n])) next.push(next.shift()!)
+    setOrder(next)
+  }
+
   const hinted = (r: number, c: number) => !!hint && hint.move.placements.some((p) => p.r === r && p.c === c)
   const lastCell = (r: number, c: number) => !!game.last && game.last.cells.some(([rr, cc]) => rr === r && cc === c)
   const tone =
     check.state === 'VALID'
       ? 'border-emerald-500 bg-emerald-100 text-emerald-900'
       : check.state === 'PARTIAL'
-        ? 'border-amber-400 bg-amber-100 text-amber-900'
+        ? 'border-orange-500 bg-orange-200 text-orange-900'
         : 'border-rose-400 bg-rose-100 text-rose-900'
   const status = note ?? (pending.length > 0 ? check.message : null)
   const statusTone =
-    note || pending.length === 0 ? 'text-slate-600' : check.state === 'VALID' ? 'text-emerald-700' : check.state === 'PARTIAL' ? 'text-amber-700' : 'text-rose-700'
+    note || pending.length === 0 ? 'text-slate-600' : check.state === 'VALID' ? 'text-emerald-700' : check.state === 'PARTIAL' ? 'text-orange-700' : 'text-rose-700'
 
   if (game.over) {
     const { YOU, BEE } = game.scores
@@ -237,7 +271,12 @@ export function TileGame({ onWord, onHome }: { onWord: () => void; onHome: () =>
         <span data-testid="tiles-you" className={`rounded-lg border-2 px-3 py-1 ${MY_TILE} ${myTurn ? 'ring-2 ring-slate-500' : ''}`}>
           You {game.scores.YOU}
         </span>
-        <span className="text-sm font-semibold text-slate-500">{game.bag.length} letters left</span>
+        <span className="flex items-center gap-2 text-sm font-semibold text-slate-500">
+          {game.bag.length} letters left
+          <button type="button" aria-label="How to play" onClick={() => setHowTo(true)} className="h-8 w-8 rounded-full bg-white text-base shadow-sm">
+            ❓
+          </button>
+        </span>
         <span data-testid="tiles-bee" className={`rounded-lg border-2 px-3 py-1 ${BEE_TILE} ${!myTurn ? 'ring-2 ring-slate-500' : ''}`}>
           🐝 {game.scores.BEE}
         </span>
@@ -252,7 +291,7 @@ export function TileGame({ onWord, onHome }: { onWord: () => void; onHome: () =>
               <button
                 key={`${r}-${c}`}
                 type="button"
-                aria-label={cell ?? mine?.l ?? `Row ${r + 1}, square ${c + 1}`}
+                aria-label={cell ?? mine?.l ?? `Row ${r + 1}, square ${c + 1}${bonusAt(r, c) === 'WORD' ? ', double word' : bonusAt(r, c) === 'LETTER' ? ', double letter' : ''}`}
                 onClick={() => tapSquare(r, c)}
                 className={`flex aspect-square items-center justify-center rounded-lg border-2 text-xl font-bold sm:text-2xl ${
                   cell
@@ -263,10 +302,14 @@ export function TileGame({ onWord, onHome }: { onWord: () => void; onHome: () =>
                         ? 'border-dashed border-violet-500 bg-violet-50 text-violet-500'
                         : hinted(r, c)
                           ? 'animate-pulse border-violet-300 bg-violet-200'
-                          : 'border-transparent bg-emerald-50 text-amber-400'
+                          : bonusAt(r, c) === 'WORD'
+                            ? 'border-transparent bg-orange-200 text-base'
+                            : bonusAt(r, c) === 'LETTER'
+                              ? 'border-transparent bg-yellow-100 text-base'
+                              : 'border-transparent bg-emerald-50 text-amber-400'
                 }`}
               >
-                {cell ?? mine?.l ?? (here ? (cursor.dir === 'ACROSS' ? '→' : '↓') : r === CENTER && c === CENTER ? '⭐' : '')}
+                {cell ?? mine?.l ?? (here ? (cursor.dir === 'ACROSS' ? '→' : '↓') : r === CENTER && c === CENTER ? '⭐' : bonusAt(r, c) === 'WORD' ? '🍯' : bonusAt(r, c) === 'LETTER' ? '🌼' : '')}
               </button>
             )
           }),
@@ -296,20 +339,32 @@ export function TileGame({ onWord, onHome }: { onWord: () => void; onHome: () =>
         )}
       </p>
 
-      <div data-testid="tiles-rack" className="flex gap-1.5">
-        {game.racks.YOU.map((l, i) => (
-          <button
-            key={i}
-            type="button"
-            disabled={!myTurn || used.has(i)}
-            onClick={() => tapRack(i)}
-            className={`flex h-12 w-11 items-center justify-center rounded-lg border-2 text-2xl font-bold shadow active:scale-95 ${
-              used.has(i) ? 'border-stone-200 bg-stone-100 text-transparent shadow-none' : picked === i ? 'border-violet-500 bg-violet-100' : MY_TILE
-            } disabled:opacity-60`}
-          >
-            {l}
-          </button>
-        ))}
+      <div className="flex items-center gap-2">
+        <div data-testid="tiles-rack" className="flex gap-1.5">
+          {shownOrder.map((i) => (
+            <button
+              key={i}
+              type="button"
+              disabled={!myTurn || used.has(i)}
+              onClick={() => tapRack(i)}
+              className={`flex h-12 w-10 items-center justify-center rounded-lg border-2 text-2xl font-bold shadow active:scale-95 ${
+                used.has(i) ? 'border-stone-200 bg-stone-100 text-transparent shadow-none' : picked === i ? 'border-violet-500 bg-violet-100' : MY_TILE
+              } disabled:opacity-60`}
+            >
+              {game.racks.YOU[i]}
+            </button>
+          ))}
+        </div>
+        <button
+          type="button"
+          data-testid="tiles-mix"
+          aria-label="Mix my letters"
+          onClick={mix}
+          className="flex h-12 flex-col items-center justify-center rounded-lg bg-white px-2 text-xs font-semibold text-slate-600 shadow active:scale-95"
+        >
+          <span className="text-lg leading-none">🔀</span>
+          Mix
+        </button>
       </div>
 
       <div className="flex items-start justify-center gap-3">
@@ -326,6 +381,59 @@ export function TileGame({ onWord, onHome }: { onWord: () => void; onHome: () =>
         <IconButton icon="💡" label="Stuck?" onClick={stuck} disabled={!myTurn} />
         <IconButton icon="🔄" label={canSwap(game, 'YOU') ? 'New letters' : 'Skip'} onClick={swap} disabled={!myTurn} />
       </div>
+      {howTo && <HowToPlay onClose={closeHowTo} />}
     </section>
+  )
+}
+
+const HOW_TO: { picture: string; title: string; text: string }[] = [
+  { picture: '🧩🐝', title: 'Make words, take turns', text: 'You have six letters. Make a word on the board, then the bee makes one. Your letters are yellow and the bee\'s are blue.' },
+  { picture: '👆 → ↓', title: 'Tap a square, then your letters', text: 'Tap the square where your word starts. Tap it again to turn the arrow down. Then tap your letters one by one. Tap a letter on the board to take it back.' },
+  { picture: '⭐', title: 'Join on to the board', text: 'The very first word must go over the star. After that, every new word has to touch a word that is already there.' },
+  { picture: '🟧 🟩 🟥', title: 'Watch the colours', text: 'Orange means it is the start of a word, so keep going. Green means it is a word: tap Play! Red means those letters cannot make a word.' },
+  { picture: '🌼 🍯', title: 'Bonus squares', text: 'Each letter is one point. A letter on a flower square counts double. A word with a new letter on a honey square counts double.' },
+  { picture: '🔀 💡 🔄', title: 'When you are stuck', text: 'Mix moves your letters around so you can spot a word. Stuck? shows where a word fits. New letters swaps all your letters, but it uses your turn.' },
+]
+
+/** A short picture guide, one idea at a time. Shown the first time, and from the ❓ button. */
+function HowToPlay({ onClose }: { onClose: () => void }) {
+  const [at, setAt] = useState(0)
+  const page = HOW_TO[at]
+  const last = at === HOW_TO.length - 1
+  return (
+    <div data-testid="tiles-howto" role="dialog" aria-modal aria-label="How to play" className="fixed inset-0 z-20 flex items-center justify-center bg-slate-900/40 p-5">
+      <div className="flex w-full max-w-sm flex-col items-center gap-4 rounded-3xl bg-white p-6 text-center shadow-2xl">
+        <div className="text-5xl">{page.picture}</div>
+        <h3 className="text-2xl font-bold text-slate-800">{page.title}</h3>
+        <p className="min-h-24 text-lg leading-snug text-slate-700">{page.text}</p>
+        <button type="button" onClick={() => speak(`${page.title}. ${page.text}`)} className="rounded-full bg-amber-100 px-4 py-1.5 text-base font-semibold shadow-sm">
+          🔊 Read it to me
+        </button>
+        <div className="flex gap-1.5" aria-label={`Step ${at + 1} of ${HOW_TO.length}`}>
+          {HOW_TO.map((_, n) => (
+            <span key={n} className={`h-2.5 w-2.5 rounded-full ${n === at ? 'bg-slate-700' : 'bg-stone-300'}`} />
+          ))}
+        </div>
+        <div className="flex w-full items-center justify-between gap-3">
+          <button type="button" onClick={onClose} className="rounded-full px-3 py-2 text-base font-semibold text-slate-500">
+            Skip
+          </button>
+          <div className="flex gap-2">
+            {at > 0 && (
+              <button type="button" onClick={() => setAt(at - 1)} className="rounded-full bg-white px-5 py-3 text-lg font-bold shadow">
+                Back
+              </button>
+            )}
+            <button
+              type="button"
+              onClick={() => (last ? onClose() : setAt(at + 1))}
+              className="rounded-full bg-amber-400 px-6 py-3 text-lg font-bold shadow active:scale-95"
+            >
+              {last ? 'Let\'s play!' : 'Next'}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
   )
 }

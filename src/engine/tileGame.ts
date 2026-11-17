@@ -9,6 +9,19 @@ export const CENTER = 3
 export const RACK_SIZE = 6
 export const GARDEN_BONUS = 2
 
+export type Bonus = 'LETTER' | 'WORD'
+/**
+ * Bonus squares, in the game's own layout: a letter put on a flower square counts
+ * double, and a word with a new letter on a honey square counts double.
+ */
+const BONUS_AT: Record<string, Bonus> = {
+  '0,3': 'LETTER', '3,0': 'LETTER', '3,6': 'LETTER', '6,3': 'LETTER',
+  '2,2': 'LETTER', '2,4': 'LETTER', '4,2': 'LETTER', '4,4': 'LETTER',
+  '1,1': 'WORD', '1,5': 'WORD', '5,1': 'WORD', '5,5': 'WORD',
+  '0,0': 'WORD', '0,6': 'WORD', '6,0': 'WORD', '6,6': 'WORD',
+}
+export const bonusAt = (r: number, c: number): Bonus | null => BONUS_AT[`${r},${c}`] ?? null
+
 export type Board = (string | null)[][]
 export interface Placement {
   r: number
@@ -143,8 +156,21 @@ export function analyse(board: Board, placements: readonly Placement[], dict: Di
       ? { state: 'PARTIAL', main, words, score: 0, message: `${main.text}… keep going.` }
       : { state: 'INVALID', main, words, score: 0, message: `I don't know a word that starts ${main.text}.` }
   }
-  const score = words.reduce((sum, w) => sum + w.text.length + (w.garden ? GARDEN_BONUS : 0), 0)
-  const extra = words.some((w) => w.garden) ? ' A garden word!' : ''
+  // A bonus square only counts on the turn a letter is first put on it.
+  const fresh = new Set(placements.map((p) => `${p.r},${p.c}`))
+  let doubled = false
+  const score = words.reduce((sum, w) => {
+    let letters = 0
+    let times = 1
+    for (const [r, c] of w.cells) {
+      const bonus = fresh.has(`${r},${c}`) ? bonusAt(r, c) : null
+      letters += bonus === 'LETTER' ? 2 : 1
+      if (bonus === 'WORD') times *= 2
+    }
+    if (times > 1) doubled = true
+    return sum + letters * times + (w.garden ? GARDEN_BONUS : 0)
+  }, 0)
+  const extra = `${doubled ? ' Double word!' : ''}${words.some((w) => w.garden) ? ' A garden word!' : ''}`
   return { state: 'VALID', main, words, score, message: `${main.text} is a word! ${score} points.${extra}` }
 }
 

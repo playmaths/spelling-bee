@@ -71,6 +71,18 @@ export function TileGame({ onWord, onHome }: { onWord: () => void; onHome: () =>
       return false
     }
   })
+  /** Starting again throws this game away, so she is asked first. */
+  const [askNew, setAskNew] = useState(false)
+  const startNew = () => {
+    setPending([])
+    setCursor(null)
+    setPicked(null)
+    setHint(null)
+    setNote(null)
+    setOrder([])
+    setAskNew(false)
+    setGame(newGame(Math.floor(Math.random() * 1e9)))
+  }
   const closeHowTo = () => {
     setHowTo(false)
     try {
@@ -276,6 +288,9 @@ export function TileGame({ onWord, onHome }: { onWord: () => void; onHome: () =>
           <button type="button" aria-label="How to play" onClick={() => setHowTo(true)} className="h-8 w-8 rounded-full bg-white text-base shadow-sm">
             ❓
           </button>
+          <button type="button" aria-label="New game" onClick={() => setAskNew(true)} className="h-8 w-8 rounded-full bg-white text-base shadow-sm">
+            🔁
+          </button>
         </span>
         <span data-testid="tiles-bee" className={`rounded-lg border-2 px-3 py-1 ${BEE_TILE} ${!myTurn ? 'ring-2 ring-slate-500' : ''}`}>
           🐝 {game.scores.BEE}
@@ -382,6 +397,23 @@ export function TileGame({ onWord, onHome }: { onWord: () => void; onHome: () =>
         <IconButton icon="🔄" label={canSwap(game, 'YOU') ? 'New letters' : 'Skip'} onClick={swap} disabled={!myTurn} />
       </div>
       {howTo && <HowToPlay onClose={closeHowTo} />}
+      {askNew && (
+        <div data-testid="tiles-new" role="dialog" aria-modal aria-label="Start a new game" className="fixed inset-0 z-20 flex items-center justify-center bg-slate-900/40 p-5">
+          <div className="flex w-full max-w-xs flex-col items-center gap-4 rounded-3xl bg-white p-6 text-center shadow-2xl">
+            <div className="text-5xl">🔁</div>
+            <h3 className="text-2xl font-bold text-slate-800">Start a new game?</h3>
+            <p className="text-lg text-slate-700">This game will be cleared away.</p>
+            <div className="flex gap-3">
+              <button type="button" onClick={() => setAskNew(false)} className="rounded-full bg-white px-5 py-3 text-lg font-bold shadow">
+                Keep playing
+              </button>
+              <button type="button" onClick={startNew} className="rounded-full bg-amber-400 px-5 py-3 text-lg font-bold shadow active:scale-95">
+                New game
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   )
 }
